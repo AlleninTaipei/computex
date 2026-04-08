@@ -1,65 +1,123 @@
-  COMPUTEX Demo 建議
+ Computex 動態展 — 完整計畫 v2                                                 
+                                                                                
+  硬體：Ryzen AI 9 HX 375 | XDNA2 55 TOPS | Radeon 890M (16CU RDNA3.5) | 無 dGPU
+                                                                                
+  ---                                                                           
+  硬體分工總覽                                                                  
+                                                                                
+  XDNA2 NPU (55 TOPS)    →  語音辨識、Hybrid LLM                                
+  Radeon 890M iGPU       →  影像生成 (ROCm)、LLM 加速 (Vulkan)                  
+  CPU                    →  TTS 語音合成、協調排程                              
+                                                                                
+  三個運算單元全部有事做，敘事完整。                                            
+                                                                                
+  ---                                                                           
+  五幕劇本（全幕復活）                                                          
+                                                                                
+  第一幕：語音進來
+                                                                                
+  硬體：XDNA2 NPU ｜ 模型：Whisper-Large-v3-Turbo                             
 
-  1. 主打「Hybrid GPU+NPU」的速度優勢
+  python examples/realtime_transcription.py --model Whisper-Large-v3-Turbo
 
-  Lemonade 已支援 AMD RyzenAI Hybrid 模式（GPU+NPU 同時運算），這是最大亮點。可以做三路對比 benchmark：
+  主持人對麥克風說話，大螢幕即時顯示逐字稿。
 
-  ┌────────────────┬────────────────────────────────────┬──────────┐
-  │      模式      │              模型範例              │ 展示重點 │
-  ├────────────────┼────────────────────────────────────┼──────────┤
-  │ CPU only       │ Qwen2.5-0.5B-Instruct-CPU          │ baseline │
-  ├────────────────┼────────────────────────────────────┼──────────┤
-  │ NPU only       │ DeepSeek-R1-Distill-Qwen-7B-NPU    │ 省電     │
-  ├────────────────┼────────────────────────────────────┼──────────┤
-  │ GPU+NPU Hybrid │ DeepSeek-R1-Distill-Qwen-7B-Hybrid │ 最快     │
-  └────────────────┴────────────────────────────────────┴──────────┘
+  ▎ 「55 TOPS 的 NPU 在跑 Whisper，CPU 和 GPU 完全沒動，留給後面用。」          
+   
+  ---                                                                           
+  第二幕：大腦思考
+                  
+  硬體：XDNA2 NPU + CPU Hybrid ｜ 模型：Qwen3-8B-Hybrid
+                                                                                
+  lemonade-server run Qwen3-8B-Hybrid
+                                                                                
+  ▎ 「模型的權重切割——部分層在 NPU 跑，剩餘層在 CPU 跑，同時進行，這是 Ryzen AI 
+  的 Hybrid 推論架構。」                                                        
+                                                                                
+  ---         
+  第三幕：說話回來
+                  
+  硬體：CPU ｜ 模型：kokoro-v1
+                                                                                
+  python examples/api_text_to_speech.py
+                                                                                
+  ▎ 「CPU 做語音合成，剛才 NPU 和 iGPU 忙的時候，CPU 沒有閒著。」               
+   
+  ---                                                                           
+  第四幕：畫出來
 
-  指標來自現成的 /v1/stats endpoint，回傳 tokens_per_second + time_to_first_token，可以直接做即時儀表板。
+  硬體：Radeon 890M ROCm ｜ 模型：SD-Turbo
+
+  python examples/api_image_generation.py --backend rocm
+                                                                                
+  ▎ 「Radeon 890M，RDNA 3.5 架構，ROCm 加速 Stable 
+  Diffusion。沒有獨顯，一樣跑影像生成。」                                       
+              
+  ---
+  第五幕：9 個 AI 同時辯論
+                                                                                
+  硬體：Radeon 890M Vulkan ｜ 模型：小型 GGUF
+                                                                                
+  lemonade-server serve --max-loaded-models 9
+  # 開啟 examples/llm-debate.html
+
+  890M 記憶體限制，選用輕量模型組合：
+
+  ┌────────────────────────────┬─────────┐
+  │            模型            │  大小   │
+  ├────────────────────────────┼─────────┤
+  │ Qwen3-0.6B-GGUF            │ 0.38 GB │
+  ├────────────────────────────┼─────────┤
+  │ Qwen3-1.7B-GGUF            │ 1.06 GB │                                      
+  ├────────────────────────────┼─────────┤
+  │ LFM2-1.2B-GGUF             │ 0.73 GB │                                      
+  ├────────────────────────────┼─────────┤
+  │ Llama-3.2-1B-Instruct-GGUF │ 0.83 GB │
+  ├────────────────────────────┼─────────┤
+  │ Phi-4-mini-instruct-GGUF   │ 2.49 GB │
+  └────────────────────────────┴─────────┘
+
+  五個模型同時串流辯論，總計約 5.5 GB，890M 可以承受。
 
   ---
-  2. 多模態 Pipeline（視覺衝擊最強）
-
-  全程本地，全跑 AMD 硬體：
-
-  麥克風語音 → Whisper (NPU) → LLM → Kokoro TTS (CPU)
-                                  ↓
-                 圖片上傳 → Gemma-3-4b-it-mm-NPU (視覺理解)
-                                  ↓
-                     SD.cpp ROCm → 圖片生成
-
-  - Vision 模型：Gemma-3-4b-it-mm-NPU（已在 registry 裡，標記 vision）
-  - 語音輸入：Whisper NPU
-  - TTS 輸出：Kokoro
-  - 圖片生成：SD.cpp with ROCm
-
+  展前準備指令（Windows PowerShell）
+                                                                                
+  # 安裝 Lemonade Server（先從官網下載 MSI）
+  # https://lemonade-server.ai/install_options.html#windows                     
+              
+  # 啟動 server                                                                 
+  lemonade-server serve --max-loaded-models 9
+                                                                                
+  # 下載所有 demo 模型（一次跑完）
+  lemonade-server pull Whisper-Large-v3-Turbo
+  lemonade-server pull Qwen3-8B-Hybrid
+  lemonade-server pull kokoro-v1                                                
+  lemonade-server pull SD-Turbo
+  lemonade-server pull Qwen3-0.6B-GGUF                                          
+  lemonade-server pull Qwen3-1.7B-GGUF
+  lemonade-server pull LFM2-1.2B-GGUF                                           
+  lemonade-server pull Llama-3.2-1B-Instruct-GGUF
+  lemonade-server pull Phi-4-mini-instruct-GGUF                                 
+                                                                                
+  # 安裝 Python 依賴
+  pip install openai pyaudio websockets                                         
+                                                                                
   ---
-  3. 目前可能缺少的功能（建議補強）
+  核心話術（修訂版）                                                            
+                    
+  ┌─────────────────────┬─────────────────────────────────────────────────┐
+  │       舊話術        │                    修訂話術                     │     
+  ├─────────────────────┼─────────────────────────────────────────────────┤
+  │ 「GPU 和 NPU 並行」 │ 「三個矽晶片各司其職：NPU 聽、CPU 說、iGPU 畫」 │     
+  ├─────────────────────┼─────────────────────────────────────────────────┤
+  │ 「需要獨顯」        │ 「不需要獨顯——這就是 Ryzen AI 的意義」          │     
+  ├─────────────────────┼─────────────────────────────────────────────────┤
+  │ 「雲端替代方案」    │ 「這台筆電，就是一座完整的 AI 工廠」            │     
+  └─────────────────────┴─────────────────────────────────────────────────┘     
+   
+  ---                                                                           
+  選配：Angel 語音主持層
+                                                                                
+  若要加上「Hello Angel」語音驅動整套 demo，架構已經就緒，到 Windows 機器 clone
+  下來後，我可以直接幫你寫 orchestrator.py。 
 
-  a. 即時 benchmark 比較面板
-  - 現有 /v1/stats 只回傳最近一次請求的 TPS
-  - 建議新增：同時跑兩個模型（GPU vs NPU）並排顯示 TPS，需要改 /stats 支援 per-model 統計
-
-  b. 展示用 Demo Script
-  - 目前沒有一鍵 demo 腳本，建議寫一個 Python script，依序：
-    a. pull 幾個 showcase 模型
-    b. 跑固定 prompt，印出 TPS
-    c. 顯示 GPU vs NPU vs Hybrid 比較表
-
-  c. Web App 的即時 TPS 顯示
-  - Electron app 現有 UI (ModelManager.tsx, ChatWindow.tsx) 但沒有即時 tokens/sec 顯示
-  - 展示時加上這個數字，視覺效果很好
-
-  ---
-  4. 最建議的 COMPUTEX 展示 Flow
-
-  1. 開場：lemonade list → 展示支援的 AMD 模型數量（~60+ 個）
-  2. 拉模型：lemonade pull DeepSeek-R1-Distill-Qwen-7B-Hybrid
-  3. 對話：用 Web App 做即時 streaming chat，螢幕上看到 token 生成速度
-  4. 切換：同樣問題問 CPU 版，對比速度差異
-  5. 多模態：上傳圖片 → Gemma NPU 視覺理解 → 語音朗讀答案
-
-  ---
-  你比較想先做哪個方向？我可以幫你：
-  - 寫 benchmark 比較腳本
-  - 改 /v1/stats 支援 per-model 統計
-  - 在 Web App 加 TPS 顯示
