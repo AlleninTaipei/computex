@@ -1,0 +1,17 @@
+lemonade pull Whisper-Large-v3-Turbo
+lemonade pull Qwen3-8B-Hybrid
+lemonade pull kokoro-v1
+lemonade pull SD-Turbo
+lemonade pull Qwen3-0.6B-GGUF
+lemonade pull Qwen3-1.7B-GGUF
+lemonade pull LFM2-1.2B-GGUF
+lemonade pull Llama-3.2-1B-Instruct-GGUF
+lemonade pull Phi-4-mini-instruct-GGUF
+lemonade pull Gemma-3-4b-it-GGUF
+lemonade pull Qwen3-4B-Instruct-2507-GGUF
+lemonade pull granite-4.0-h-tiny-GGUF
+lemonade pull Jan-nano-128k-GGUF
+lemonade pull SmolLM3-3B-GGUF
+lemonade pull Ministral-3-3B-Instruct-2512-GGUF
+lemonade pull Llama-3.2-3B-Instruct-GGUF
+lemonade pull LFM2-1.2B-GGUF

@@ -37,7 +37,7 @@ python examples/realtime_transcription.py --model Whisper-Large-v3-Turbo
 **硬體：** XDNA2 NPU + CPU Hybrid｜**模型：** Qwen3-8B-Hybrid
 
 ```bash
-lemonade-server run Qwen3-8B-Hybrid
+lemonade run Qwen3-8B-Hybrid
 ```
 
 > 「模型的權重切割——部分層在 NPU 跑，剩餘層在 CPU 跑，同時進行，這是 Ryzen AI 的 Hybrid 推論架構。」
@@ -73,7 +73,7 @@ python examples/api_image_generation.py --backend rocm
 **硬體：** Radeon 890M Vulkan｜**模型：** 小型 GGUF
 
 ```bash
-lemonade-server serve --max-loaded-models 9
+lemonade serve --max-loaded-models 9
 # 開啟 examples/llm-debate.html
 ```
 
@@ -91,28 +91,45 @@ lemonade-server serve --max-loaded-models 9
 
 ---
 
-## 展前準備指令（Windows PowerShell）
+## 展前準備指令
 
-```powershell
-# 安裝 Lemonade Server
-# https://lemonade-server.ai/install_options.html#windows
+* 安裝 Lemonade Server
+  * https://lemonade.ai/install_options.html#windows
 
-# 啟動 server
-lemonade-server serve --max-loaded-models 9
 
-# 下載所有 demo 模型
-lemonade-server pull Whisper-Large-v3-Turbo
-lemonade-server pull Qwen3-8B-Hybrid
-lemonade-server pull kokoro-v1
-lemonade-server pull SD-Turbo
-lemonade-server pull Qwen3-0.6B-GGUF
-lemonade-server pull Qwen3-1.7B-GGUF
-lemonade-server pull LFM2-1.2B-GGUF
-lemonade-server pull Llama-3.2-1B-Instruct-GGUF
-lemonade-server pull Phi-4-mini-instruct-GGUF
+* 啟動 server
+```bash
+lemonade config set max-loaded-models=9
+```
 
-# 安裝 Python 依賴
-pip install openai pyaudio websockets
+* 下載所有 demo 模型 (/demo/pullmodels.bat)
+```bash
+lemonade pull Whisper-Large-v3-Turbo
+lemonade pull Qwen3-8B-Hybrid
+lemonade pull kokoro-v1
+lemonade pull SD-Turbo
+lemonade pull Qwen3-0.6B-GGUF
+lemonade pull Qwen3-1.7B-GGUF
+lemonade pull LFM2-1.2B-GGUF
+lemonade pull Llama-3.2-1B-Instruct-GGUF
+lemonade pull Phi-4-mini-instruct-GGUF
+lemonade pull Gemma-3-4b-it-GGUF
+lemonade pull Qwen3-4B-Instruct-2507-GGUF
+lemonade pull granite-4.0-h-tiny-GGUF
+lemonade pull Jan-nano-128k-GGUF
+lemonade pull SmolLM3-3B-GGUF
+lemonade pull Ministral-3-3B-Instruct-2512-GGUF
+lemonade pull Llama-3.2-3B-Instruct-GGUF
+lemonade pull LFM2-1.2B-GGUF
+```
+
+* 安裝 Python 依賴
+```bash
+python -m pip install pyaudio
+python -m pip install websockets
+python -m pip install numpy
+python -m pip install openai[voice_helpers]
+python -m pip install sounddevice
 ```
 
 ---
@@ -123,10 +140,32 @@ pip install openai pyaudio websockets
 |---|---|
 | 「GPU 和 NPU 並行」 | 「三個矽晶片各司其職：NPU 聽、CPU 說、iGPU 畫」 |
 | 「需要獨顯」 | 「不需要獨顯——這就是 Ryzen AI 的意義」 |
-| 「雲端替代方案」 | 「這台筆電，就是一座完整的 AI 工廠」 |
+| 「雲端替代方案」 | 「這套系統，就是一座完整的 AI 工廠」 |
 
 ---
 
-## 選配：Angel 語音主持層
+ ## demo/setup.py — 展前驗證
 
-若要加上「Hello Angel」語音驅動整套 demo，架構已經就緒，到 Windows 機器 clone 下來後，我可以直接幫你寫 `orchestrator.py`。
+  python demo/setup.py
+
+  輸出三個區塊的 checklist：
+  - Server — 連線健康檢查
+  - Models — 逐一確認 9 個模型已 pull（依幕分組標示）
+  - Backends — NPU / Vulkan / ROCm 狀態，自動顯示 fallback 提示
+
+  ## demo/orchestrator.py — 五幕主持腳本
+
+  python demo/orchestrator.py           # 從第1幕開始
+  python demo/orchestrator.py --start-at 3   # 從第3幕繼續
+
+  每一幕的流程：
+  1. 顯示幕頭（幕數、標題、硬體標示）
+  2. 黃色框顯示話術提示（直接念）
+  3. 按 Enter 啟動腳本
+  4. 幕結束後按 Enter 繼續下一幕
+
+  特別處理：
+  - 第1幕（Whisper）— interactive，按 Ctrl+C 結束錄音，orchestrator 繼續
+  - 第2幕（Benchmark）— 自動跑完，輸出 NPU vs Hybrid 比較表
+  - 第4幕（影像）— 啟動時自動偵測 ROCm；不可用就 fallback CPU，話術也一起換
+  - 第5幕（辯論）— 顯示 5 個模型清單 + 總記憶體、自動開啟瀏覽器

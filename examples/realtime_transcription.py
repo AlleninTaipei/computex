@@ -250,7 +250,10 @@ def transcribe_microphone(model: str, server_url: str):
                 print("Full transcript:")
                 print(" ".join(transcripts))
 
-    asyncio.run(run())
+    try:
+        asyncio.run(run())
+    except KeyboardInterrupt:
+        pass
 
 
 def main():
