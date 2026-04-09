@@ -1,5 +1,9 @@
 ## 🍋 Lemonade: Refreshingly fast local LLMs, Image and Speech Generation
 
+> **Fork Notice**
+> This repository is forked from [lemonade-sdk/lemonade](https://github.com/lemonade-sdk/lemonade) (AMD) for personal research and learning purposes.
+> All original copyrights belong to the respective authors. See [LICENSE](./LICENSE) and [NOTICE.md](./NOTICE.md).
+
 <p align="center">
   <a href="https://discord.gg/5xXzkMu8Zk">
     <img src="https://img.shields.io/badge/Discord-7289DA?logo=discord&logoColor=white" alt="Discord" /></a>

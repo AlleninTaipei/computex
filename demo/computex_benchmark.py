@@ -5,16 +5,19 @@ Lemonade COMPUTEX Demo: AMD GPU+NPU Speed Benchmark
 Automatically detects available hardware and runs the best comparison:
 
   • AMD XDNA 2 NPU (Ryzen AI 300+):
-        CPU model  →  NPU model  →  GPU+NPU Hybrid model
+        NPU only  →  GPU+NPU Hybrid
 
   • AMD GPU / iGPU only (Radeon, Vulkan):
         CPU (x86)  →  GPU (Vulkan / Radeon)
 
+All NPU benchmark passes use the DeepSeek-R1-Distill-Qwen-1.5B model family
+so that throughput numbers are directly comparable across both inference modes.
+
 Usage:
     python demo/computex_benchmark.py
-    python demo/computex_benchmark.py --model Qwen3-4B-GGUF      # GPU mode model
-    python demo/computex_benchmark.py --skip-install              # skip backend install
-    python demo/computex_benchmark.py --skip-pull                 # skip model download
+    python demo/computex_benchmark.py --gpu-model Qwen3-1.7B-GGUF  # GPU-only mode model
+    python demo/computex_benchmark.py --skip-install                # skip backend install
+    python demo/computex_benchmark.py --skip-pull                   # skip model download
     python demo/computex_benchmark.py --host localhost --port 13305
 
 Requirements:
@@ -52,31 +55,19 @@ TIMEOUT_INFER = 180     # inference call
 TIMEOUT_DEFAULT = 30
 
 # ---------------------------------------------------------------------------
-# NPU benchmark: same model family in CPU / NPU / Hybrid variants
+# NPU benchmark: NPU-only vs GPU+NPU Hybrid, same model family
+#
+# Both variants use the ryzenai-llm recipe so throughput numbers are directly
+# comparable. The Hybrid variant co-runs the model on the XDNA 2 NPU and the
+# integrated GPU, demonstrating the advantage of AMD's hybrid inference path.
 # ---------------------------------------------------------------------------
 NPU_FAMILIES = {
-    "DeepSeek-R1-Distill-Qwen-7B": {
-        "CPU":    "DeepSeek-R1-Distill-Qwen-7B-CPU",
-        "NPU":    "DeepSeek-R1-Distill-Qwen-7B-NPU",
-        "Hybrid": "DeepSeek-R1-Distill-Qwen-7B-Hybrid",
-    },
-    "DeepSeek-R1-Distill-Llama-8B": {
-        "CPU":    "DeepSeek-R1-Distill-Llama-8B-CPU",
-        "NPU":    "DeepSeek-R1-Distill-Llama-8B-NPU",
-        "Hybrid": "DeepSeek-R1-Distill-Llama-8B-Hybrid",
-    },
-    "Phi-4-mini-instruct": {
-        "CPU":    "Phi-4-mini-instruct-CPU",
-        "NPU":    "Phi-4-mini-instruct-NPU",
-        "Hybrid": "Phi-4-mini-instruct-Hybrid",
-    },
-    "Qwen3-8B": {
-        "CPU":    "Qwen3-8B-Hybrid",   # use Hybrid as CPU stand-in if no pure-CPU variant
-        "NPU":    "Qwen3-8B-Hybrid",
-        "Hybrid": "Qwen3-8B-Hybrid",
+    "DeepSeek-R1-Distill-Qwen-1.5B": {
+        "NPU":    "DeepSeek-R1-Distill-Qwen-1.5B-NPU",
+        "Hybrid": "DeepSeek-R1-Distill-Qwen-1.5B-Hybrid",
     },
 }
-DEFAULT_NPU_FAMILY = "DeepSeek-R1-Distill-Qwen-7B"
+DEFAULT_NPU_FAMILY = "DeepSeek-R1-Distill-Qwen-1.5B"
 
 # ---------------------------------------------------------------------------
 # GPU-only benchmark: same GGUF model loaded with cpu vs vulkan backend
@@ -173,14 +164,23 @@ def get_system_info(base_url):
 
 def detect_scenario(base_url):
     """
-    Returns one of:
-      "npu"   — XDNA 2 NPU is supported/installed (Ryzen AI 300+)
-      "gpu"   — Vulkan GPU is available but no NPU
-      "cpu"   — CPU only
-    Also returns the full recipes dict.
+    Returns:
+      scenario  — one of "npu", "gpu", "cpu"
+      has_gpu   — True when a Vulkan-capable GPU is present (meaningful in the
+                  "npu" scenario to decide whether to run GPU+Hybrid passes)
+      recipes   — full recipes dict from /v1/system-info
     """
     info = get_system_info(base_url)
     recipes = info.get("recipes", {})
+
+    # Check Vulkan GPU (needed for both GPU-only and NPU+GPU Hybrid passes)
+    vulkan_state = (
+        recipes.get("llamacpp", {})
+               .get("backends", {})
+               .get("vulkan", {})
+               .get("state", "unsupported")
+    )
+    has_gpu = vulkan_state in ("installed", "installable", "supported")
 
     # Check NPU (ryzenai-llm:npu)
     npu_state = (
@@ -190,19 +190,12 @@ def detect_scenario(base_url):
                .get("state", "unsupported")
     )
     if npu_state in ("installed", "installable", "supported"):
-        return "npu", recipes
+        return "npu", has_gpu, recipes
 
-    # Check Vulkan GPU
-    vulkan_state = (
-        recipes.get("llamacpp", {})
-               .get("backends", {})
-               .get("vulkan", {})
-               .get("state", "unsupported")
-    )
-    if vulkan_state in ("installed", "installable", "supported"):
-        return "gpu", recipes
+    if has_gpu:
+        return "gpu", False, recipes
 
-    return "cpu", recipes
+    return "cpu", False, recipes
 
 
 def install_backend(base_url, recipe, backend):
@@ -345,7 +338,7 @@ def print_results_table(results, title):
             baseline = tps
 
         speedup = ""
-        if baseline and tps > 0 and r["label"] != "CPU":
+        if baseline and tps > 0 and r["label"] != "NPU":
             speedup = _c(f"  ×{tps/baseline:.1f}", GREEN, BOLD)
 
         bar = _bar(tps, max_tps, width=COL["bar"], color=color)
@@ -366,17 +359,17 @@ def print_results_table(results, title):
         f"{_c(best['label'], best_color, BOLD)}  "
         f"({best['tps']:.1f} tokens/sec)"
     )
-    if baseline and best["tps"] > baseline and best["label"] != "CPU":
+    if baseline and best["tps"] > baseline and best["label"] != "NPU":
         speedup_x = best["tps"] / baseline
         print(
-            f"  {_c('Speedup vs CPU:', CYAN)}  "
+            f"  {_c('Speedup vs NPU:', CYAN)}  "
             f"{_c(f'{speedup_x:.1f}x', CYAN, BOLD)} faster"
         )
     print()
 
 
 # ---------------------------------------------------------------------------
-# NPU scenario: CPU model → NPU model → Hybrid model
+# NPU scenario: NPU model → GPU+NPU Hybrid model
 # ---------------------------------------------------------------------------
 
 def run_npu_benchmark(base_url, client, family_name, family, prompt, skip_pull):
@@ -395,9 +388,10 @@ def run_npu_benchmark(base_url, client, family_name, family, prompt, skip_pull):
         else:
             _warn(f"Skipping {target}")
 
-    _step("🏁", "Running inference", "CPU → NPU → Hybrid")
+    _step("🏁", "Running inference", "NPU → GPU+NPU Hybrid")
+
     results = []
-    for target in ["CPU", "NPU", "Hybrid"]:
+    for target in ["NPU", "Hybrid"]:
         model_id = available.get(target)
         if not model_id:
             _warn(f"Skipping {target}")
@@ -476,8 +470,8 @@ def main():
         "--npu-model", default=DEFAULT_NPU_FAMILY,
         choices=list(NPU_FAMILIES.keys()),
         metavar="FAMILY",
-        help=f"NPU model family (default: {DEFAULT_NPU_FAMILY}). "
-             f"Choices: {', '.join(NPU_FAMILIES)}"
+        help=f"NPU model family used for the 3-way NPU/GPU/Hybrid comparison "
+             f"(default: {DEFAULT_NPU_FAMILY}). Choices: {', '.join(NPU_FAMILIES)}"
     )
     parser.add_argument(
         "--gpu-model", default=DEFAULT_GPU_MODEL,
@@ -497,14 +491,7 @@ def main():
 
     # ── Banner ────────────────────────────────────────────────────────────
     print()
-    print(_c("  ██╗     ███████╗███╗   ███╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ ███████╗", CYAN))
-    print(_c("  ██║     ██╔════╝████╗ ████║██╔═══██╗████╗  ██║██╔══██╗██╔══██╗██╔════╝", CYAN))
-    print(_c("  ██║     █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║███████║██║  ██║█████╗  ", CYAN))
-    print(_c("  ██║     ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║██╔══██║██║  ██║██╔══╝  ", CYAN))
-    print(_c("  ███████╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██║  ██║██████╔╝███████╗", CYAN))
-    print(_c("  ╚══════╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═════╝ ╚══════╝", CYAN))
-    print()
-    print(_c("  AMD Hybrid Inference Benchmark  —  COMPUTEX 2025", WHITE, BOLD))
+    print(_c("  AMD Hybrid Inference Benchmark  —  COMPUTEX 2026", WHITE, BOLD))
     print(_c(f"  Server : {base_url}", DIM))
 
     # ── Check server ──────────────────────────────────────────────────────
@@ -519,11 +506,11 @@ def main():
 
     # ── Detect hardware ───────────────────────────────────────────────────
     _step("🔍", "Detecting hardware")
-    scenario, recipes = detect_scenario(base_url)
+    scenario, has_gpu, recipes = detect_scenario(base_url)
 
     if scenario == "npu":
         print(f"     {_c('AMD XDNA 2 NPU detected!', GREEN, BOLD)}")
-        print(f"     Running: CPU model → NPU model → GPU+NPU Hybrid")
+        print(f"     Running: NPU model → GPU+NPU Hybrid  (if a supported GPU is installed)")
     elif scenario == "gpu":
         vulkan_devices = (
             recipes.get("llamacpp", {})
