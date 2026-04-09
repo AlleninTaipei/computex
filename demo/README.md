@@ -127,3 +127,127 @@ python demo/computex_benchmark.py --host localhost --port 13305
 ```
 
 > Numbers above are illustrative. Actual results depend on installed GPU and system memory configuration.
+
+## Learning
+
+### NPU only — NPU 專用路徑
+
+* Example : Phi-4-mini-instruct-NPU
+* 完全跑在 Ryzen AI 的 NPU（XDNA）, 使用 AMD 自家的 runtime（ryzenai-llm）, 不走 GPU、不走 CPU
+* 特點： 功耗最低（筆電超重要）, 靜音 / 低溫, 延遲穩定（但吞吐通常不高）
+* 限制： 模型要轉成 NPU 支援格式（通常是 INT8 / 特殊編譯）, 不支援太大的模型（記憶體 + NPU算力限制）
+
+### GPU only — GPU 推論路徑
+
+* Examplel : Phi-4-mini-instruct-GGUF
+* 模型轉成 GGUF 用 llama.cpp 跑, GPU 用的是 Vulkan backend
+* 比 CPU 快很多, 支援模型種類最廣, 最成熟、社群最大
+* 這裡是「跨平台 GPU」方案（Vulkan），不是 AMD 專用 stack
+
+### GPU + NPU — Hybrid 混合推論
+
+* Example : Phi-4-mini-instruct-Hybrid
+* 一部分 layer 在 NPU, 一部分在 GPU（或 CPU）, runtime 會幫你切 workload
+* 平衡效能 vs 功耗, 比純 NPU 快, 比純 GPU 省電
+
+### 為什麼「沒有 ROCm」？（重點）
+
+* 這是關鍵設計選擇
+  * 1️⃣ ROCm ≠ 消費級 Windows 主流方案
+    * ROCm 是 AMD 的 CUDA 對應平台，主要在 Linux
+    * 偏向 Data center（MI300）, AI training / HPC
+    * Windows 支援 有限 / 不穩定
+
+  * 2️⃣ llama.cpp 選 Vulkan，是為了「通用性」, Vulkan backend 的優勢：
+    * 支援 AMD / NVIDIA / Intel
+    * Windows / Linux 都能跑
+    * 不需要 ROCm / CUDA
+    * 所以這條路刻意「避開 ROCm」
+
+  * 3️⃣ Ryzen AI 軟體棧本來就不走 ROCm, AMD 在 AI PC 的策略是：
+    * NPU → ryzenai-llm
+    * GPU → Vulkan / DirectML（有時）
+    * 不強推 ROCm
+
+  * 4️⃣ ROCm 不適合這種「edge / client AI」, ROCm 的問題在這裡：
+    * 安裝重
+    * 相容性限制（特定 GPU）
+    * driver + kernel 綁死
+    * 不適合 OEM / end-user 發佈
+
+* 「讓使用者開箱即用 AI PC」, 這三種模式其實代表三條產品策略：
+  * NPU → 省電、AI PC differentiation
+  * GPU (Vulkan) → 最大相容性
+  * Hybrid → 最佳體驗
+  * ❗ ROCm 被刻意排除，因為它不是「consumer AI PC」的最佳路徑
+
+* 這其實透露 AMD 的方向：
+  * ROCm → datacenter（對標 CUDA）
+  * Ryzen AI → client AI（完全另一套 stack）
+
+如果你想，我可以幫你畫一張：
+
+### 「AMD AI Software Stack（ROCm vs Ryzen AI vs Vulkan）」的完整架構圖
+
+```plaintext
+                    ┌──────────────────────────┐
+                    │        應用層 (Apps)      │
+                    │  Chatbot / Copilot / RAG │
+                    └────────────┬─────────────┘
+                                 │
+        ┌────────────────────────┼────────────────────────┐
+        │                        │                        │
+        ▼                        ▼                        ▼
+
+ ┌───────────────┐     ┌────────────────┐     ┌──────────────────┐
+ │  Ryzen AI SDK │     │   llama.cpp    │     │   PyTorch / ONNX │
+ │ (NPU Runtime) │     │ (GGUF runtime) │     │  (Training/Infer)│
+ └──────┬────────┘     └──────┬─────────┘     └─────────┬────────┘
+        │                     │                         │
+        ▼                     ▼                         ▼
+
+ ┌───────────────┐     ┌────────────────┐     ┌──────────────────┐
+ │ ryzenai-llm   │     │ Vulkan backend │     │      ROCm        │
+ │ (NPU driver)  │     │ (Cross GPU)    │     │ (HIP / OpenCL)   │
+ └──────┬────────┘     └──────┬─────────┘     └─────────┬────────┘
+        │                     │                         │
+        ▼                     ▼                         ▼
+
+ ┌───────────────┐     ┌────────────────┐     ┌──────────────────┐
+ │   XDNA NPU    │     │   RDNA GPU     │     │   CDNA / RDNA    │
+ │ (Ryzen AI)    │     │ (Consumer GPU) │     │ (MI300 / HPC)    │
+ └───────────────┘     └────────────────┘     └──────────────────┘
+```
+
+### 為什麼它們「沒有整合」？ 這是 AMD 現在最大結構問題 ?
+
+* 三套完全不互通的 execution model
+
+|層面|Ryzen AI|Vulkan|ROCm|
+|:-|:-|:-|:-|
+|API|專有|通用|HIP|
+|OS|Windows-first|全平台|Linux|
+|HW|NPU|GPU|Datacenter GPU|
+|模型格式|編譯後|GGUF|PyTorch|
+
+* 結果就是：模型要轉 3 次, runtime 不共用 ,developer 體驗割裂
+
+* 從產品策略看, 現在看到的現象，其實代表 AMD 在做切割, 故意讓 ROCm 留在 datacenter，不進 client AI stack ?
+  * Datacenter（對打 NVIDIA CUDA）
+    * ROCm + MI300
+    * target：OpenAI / hyperscaler
+  * AI PC（對打 Intel / Apple）
+    * Ryzen AI + NPU
+    * target：Copilot+ PC / OEM
+  * Developer / 開源社群
+    * Vulkan / llama.cpp
+    * target：local AI / hobby / prototyping
+  
+### 機會？ 還是根本是晶片產品線使然 ？
+
+| 廠商     | 狀態                             |
+| ------ | ------------------------------ |
+| NVIDIA | CUDA（統一）                       |
+| AMD    | 三裂（ROCm / Ryzen AI / Vulkan） |
+| Intel  | oneAPI（但很弱）                     |
+| Apple  | CoreML（封閉）                     |

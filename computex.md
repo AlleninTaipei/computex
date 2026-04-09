@@ -68,7 +68,7 @@ python examples/api_image_generation.py --backend rocm
 
 ---
 
-### 第五幕：9 個 AI 同時辯論
+### 第五幕：5 個 AI 同時辯論
 
 **硬體：** Radeon 890M Vulkan｜**模型：** 小型 GGUF
 
@@ -94,13 +94,13 @@ lemonade-server serve --max-loaded-models 9
 ## 展前準備指令（Windows PowerShell）
 
 ```powershell
-# 安裝 Lemonade Server（先從官網下載 MSI）
+# 安裝 Lemonade Server
 # https://lemonade-server.ai/install_options.html#windows
 
 # 啟動 server
 lemonade-server serve --max-loaded-models 9
 
-# 下載所有 demo 模型（一次跑完）
+# 下載所有 demo 模型
 lemonade-server pull Whisper-Large-v3-Turbo
 lemonade-server pull Qwen3-8B-Hybrid
 lemonade-server pull kokoro-v1
@@ -117,7 +117,7 @@ pip install openai pyaudio websockets
 
 ---
 
-## 核心話術（修訂版）
+## 核心話術
 
 | 舊話術 | 修訂話術 |
 |---|---|
