@@ -286,9 +286,9 @@ def run_benchmark(client, base_url, model_id, prompt, label, color):
         tps = output_tokens / wall_secs
 
     if response.choices:
-        text = (response.choices[0].message.content or "")
-        preview = text[:100].replace("\n", " ") + ("…" if len(text) > 100 else "")
-        print(f"       {_c(preview, DIM)}")
+        text = (response.choices[0].message.content or "").strip()
+        for line in text.splitlines():
+            print(f"       {_c(line, DIM)}")
 
     _ok(
         f"Wall: {wall_secs:.1f}s  |  "
@@ -389,6 +389,7 @@ def run_npu_benchmark(base_url, client, family_name, family, prompt, skip_pull):
             _warn(f"Skipping {target}")
 
     _step("🏁", "Running inference", "NPU → GPU+NPU Hybrid")
+    print(f"\n     {_c('Prompt:', WHITE, BOLD)}  {_c(prompt, DIM)}")
 
     results = []
     for target in ["NPU", "Hybrid"]:
@@ -428,6 +429,7 @@ def run_gpu_benchmark(base_url, client, model_id, prompt, skip_install, skip_pul
         _ok(f"{model_id} ready")
 
     _step("🏁", "Running inference", "CPU x86  →  GPU Vulkan (Radeon)")
+    print(f"\n     {_c('Prompt:', WHITE, BOLD)}  {_c(prompt, DIM)}")
     results = []
 
     for target in GPU_TARGETS:

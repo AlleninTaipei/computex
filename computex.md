@@ -34,10 +34,10 @@ python examples/realtime_transcription.py --model Whisper-Large-v3-Turbo
 
 ### 第二幕：大腦思考
 
-**硬體：** XDNA2 NPU + CPU Hybrid｜**模型：** Qwen3-8B-Hybrid
+**硬體：** XDNA2 NPU + CPU Hybrid｜**模型：** DeepSeek-R1-Distill-Qwen-1.5B-Hybrid
 
 ```bash
-lemonade run Qwen3-8B-Hybrid
+lemonade run DeepSeek-R1-Distill-Qwen-1.5B-Hybrid
 ```
 
 > 「模型的權重切割——部分層在 NPU 跑，剩餘層在 CPU 跑，同時進行，這是 Ryzen AI 的 Hybrid 推論架構。」
@@ -103,25 +103,6 @@ lemonade config set max-loaded-models=9
 ```
 
 * 下載所有 demo 模型 (/demo/pullmodels.bat)
-```bash
-lemonade pull Whisper-Large-v3-Turbo
-lemonade pull Qwen3-8B-Hybrid
-lemonade pull kokoro-v1
-lemonade pull SD-Turbo
-lemonade pull Qwen3-0.6B-GGUF
-lemonade pull Qwen3-1.7B-GGUF
-lemonade pull LFM2-1.2B-GGUF
-lemonade pull Llama-3.2-1B-Instruct-GGUF
-lemonade pull Phi-4-mini-instruct-GGUF
-lemonade pull Gemma-3-4b-it-GGUF
-lemonade pull Qwen3-4B-Instruct-2507-GGUF
-lemonade pull granite-4.0-h-tiny-GGUF
-lemonade pull Jan-nano-128k-GGUF
-lemonade pull SmolLM3-3B-GGUF
-lemonade pull Ministral-3-3B-Instruct-2512-GGUF
-lemonade pull Llama-3.2-3B-Instruct-GGUF
-lemonade pull LFM2-1.2B-GGUF
-```
 
 * 安裝 Python 依賴
 ```bash
