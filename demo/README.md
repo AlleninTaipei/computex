@@ -116,7 +116,7 @@ python demo/computex_benchmark.py --host localhost --port 13305
 ══════════════════════════════════════════════════════════════════════
   AMD XDNA 2 NPU — DeepSeek-R1-Distill-Qwen-1.5B
 ══════════════════════════════════════════════════════════════════════
-  Mode      Model                                      TPS   TTFT (ms)  Throughput
+  Mode      Model          TPS   TTFT (ms)  Throughput
   ────────────────────────────────────────────────────────────────────────────────────────
   ⚡ NPU     DeepSeek-R1-Distill-Qwen-1.5B-NPU         27.7         349  █████████████████████████░░░░░
   🚀 Hybrid  DeepSeek-R1-Distill-Qwen-1.5B-Hybrid      33.4         216  ██████████████████████████████  ×1.2
@@ -251,3 +251,32 @@ python demo/computex_benchmark.py --host localhost --port 13305
 | AMD    | 三裂（ROCm / Ryzen AI / Vulkan） |
 | Intel  | oneAPI（但很弱）                     |
 | Apple  | CoreML（封閉）                     |
+
+### @src/cpp/resources/server_models.json
+
+>「屬性（property）」或「鍵（key）」
+
+#### checkpoint
+
+指向模型權重檔案的下載來源，格式是 HuggingFace repo/模型名稱[:檔案名]。Lemonade 執行 lemonade pull <模型名> 時，就是去這個路徑抓檔案。
+
+|來源前綴|數量|說明|
+|-|-|-|
+|amd| 81| AMD 官方量化版本，針對 Ryzen AI 優化|
+|unsloth|     36|    第三方 GGUF 量化|
+|stabilityai|  3|     SD 原廠|
+|mikkoph|      1|     kokoro TTS| 
+|  (無) |         12|    Whisper 系列等，由 recipe 自行處理下載| 
+
+#### recipe  
+
+指定用哪個推論引擎來執行這個模型
+
+|recipe|引擎|說明|
+|-|-|-|
+|ryzenai-llm|  AMD RyzenAI ONNX runtime|Hybrid LLM|
+|llamacpp|llama.cpp（Vulkan/CPU ||
+|whispercpp|whisper.cpp| 語音辨識|
+|sd-cpp|       stable-diffusion.cpp| 影像生成|
+|kokoro|       kokoro ONNX |TTS|
+|experience|   複合套裝||
