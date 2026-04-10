@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Computex 2026 — AMD Ryzen AI Demo</title>
+    <style>
+        /* ================================================================
+           CSS Variables & Reset
+           ================================================================ */
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-panel: #14141a;
+            --bg-cue: #1a1a10;
+            --bg-output: #111115;
+            --border-color: #2a2a35;
+            --text-primary: #f0f0f5;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --text-cue: #facc15;
+
+            --act1: #38bdf8;   /* Blue  — NPU/Whisper */
+            --act2: #06b6d4;   /* Cyan  — Hybrid */
+            --act3: #facc15;   /* Yellow — CPU/TTS */
+            --act4: #22c55e;   /* Green — Radeon/Image */
+            --act5: #a855f7;   /* Purple — Debate */
+
+            --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'Consolas', 'Source Code Pro', 'Courier New', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-ui);
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        /* ================================================================
+           Layout — CSS Grid
+           ================================================================ */
+        .app {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            grid-template-columns: 2fr 3fr;
+            grid-template-areas:
+                "header header"
+                "cue    output"
+                "footer footer";
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        /* ================================================================
+           Header
+           ================================================================ */
+        .header {
+            grid-area: header;
+            background: linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-dark) 100%);
+            padding: 0.6rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+        .header-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .header-title span { color: var(--text-muted); font-weight: 400; }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .status-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: #ef4444;
+            transition: background 0.3s;
+        }
+        .status-dot.connected { background: var(--act4); }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+            font-size: 0.8rem;
+        }
+        .lang-btn {
+            padding: 0.25rem 0.6rem;
+            background: transparent;
+            color: var(--text-muted);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover { color: var(--text-secondary); }
+        .lang-btn.active {
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+        }
+
+        /* ================================================================
+           Left Panel — Cue
+           ================================================================ */
+        .cue-panel {
+            grid-area: cue;
+            background: var(--bg-cue);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.8rem;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+        .act-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .act-num {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+            transition: color 0.3s;
+        }
+        .act-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.2rem;
+        }
+        .act-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 1.2rem;
+        }
+        .hw-badge {
+            font-size: 1rem;
+            font-family: var(--font-mono);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+        .cue-box {
+            background: rgba(250, 204, 21, 0.08);
+            border: 1px solid rgba(250, 204, 21, 0.25);
+            border-radius: 10px;
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+        .cue-text {
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: var(--text-cue);
+            font-weight: 500;
+        }
+        .cue-hint {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .cue-spacer { flex: 1; }
+        .action-btn {
+            width: 100%;
+            min-height: 80px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            color: #fff;
+            transition: transform 0.1s, filter 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .action-btn:active { transform: scale(0.97); }
+        .action-btn:hover  { filter: brightness(1.15); }
+        .action-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: none;
+            transform: none;
+        }
+
+        /* ================================================================
+           Right Panel — Output
+           ================================================================ */
+        .output-panel {
+            grid-area: output;
+            background: var(--bg-output);
+            padding: 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .output-title {
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        .output-content {
+            flex: 1;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+
+        /* Transcript (Act 1) */
+        .transcript-area {
+            font-size: 1.6rem;
+            line-height: 1.8;
+            min-height: 200px;
+        }
+        .transcript-interim { color: var(--text-muted); }
+        .transcript-final   { color: var(--text-primary); }
+        .mic-level {
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        .mic-level-bar {
+            height: 100%;
+            background: var(--act1);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        /* Benchmark (Act 2) */
+        .benchmark-prompt {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--text-secondary);
+            background: rgba(255,255,255,0.03);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .benchmark-run { margin-bottom: 1.5rem; }
+        .benchmark-run-label {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .benchmark-response {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            min-height: 40px;
+        }
+        .benchmark-stats {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .benchmark-chart { margin-top: 2rem; display: none; }
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .bar-label { width: 80px; font-weight: 700; font-size: 1.1rem; text-align: right; }
+        .bar-track {
+            flex: 1; height: 36px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%; border-radius: 8px; width: 0%;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex; align-items: center; padding-left: 1rem;
+            font-weight: 700; font-size: 1rem; color: #fff;
+        }
+        .bar-value { width: 100px; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; }
+        .benchmark-winner { font-size: 1.3rem; font-weight: 700; margin-top: 1.5rem; display: none; }
+
+        /* TTS (Act 3) */
+        .tts-text { font-size: 1.6rem; line-height: 1.8; margin-bottom: 2rem; }
+        .audio-progress { height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; margin-top: 1rem; }
+        .audio-progress-bar { height: 100%; background: var(--act3); border-radius: 4px; width: 0%; transition: width 0.3s; }
+
+        /* Image (Act 4) */
+        .image-prompt { font-size: 1.2rem; color: var(--text-secondary); font-style: italic; margin-bottom: 1.5rem; }
+        .image-container {
+            position: relative; max-width: 512px; aspect-ratio: 1;
+            border-radius: 12px; overflow: hidden; background: var(--bg-panel);
+        }
+        .image-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s; }
+        .image-container img.loaded { opacity: 1; }
+        .shimmer {
+            position: absolute; inset: 0;
+            background: linear-gradient(110deg, var(--bg-panel) 30%, rgba(255,255,255,0.06) 50%, var(--bg-panel) 70%);
+            background-size: 200% 100%; animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        .image-backend-badge { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); margin-top: 0.8rem; }
+
+        /* Debate (Act 5) */
+        .debate-models { list-style: none; margin-bottom: 1.5rem; }
+        .debate-models li {
+            font-size: 1.1rem; padding: 0.4rem 0;
+            display: flex; justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .debate-models .model-size { color: var(--text-muted); font-family: var(--font-mono); }
+        .debate-total { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+        .debate-slots { font-size: 1rem; margin-bottom: 1rem; }
+        .debate-restart-cmd {
+            font-family: var(--font-mono); font-size: 0.95rem;
+            background: rgba(255,255,255,0.05); padding: 0.8rem 1rem;
+            border-radius: 8px; border: 1px solid var(--border-color);
+            color: var(--text-secondary); margin-top: 0.5rem;
+        }
+
+        /* ================================================================
+           Footer — Progress
+           ================================================================ */
+        .footer {
+            grid-area: footer; background: var(--bg-panel);
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem 1.5rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+        }
+        .footer-act {
+            display: flex; align-items: center; gap: 0.4rem;
+            padding: 0.35rem 0.8rem; border-radius: 6px;
+            font-size: 0.85rem; cursor: pointer;
+            transition: background 0.2s; color: var(--text-muted);
+        }
+        .footer-act:hover { background: rgba(255,255,255,0.05); }
+        .footer-act.done  { color: var(--act4); }
+        .footer-act.current { color: var(--text-primary); background: rgba(255,255,255,0.08); font-weight: 700; }
+        .footer-sep { width: 24px; height: 1px; background: var(--border-color); }
+
+        /* ================================================================
+           Welcome Overlay
+           ================================================================ */
+        .overlay {
+            position: fixed; inset: 0; background: var(--bg-dark);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 100; transition: opacity 0.5s;
+        }
+        .overlay.hidden { opacity: 0; pointer-events: none; }
+        .welcome-title { font-size: 3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .welcome-sub { font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2.5rem; }
+        .welcome-hw { list-style: none; margin-bottom: 2.5rem; }
+        .welcome-hw li { font-size: 1.2rem; padding: 0.4rem 0; display: flex; gap: 1rem; }
+        .welcome-hw .hw-role { font-weight: 700; width: 140px; text-align: right; }
+        .welcome-hw .hw-desc { color: var(--text-secondary); }
+        .welcome-lang {
+            display: flex; gap: 0.5rem; margin-bottom: 2rem;
+        }
+        .welcome-lang-btn {
+            padding: 0.5rem 1.2rem; border: 1px solid var(--border-color);
+            background: transparent; color: var(--text-muted);
+            border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600;
+            transition: all 0.2s;
+        }
+        .welcome-lang-btn:hover { border-color: var(--text-secondary); color: var(--text-secondary); }
+        .welcome-lang-btn.active { background: rgba(255,255,255,0.1); color: var(--text-primary); border-color: var(--text-primary); }
+        .welcome-start {
+            min-width: 280px; min-height: 72px; font-size: 1.6rem; font-weight: 700;
+            border: none; border-radius: 14px; cursor: pointer; color: #fff;
+            background: linear-gradient(135deg, var(--act1), var(--act5));
+            transition: transform 0.1s, filter 0.1s;
+        }
+        .welcome-start:hover  { filter: brightness(1.15); }
+        .welcome-start:active { transform: scale(0.97); }
+
+        /* ================================================================
+           Error overlay
+           ================================================================ */
+        .error-banner {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: var(--bg-panel); border: 1px solid #ef4444; border-radius: 14px;
+            padding: 2rem 2.5rem; z-index: 200; text-align: center; display: none; max-width: 500px;
+        }
+        .error-banner.show { display: block; }
+        .error-banner h3 { color: #ef4444; margin-bottom: 0.8rem; font-size: 1.3rem; }
+        .error-banner p  { color: var(--text-secondary); margin-bottom: 1rem; }
+        .error-banner button {
+            padding: 0.5rem 1.5rem; border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.08); color: var(--text-primary);
+            border-radius: 8px; cursor: pointer; font-size: 1rem; margin: 0 0.3rem;
+        }
+
+        /* ================================================================
+           Utilities
+           ================================================================ */
+        .spinner {
+            display: inline-block; width: 18px; height: 18px;
+            border: 2px solid var(--text-muted); border-top-color: transparent;
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .pulsing { animation: pulse 1.5s ease-in-out infinite; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<!-- ================================================================
+     Welcome Overlay
+     ================================================================ -->
+<div id="welcome" class="overlay">
+    <div class="welcome-title">Computex 2026</div>
+    <div class="welcome-sub">AMD Ryzen AI &mdash; Demo Orchestrator</div>
+    <ul class="welcome-hw" id="welcome-hw"></ul>
+    <div class="welcome-lang" id="welcome-lang"></div>
+    <div class="welcome-sub" style="font-size:1rem;color:var(--text-muted);margin-bottom:1rem" id="welcome-server"></div>
+    <button class="welcome-start" id="btn-start-demo" disabled></button>
+</div>
+
+<!-- ================================================================
+     Error Banner
+     ================================================================ -->
+<div id="error-banner" class="error-banner">
+    <h3 id="error-title">Error</h3>
+    <p id="error-msg"></p>
+    <button id="error-close-btn" onclick="dismissError()"></button>
+    <button id="error-skip-btn" class="hidden" onclick="skipAct()"></button>
+</div>
+
+<!-- ================================================================
+     Main App
+     ================================================================ -->
+<div class="app">
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            Computex 2026 <span>&mdash; AMD Ryzen AI Demo</span>
+        </div>
+        <div class="header-right">
+            <div class="lang-toggle" id="header-lang">
+                <button class="lang-btn active" data-lang="zh" onclick="setLang('zh')">中文</button>
+                <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+            </div>
+            <div class="header-status">
+                <span id="server-label">localhost:13305</span>
+                <div class="status-dot" id="status-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left: Cue Panel -->
+    <div class="cue-panel" id="cue-panel">
+        <div class="act-badge" id="cue-badge"></div>
+        <div class="act-num" id="cue-num"></div>
+        <div class="act-title" id="cue-title"></div>
+        <div class="act-subtitle" id="cue-subtitle"></div>
+        <div class="hw-badge" id="cue-hw"></div>
+        <div class="cue-box">
+            <div class="cue-text" id="cue-text"></div>
+        </div>
+        <div class="cue-hint" id="cue-hint"></div>
+        <div class="cue-spacer"></div>
+        <button class="action-btn" id="action-btn"></button>
+    </div>
+
+    <!-- Right: Output Panel -->
+    <div class="output-panel" id="output-panel">
+        <div class="output-title" id="output-title"></div>
+        <div class="output-content" id="output-content"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer" id="footer"></div>
+</div>
+
+<script>
+/* ==================================================================
+   i18n — Bilingual strings
+   ================================================================== */
+const I18N = {
+    // Welcome screen
+    welcomeHw: {
+        zh: [
+            { role: 'NPU 聽', desc: 'XDNA2 55 TOPS' },
+            { role: 'CPU 說', desc: 'Ryzen AI 9 HX 375' },
+            { role: 'iGPU 畫', desc: 'Radeon 890M RDNA 3.5' },
+        ],
+        en: [
+            { role: 'NPU Listens', desc: 'XDNA2 55 TOPS' },
+            { role: 'CPU Speaks', desc: 'Ryzen AI 9 HX 375' },
+            { role: 'iGPU Draws', desc: 'Radeon 890M RDNA 3.5' },
+        ],
+    },
+    connectingServer: { zh: '正在連線 server…', en: 'Connecting to server...' },
+    serverOk:         { zh: (h,p) => `✔ Server 連線正常 (${h}:${p})`, en: (h,p) => `✔ Server connected (${h}:${p})` },
+    serverFail:       { zh: url => `✘ 無法連線到 ${url}`, en: url => `✘ Cannot reach ${url}` },
+    startDemo:        { zh: '開始 Demo', en: 'Start Demo' },
+
+    // Acts — per-act bilingual content
+    acts: [
+        { // Act 1
+            title:    { zh: '語音進來', en: 'Speech In' },
+            subtitle: { zh: 'Speech In', en: 'Realtime Transcription' },
+            cue: {
+                zh: '「55 TOPS 的 NPU 在跑 Whisper，\nCPU 和 GPU 完全沒動，留給後面用。」',
+                en: '"The 55 TOPS NPU is running Whisper —\nCPU and GPU stay idle, reserved for later."',
+            },
+            hint: {
+                zh: '對麥克風說話，大螢幕即時顯示逐字稿。',
+                en: 'Speak into the microphone. Live transcription appears on screen.',
+            },
+            btnStart: { zh: '🎤 開始錄音', en: '🎤 Start Recording' },
+            btnStop:  { zh: '⏹ 停止錄音', en: '⏹ Stop Recording' },
+        },
+        { // Act 2
+            title:    { zh: '大腦思考', en: 'Brain Thinks' },
+            subtitle: { zh: 'Hybrid LLM Benchmark', en: 'Hybrid LLM Benchmark' },
+            cue: {
+                zh: '「模型的權重切割——部分層在 NPU 跑，\n剩餘層在 CPU 跑，同時進行，\n這是 Ryzen AI 的 Hybrid 推論架構。」',
+                en: '"Model weights are split — some layers run on NPU,\nthe rest on CPU, simultaneously.\nThis is Ryzen AI\'s Hybrid inference architecture."',
+            },
+            hint: {
+                zh: 'Benchmark 自動執行，完成後顯示 NPU vs Hybrid 速度比較。',
+                en: 'Benchmark runs automatically. NPU vs Hybrid speed comparison shown at the end.',
+            },
+            btnStart: { zh: '🧠 開始 Benchmark', en: '🧠 Start Benchmark' },
+        },
+        { // Act 3
+            title:    { zh: '說話回來', en: 'Speech Out' },
+            subtitle: { zh: 'Text-to-Speech', en: 'Text-to-Speech' },
+            cue: {
+                zh: '「CPU 做語音合成，\n剛才 NPU 和 iGPU 忙的時候，CPU 沒有閒著。」',
+                en: '"The CPU handles text-to-speech.\nWhile NPU and iGPU were busy, the CPU wasn\'t idle."',
+            },
+            hint: {
+                zh: '合成語音將透過預設音訊裝置播放。',
+                en: 'Synthesized speech plays through the default audio device.',
+            },
+            btnStart: { zh: '🔊 開始語音合成', en: '🔊 Start TTS' },
+        },
+        { // Act 4
+            title:    { zh: '畫出來', en: 'Draw It' },
+            subtitle: { zh: 'Image Generation', en: 'Image Generation' },
+            cueRocm: {
+                zh: '「Radeon 890M，RDNA 3.5 架構，\nROCm 加速 Stable Diffusion。\n沒有獨顯，一樣跑影像生成。」',
+                en: '"Radeon 890M, RDNA 3.5 architecture,\nROCm-accelerated Stable Diffusion.\nNo discrete GPU — still generating images."',
+            },
+            cueCpu: {
+                zh: '「SD-Turbo 在純 CPU 也能跑——\n這就是 Lemonade 的跨平台設計。\n不需要 ROCm，不需要獨顯。」',
+                en: '"SD-Turbo runs on CPU alone —\nthat\'s Lemonade\'s cross-platform design.\nNo ROCm needed, no discrete GPU."',
+            },
+            hint: {
+                zh: '生成完成後圖片顯示在右側。',
+                en: 'Generated image appears on the right when done.',
+            },
+            btnStart: { zh: '🎨 開始生成圖片', en: '🎨 Generate Image' },
+        },
+        { // Act 5
+            title:    { zh: '5 個 AI 同時辯論', en: '5 AIs Debate Live' },
+            subtitle: { zh: 'Multi-Model Debate', en: 'Multi-Model Debate' },
+            cue: {
+                zh: '「五個模型同時串流辯論，\n890M 一張 iGPU 全部扛起來。」\n「三個矽晶片各司其職——\nNPU 聽、CPU 說、iGPU 辯論。」\n「這套系統，就是一座完整的 AI 工廠。」',
+                en: '"Five models streaming debate simultaneously,\nall powered by a single 890M iGPU."\n"Three silicon units, each with a role —\nNPU listens, CPU speaks, iGPU debates."\n"This system is a complete AI factory."',
+            },
+            hint: {
+                zh: '瀏覽器開啟 llm-debate.html 後，在 UI 裡選 5 個模型並啟動辯論。',
+                en: 'Opens llm-debate.html in a new tab. Select 5 models in the UI and start the debate.',
+            },
+            btnStart: { zh: '⚔️ 開啟辯論頁面', en: '⚔️ Open Debate Page' },
+        },
+    ],
+
+    // Footer labels
+    footerNames: {
+        zh: ['語音', '思考', '說話', '畫', '辯論'],
+        en: ['Speech', 'Think', 'TTS', 'Image', 'Debate'],
+    },
+
+    // Act badge prefix
+    actBadge: { zh: n => `第 ${n} 幕`, en: n => `Act ${n}` },
+
+    // Shared UI
+    output:       { zh: '輸出', en: 'Output' },
+    nextAct:      { zh: '→ 下一幕', en: '→ Next Act' },
+    finish:       { zh: '→ 完成', en: '→ Finish' },
+    restart:      { zh: '🔄 重新開始', en: '🔄 Restart' },
+    close:        { zh: '關閉', en: 'Close' },
+    skipAct:      { zh: '跳過此幕', en: 'Skip Act' },
+
+    // Finale
+    finaleTitle:  { zh: '五幕全部完成！', en: 'All Five Acts Complete!' },
+    finaleCue: {
+        zh: '「三個矽晶片各司其職：NPU 聽、CPU 說、iGPU 畫」\n「不需要獨顯——這就是 Ryzen AI 的意義」\n「這套系統，就是一座完整的 AI 工廠」',
+        en: '"Three silicon units, each with a role: NPU listens, CPU speaks, iGPU draws"\n"No discrete GPU needed — that\'s the point of Ryzen AI"\n"This system is a complete AI factory"',
+    },
+    demoComplete: { zh: 'Demo 完成', en: 'Demo Complete' },
+
+    // Act 1 status
+    loadingModel:    { zh: '正在載入模型…', en: 'Loading model...' },
+    modelLoadedMic:  { zh: '模型已載入，正在啟動麥克風…', en: 'Model loaded. Starting microphone...' },
+    recording:       { zh: '🔴 正在錄音… 按「停止」或 Enter/Space 結束', en: '🔴 Recording... Press Stop or Enter/Space to end' },
+    speechDetected:  { zh: '🔴 偵測到語音…', en: '🔴 Speech detected...' },
+    recordingDone:   { zh: '✔ 錄音結束', en: '✔ Recording ended' },
+
+    // Act 2 status
+    waiting:         { zh: '等待中…', en: 'Waiting...' },
+
+    // Act 3 status
+    synthesizing:    { zh: '正在合成語音…', en: 'Synthesizing speech...' },
+    playing:         { zh: '🔊 播放中…', en: '🔊 Playing...' },
+    playDone:        { zh: '✔ 播放完成', en: '✔ Playback complete' },
+    playFail:        { zh: '⚠ 播放失敗', en: '⚠ Playback failed' },
+    clickToPlay:     { zh: '▶ 點擊播放', en: '▶ Click to Play' },
+
+    // Act 4 status
+    generating:      { zh: '正在生成圖片… (SD-Turbo)', en: 'Generating image... (SD-Turbo)' },
+    genDone:         { zh: s => `✔ 生成完成 (${s}s)`, en: s => `✔ Generation complete (${s}s)` },
+
+    // Act 5 status
+    checkingSlots:   { zh: '檢查 server slots…', en: 'Checking server slots...' },
+    slotsOk:         { zh: (n) => `Server slots = ${n} (需要 9)`, en: (n) => `Server slots = ${n} (need 9)` },
+    slotsFail:       { zh: (n) => `Server slots = ${n || '?'}，需要 9`, en: (n) => `Server slots = ${n || '?'}, need 9` },
+    restartServer:   { zh: '請重啟 server：', en: 'Please restart the server:' },
+    slotsUnknown:    { zh: '⚠ 無法讀取 server slots', en: '⚠ Cannot read server slots' },
+    debateTotal:     { zh: '總計：', en: 'Total: ' },
+    debate890m:      { zh: '（890M 可承受）', en: '(within 890M capacity)' },
+    debateOpened:    { zh: '✔ 已在新分頁開啟 llm-debate.html', en: '✔ Opened llm-debate.html in a new tab' },
+
+    // Errors
+    actError:        { zh: n => `第 ${n} 幕錯誤`, en: n => `Act ${n} Error` },
+    wsError:         { zh: (h,p) => `無法連線到 ws://${h}:${p}/realtime`, en: (h,p) => `Cannot connect to ws://${h}:${p}/realtime` },
+};
+
+/* ==================================================================
+   Language State & Helper
+   ================================================================== */
+let LANG = 'zh';
+
+function t(key) {
+    const entry = I18N[key];
+    if (!entry) return key;
+    return entry[LANG] ?? entry['zh'] ?? key;
+}
+
+function setLang(lang) {
+    LANG = lang;
+    document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'en';
+
+    // Update toggle buttons (header + welcome)
+    document.querySelectorAll('.lang-btn, .welcome-lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+    });
+
+    // Re-render dynamic content if visible
+    if (STATE.phase === 'welcome') renderWelcome();
+    else if (STATE.phase === 'intro' || STATE.phase === 'done') showAct(STATE.currentAct - 1);
+    else if (STATE.phase === 'finale') showFinale();
+
+    buildFooter();
+    updateFooter();
+
+    // Update error buttons (always present)
+    $('error-close-btn').textContent = t('close');
+    $('error-skip-btn').textContent = t('skipAct');
+}
+
+/* ==================================================================
+   Configuration
+   ================================================================== */
+const params = new URLSearchParams(location.search);
+const CONFIG = {
+    host:    params.get('host') || 'localhost',
+    port:    parseInt(params.get('port') || '13305', 10),
+    startAt: parseInt(params.get('start-at') || '1', 10),
+};
+CONFIG.serverUrl = `http://${CONFIG.host}:${CONFIG.port}`;
+
+/* ==================================================================
+   State
+   ================================================================== */
+const STATE = {
+    currentAct: 0,
+    phase: 'welcome',
+    connected: false,
+    wsPort: null,
+    imageBackend: 'cpu',
+    abortControllers: [],
+    audioCtx: null, micStream: null, processor: null, ws: null,
+    audioEl: null,
+};
+
+/* ==================================================================
+   Act Definitions (structural — text comes from I18N)
+   ================================================================== */
+const ACTS_META = [
+    { num: 1, hw: 'XDNA2 NPU · Whisper-Large-v3-Turbo', color: 'var(--act1)', colorHex: '#38bdf8', icon: '🎤' },
+    { num: 2, hw: 'XDNA2 NPU + CPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
+    { num: 3, hw: 'CPU · kokoro-v1', color: 'var(--act3)', colorHex: '#facc15', icon: '🔊' },
+    { num: 4, hw: 'Radeon 890M · SD-Turbo', color: 'var(--act4)', colorHex: '#22c55e', icon: '🎨' },
+    { num: 5, hw: 'Radeon 890M Vulkan · 5× GGUF', color: 'var(--act5)', colorHex: '#a855f7', icon: '⚔️' },
+];
+
+function getAct(idx) {
+    const m = ACTS_META[idx];
+    const i = I18N.acts[idx];
+    let hw = m.hw;
+    // Act 4 hw varies by backend
+    if (idx === 3) {
+        hw = STATE.imageBackend === 'rocm' ? 'Radeon 890M (ROCm) · SD-Turbo' : 'CPU · SD-Turbo';
+    }
+    let cue;
+    if (idx === 3) {
+        cue = STATE.imageBackend === 'rocm' ? i.cueRocm[LANG] : i.cueCpu[LANG];
+    } else {
+        cue = i.cue[LANG];
+    }
+    return {
+        ...m, hw,
+        title: i.title[LANG],
+        subtitle: i.subtitle[LANG],
+        cue,
+        hint: i.hint[LANG],
+        btnStart: i.btnStart[LANG],
+        btnStop: i.btnStop ? i.btnStop[LANG] : undefined,
+    };
+}
+
+const DEBATE_MODELS = [
+    { id: 'Qwen3-0.6B-GGUF',            size: '0.38 GB' },
+    { id: 'Qwen3-1.7B-GGUF',            size: '1.06 GB' },
+    { id: 'LFM2-1.2B-GGUF',             size: '0.73 GB' },
+    { id: 'Llama-3.2-1B-Instruct-GGUF', size: '0.83 GB' },
+    { id: 'Phi-4-mini-instruct-GGUF',   size: '2.49 GB' },
+];
+
+const BENCHMARK_PROMPT =
+    'You are a helpful AI assistant running locally on AMD hardware. ' +
+    'Briefly explain (in 4-5 sentences) why edge AI inference on AMD ' +
+    'silicon is important for privacy and performance.';
+
+const TTS_TEXT = 'Today is a wonderful day to build something people love!';
+const IMAGE_PROMPT = 'A serene mountain landscape at sunset, digital art';
+
+/* ==================================================================
+   DOM References
+   ================================================================== */
+const $ = id => document.getElementById(id);
+const el = {
+    welcome:     $('welcome'),
+    btnStart:    $('btn-start-demo'),
+    welcomeSrv:  $('welcome-server'),
+    welcomeHw:   $('welcome-hw'),
+    welcomeLang: $('welcome-lang'),
+    statusDot:   $('status-dot'),
+    serverLabel: $('server-label'),
+    cueBadge:    $('cue-badge'),
+    cueNum:      $('cue-num'),
+    cueTitle:    $('cue-title'),
+    cueSubtitle: $('cue-subtitle'),
+    cueHw:       $('cue-hw'),
+    cueText:     $('cue-text'),
+    cueHint:     $('cue-hint'),
+    actionBtn:   $('action-btn'),
+    outputTitle: $('output-title'),
+    outputContent: $('output-content'),
+    footer:      $('footer'),
+    errorBanner: $('error-banner'),
+    errorTitle:  $('error-title'),
+    errorMsg:    $('error-msg'),
+    errorSkip:   $('error-skip-btn'),
+};
+
+/* ==================================================================
+   Server Helpers
+   ================================================================== */
+async function fetchJSON(path, timeout = 10000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+        const r = await fetch(`${CONFIG.serverUrl}${path}`, { signal: ctrl.signal });
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return await r.json();
+    } finally { clearTimeout(timer); }
+}
+
+async function postJSON(path, body, timeout = 600000) {
+    const ctrl = new AbortController();
+    STATE.abortControllers.push(ctrl);
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+        const r = await fetch(`${CONFIG.serverUrl}${path}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            signal: ctrl.signal,
+        });
+        if (!r.ok) {
+            const err = await r.json().catch(() => ({}));
+            throw new Error(err.error || `HTTP ${r.status}`);
+        }
+        return r;
+    } finally {
+        clearTimeout(timer);
+        STATE.abortControllers = STATE.abortControllers.filter(c => c !== ctrl);
+    }
+}
+
+async function streamSSE(path, body, onDelta, timeout = 180000) {
+    const ctrl = new AbortController();
+    STATE.abortControllers.push(ctrl);
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    try {
+        const r = await fetch(`${CONFIG.serverUrl}${path}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            signal: ctrl.signal,
+        });
+        const reader = r.body.getReader();
+        const decoder = new TextDecoder();
+        let full = '';
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value);
+            for (const line of chunk.split('\n')) {
+                if (!line.startsWith('data: ')) continue;
+                const data = line.slice(6);
+                if (data === '[DONE]') continue;
+                try {
+                    const json = JSON.parse(data);
+                    const delta = json.choices?.[0]?.delta?.content || '';
+                    full += delta;
+                    onDelta(full, delta);
+                } catch (_) {}
+            }
+        }
+        return full;
+    } finally {
+        clearTimeout(timer);
+        STATE.abortControllers = STATE.abortControllers.filter(c => c !== ctrl);
+    }
+}
+
+async function checkHealth() {
+    try {
+        const data = await fetchJSON('/v1/health', 5000);
+        STATE.connected = true;
+        STATE.wsPort = data.websocket_port || null;
+        el.statusDot.classList.add('connected');
+        return true;
+    } catch {
+        STATE.connected = false;
+        el.statusDot.classList.remove('connected');
+        return false;
+    }
+}
+
+async function detectImageBackend() {
+    try {
+        const info = await fetchJSON('/v1/system-info');
+        const state = info?.recipes?.['stable-diffusion']?.backends?.rocm?.state;
+        STATE.imageBackend = (state === 'installed' || state === 'supported') ? 'rocm' : 'cpu';
+    } catch {
+        STATE.imageBackend = 'cpu';
+    }
+}
+
+function abortAll() {
+    STATE.abortControllers.forEach(c => c.abort());
+    STATE.abortControllers = [];
+}
+
+/* ==================================================================
+   UI Rendering
+   ================================================================== */
+function renderWelcome() {
+    const hw = I18N.welcomeHw[LANG];
+    const colors = ['var(--act1)', 'var(--act3)', 'var(--act4)'];
+    el.welcomeHw.innerHTML = hw.map((h, i) =>
+        `<li><span class="hw-role" style="color:${colors[i]}">${h.role}</span><span class="hw-desc">${h.desc}</span></li>`
+    ).join('');
+
+    el.welcomeLang.innerHTML =
+        `<button class="welcome-lang-btn ${LANG==='zh'?'active':''}" data-lang="zh" onclick="setLang('zh')">繁體中文</button>` +
+        `<button class="welcome-lang-btn ${LANG==='en'?'active':''}" data-lang="en" onclick="setLang('en')">English</button>`;
+
+    el.btnStart.textContent = t('startDemo');
+}
+
+function buildFooter() {
+    const icons = ['🎤', '🧠', '🔊', '🎨', '⚔️'];
+    const names = I18N.footerNames[LANG];
+    let html = '';
+    for (let i = 0; i < 5; i++) {
+        if (i > 0) html += '<div class="footer-sep"></div>';
+        html += `<div class="footer-act" id="footer-act-${i+1}" onclick="goToAct(${i+1})">${icons[i]} ${names[i]}</div>`;
+    }
+    el.footer.innerHTML = html;
+}
+
+function updateFooter() {
+    for (let i = 1; i <= 5; i++) {
+        const f = document.getElementById(`footer-act-${i}`);
+        if (!f) continue;
+        f.classList.remove('done', 'current');
+        if (i < STATE.currentAct) f.classList.add('done');
+        if (i === STATE.currentAct) f.classList.add('current');
+    }
+}
+
+function showAct(actIdx) {
+    const act = getAct(actIdx);
+    STATE.currentAct = act.num;
+    STATE.phase = 'intro';
+
+    el.cueBadge.textContent = I18N.actBadge[LANG](act.num);
+    el.cueNum.textContent = act.icon;
+    el.cueNum.style.color = act.color;
+    el.cueTitle.textContent = act.title;
+    el.cueTitle.style.color = act.color;
+    el.cueSubtitle.textContent = act.subtitle;
+    el.cueHw.textContent = act.hw;
+    el.cueHw.style.borderColor = act.colorHex + '40';
+    el.cueHw.style.color = act.colorHex;
+    el.cueText.innerHTML = act.cue.replace(/\n/g, '<br>');
+    el.cueHint.textContent = act.hint;
+
+    el.actionBtn.textContent = act.btnStart;
+    el.actionBtn.style.background = act.colorHex;
+    el.actionBtn.disabled = false;
+
+    el.outputTitle.textContent = `${act.subtitle} — ${t('output')}`;
+    el.outputContent.innerHTML = '';
+    el.outputContent.className = 'output-content fade-in';
+
+    updateFooter();
+}
+
+function showFinale() {
+    STATE.phase = 'finale';
+    el.cueBadge.textContent = '';
+    el.cueNum.textContent = '★';
+    el.cueNum.style.color = 'var(--act3)';
+    el.cueTitle.textContent = t('finaleTitle');
+    el.cueTitle.style.color = 'var(--text-primary)';
+    el.cueSubtitle.textContent = '';
+    el.cueHw.textContent = '';
+    el.cueText.innerHTML = t('finaleCue').replace(/\n/g, '<br>');
+    el.cueHint.textContent = '';
+    el.actionBtn.textContent = t('restart');
+    el.actionBtn.style.background = 'linear-gradient(135deg, var(--act1), var(--act5))';
+    el.actionBtn.disabled = false;
+    el.outputTitle.textContent = '';
+    el.outputContent.innerHTML = `<div style="text-align:center;padding-top:4rem;font-size:2rem;color:var(--text-muted)">${t('demoComplete')}</div>`;
+    updateFooter();
+}
+
+/* ==================================================================
+   Error Handling
+   ================================================================== */
+function showError(title, msg, showSkip = false) {
+    el.errorTitle.textContent = title;
+    el.errorMsg.textContent = msg;
+    el.errorSkip.classList.toggle('hidden', !showSkip);
+    el.errorBanner.classList.add('show');
+}
+
+function dismissError() { el.errorBanner.classList.remove('show'); }
+
+function skipAct() {
+    dismissError();
+    cleanupCurrentAct();
+    nextAct();
+}
+
+/* ==================================================================
+   Navigation
+   ================================================================== */
+function advance() {
+    if (STATE.phase === 'welcome') return;
+    if (STATE.phase === 'intro') runCurrentAct();
+    else if (STATE.phase === 'done') nextAct();
+    else if (STATE.phase === 'finale') { STATE.currentAct = 0; showAct(0); }
+}
+
+function nextAct() {
+    const nextIdx = STATE.currentAct;
+    if (nextIdx >= 5) showFinale();
+    else showAct(nextIdx);
+}
+
+function goToAct(num) {
+    if (STATE.phase === 'running') return;
+    cleanupCurrentAct();
+    showAct(num - 1);
+}
+
+function actDone() {
+    STATE.phase = 'done';
+    const act = getAct(STATE.currentAct - 1);
+    el.actionBtn.textContent = STATE.currentAct < 5 ? t('nextAct') : t('finish');
+    el.actionBtn.style.background = act.colorHex;
+    el.actionBtn.disabled = false;
+}
+
+/* ==================================================================
+   Keyboard / Remote Control
+   ================================================================== */
+document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    const advanceKeys = ['Enter', ' ', 'PageDown', 'ArrowRight', 'ArrowDown'];
+    if (advanceKeys.includes(e.key)) {
+        e.preventDefault();
+        if (STATE.phase === 'running' && STATE.currentAct === 1) stopAct1();
+        else advance();
+    }
+    if (e.key === 'Escape') { e.preventDefault(); emergencyStop(); }
+});
+
+el.actionBtn.addEventListener('click', () => {
+    if (STATE.phase === 'running' && STATE.currentAct === 1) stopAct1();
+    else advance();
+});
+
+function emergencyStop() {
+    if (STATE.phase !== 'running') return;
+    abortAll();
+    cleanupCurrentAct();
+    actDone();
+}
+
+function cleanupCurrentAct() {
+    abortAll();
+    if (STATE.ws) { try { STATE.ws.close(); } catch(_) {} STATE.ws = null; }
+    if (STATE.processor) { try { STATE.processor.disconnect(); } catch(_) {} STATE.processor = null; }
+    if (STATE.audioCtx) { try { STATE.audioCtx.close(); } catch(_) {} STATE.audioCtx = null; }
+    if (STATE.micStream) { STATE.micStream.getTracks().forEach(t => t.stop()); STATE.micStream = null; }
+    if (STATE.audioEl) { STATE.audioEl.pause(); STATE.audioEl = null; }
+}
+
+/* ==================================================================
+   Act Runner Dispatch
+   ================================================================== */
+function runCurrentAct() {
+    STATE.phase = 'running';
+    el.actionBtn.disabled = true;
+    [runAct1, runAct2, runAct3, runAct4, runAct5][STATE.currentAct - 1]();
+}
+
+/* ==================================================================
+   Act 1: Whisper Realtime Transcription
+   ================================================================== */
+async function runAct1() {
+    const act = getAct(0);
+    el.actionBtn.textContent = act.btnStop;
+    el.actionBtn.disabled = false;
+
+    el.outputContent.innerHTML =
+        '<div class="transcript-area" id="transcript"></div>' +
+        '<div class="mic-level"><div class="mic-level-bar" id="mic-level"></div></div>' +
+        `<div style="margin-top:0.8rem;color:var(--text-muted);font-size:0.9rem" id="act1-status">${t('loadingModel')}</div>`;
+
+    const statusEl = $('act1-status');
+    const transcriptEl = $('transcript');
+    let finalText = '';
+    let interimText = '';
+
+    try {
+        await postJSON('/v1/load', { model_name: 'Whisper-Large-v3-Turbo' });
+        statusEl.textContent = t('modelLoadedMic');
+
+        if (!STATE.wsPort) {
+            const health = await fetchJSON('/v1/health');
+            STATE.wsPort = health.websocket_port;
+        }
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
+        });
+        STATE.micStream = stream;
+
+        const audioCtx = new AudioContext();
+        STATE.audioCtx = audioCtx;
+        const nativeRate = audioCtx.sampleRate;
+        const source = audioCtx.createMediaStreamSource(stream);
+        const processor = audioCtx.createScriptProcessor(4096, 1, 1);
+        STATE.processor = processor;
+
+        const wsUrl = `ws://${CONFIG.host}:${STATE.wsPort}/realtime?model=Whisper-Large-v3-Turbo`;
+        const ws = new WebSocket(wsUrl);
+        STATE.ws = ws;
+
+        ws.addEventListener('open', () => {
+            ws.send(JSON.stringify({ type: 'session.update', session: { model: 'Whisper-Large-v3-Turbo' } }));
+            statusEl.textContent = t('recording');
+        });
+
+        ws.addEventListener('message', (event) => {
+            try {
+                const msg = JSON.parse(event.data);
+                if (msg.type === 'conversation.item.input_audio_transcription.delta') {
+                    interimText = msg.delta || '';
+                    render();
+                } else if (msg.type === 'conversation.item.input_audio_transcription.completed') {
+                    if (msg.transcript) { finalText += msg.transcript + ' '; interimText = ''; render(); }
+                } else if (msg.type === 'input_audio_buffer.speech_started') {
+                    statusEl.textContent = t('speechDetected');
+                } else if (msg.type === 'input_audio_buffer.speech_stopped') {
+                    statusEl.textContent = t('recording');
+                }
+            } catch (_) {}
+        });
+
+        ws.addEventListener('error', () => {
+            showError(I18N.actError[LANG](1), I18N.wsError[LANG](CONFIG.host, STATE.wsPort), true);
+        });
+
+        processor.onaudioprocess = (e) => {
+            if (!STATE.ws || STATE.ws.readyState !== WebSocket.OPEN) return;
+            const input = e.inputBuffer.getChannelData(0);
+            const ratio = nativeRate / 16000;
+            const outLen = Math.floor(input.length / ratio);
+            const int16 = new Int16Array(outLen);
+            let sumSq = 0;
+            for (let i = 0; i < outLen; i++) {
+                const srcIdx = i * ratio;
+                const floor = Math.floor(srcIdx);
+                const ceil = Math.min(floor + 1, input.length - 1);
+                const frac = srcIdx - floor;
+                const sample = input[floor] * (1 - frac) + input[ceil] * frac;
+                sumSq += sample * sample;
+                const s = Math.max(-1, Math.min(1, sample));
+                int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+            }
+            const bytes = new Uint8Array(int16.buffer);
+            let binary = '';
+            for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+            STATE.ws.send(JSON.stringify({ type: 'input_audio_buffer.append', audio: btoa(binary) }));
+
+            const rms = Math.sqrt(sumSq / outLen);
+            const db = rms > 0 ? 20 * Math.log10(rms) : -60;
+            const norm = Math.max(0, Math.min(1, (Math.max(-60, Math.min(-6, db)) + 60) / 54));
+            $('mic-level').style.width = (norm * 100) + '%';
+        };
+
+        source.connect(processor);
+        const mute = audioCtx.createGain();
+        mute.gain.value = 0;
+        processor.connect(mute);
+        mute.connect(audioCtx.destination);
+
+    } catch (err) {
+        showError(I18N.actError[LANG](1), err.message, true);
+        actDone();
+    }
+
+    function render() {
+        transcriptEl.innerHTML =
+            `<span class="transcript-final">${escHtml(finalText)}</span>` +
+            `<span class="transcript-interim">${escHtml(interimText)}</span>`;
+        transcriptEl.scrollTop = transcriptEl.scrollHeight;
+    }
+}
+
+function stopAct1() {
+    cleanupCurrentAct();
+    const s = $('act1-status');
+    if (s) s.textContent = t('recordingDone');
+    postJSON('/v1/unload', { model: 'Whisper-Large-v3-Turbo' }).catch(() => {});
+    actDone();
+}
+
+/* ==================================================================
+   Act 2: Hybrid Benchmark
+   ================================================================== */
+async function runAct2() {
+    const NPU_MODEL    = 'DeepSeek-R1-Distill-Qwen-1.5B-NPU';
+    const HYBRID_MODEL = 'DeepSeek-R1-Distill-Qwen-1.5B-Hybrid';
+
+    el.outputContent.innerHTML =
+        '<div class="benchmark-prompt"><strong>Prompt:</strong> ' + escHtml(BENCHMARK_PROMPT) + '</div>' +
+        '<div class="benchmark-run" id="run-npu">' +
+            '<div class="benchmark-run-label" style="color:var(--act1)">⚡ NPU <span class="spinner" id="spin-npu"></span></div>' +
+            '<div class="benchmark-response" id="resp-npu"></div>' +
+            '<div class="benchmark-stats" id="stats-npu"></div>' +
+        '</div>' +
+        '<div class="benchmark-run" id="run-hybrid">' +
+            `<div class="benchmark-run-label" style="color:var(--act4)">🚀 Hybrid <span class="spinner hidden" id="spin-hybrid"></span></div>` +
+            `<div class="benchmark-response" id="resp-hybrid" style="color:var(--text-muted)">${t('waiting')}</div>` +
+            '<div class="benchmark-stats" id="stats-hybrid"></div>' +
+        '</div>' +
+        '<div class="benchmark-chart" id="bench-chart"></div>' +
+        '<div class="benchmark-winner" id="bench-winner"></div>';
+
+    const results = [];
+    try {
+        const npuR = await runBenchmarkPass(NPU_MODEL, 'NPU', 'resp-npu', 'stats-npu', 'spin-npu');
+        if (npuR) results.push(npuR);
+
+        $('resp-hybrid').textContent = '';
+        $('resp-hybrid').style.color = '';
+        $('spin-hybrid').classList.remove('hidden');
+        const hybR = await runBenchmarkPass(HYBRID_MODEL, 'Hybrid', 'resp-hybrid', 'stats-hybrid', 'spin-hybrid');
+        if (hybR) results.push(hybR);
+
+        if (results.length === 2) showBenchmarkChart(results);
+    } catch (err) {
+        if (err.name !== 'AbortError') showError(I18N.actError[LANG](2), err.message, true);
+    }
+    actDone();
+}
+
+async function runBenchmarkPass(modelId, label, respId, statsId, spinId) {
+    const wallStart = performance.now();
+    await streamSSE('/v1/chat/completions', {
+        model: modelId,
+        messages: [{ role: 'user', content: BENCHMARK_PROMPT }],
+        stream: true, max_tokens: 256,
+    }, (full) => { $(respId).textContent = full; });
+
+    const wallSecs = (performance.now() - wallStart) / 1000;
+    $(spinId).classList.add('hidden');
+
+    let tps = 0, ttft = 0, tokens = 0;
+    try {
+        const stats = await fetchJSON('/v1/stats');
+        tps = stats.tokens_per_second || 0;
+        ttft = stats.time_to_first_token || 0;
+        tokens = stats.output_tokens || 0;
+        if (tps === 0 && tokens > 0) tps = tokens / wallSecs;
+    } catch (_) {}
+
+    $(statsId).textContent = `TPS: ${tps.toFixed(1)} | TTFT: ${(ttft*1000).toFixed(0)} ms | Tokens: ${tokens} | Wall: ${wallSecs.toFixed(1)}s`;
+    await postJSON('/v1/unload', { model: modelId }).catch(() => {});
+    return { label, tps, ttft, tokens, wallSecs };
+}
+
+function showBenchmarkChart(results) {
+    const maxTps = Math.max(...results.map(r => r.tps)) || 1;
+    const colors = { NPU: 'var(--act1)', Hybrid: 'var(--act4)' };
+    const icons  = { NPU: '⚡', Hybrid: '🚀' };
+
+    let html = '';
+    for (const r of results) {
+        html += `<div class="bar-row">
+            <div class="bar-label" style="color:${colors[r.label]}">${icons[r.label]} ${r.label}</div>
+            <div class="bar-track"><div class="bar-fill" style="background:${colors[r.label]}" id="bar-${r.label}">${r.tps.toFixed(1)} TPS</div></div>
+            <div class="bar-value" style="color:${colors[r.label]}">${r.tps.toFixed(1)} t/s</div>
+        </div>`;
+    }
+    const chart = $('bench-chart');
+    chart.innerHTML = html;
+    chart.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            for (const r of results) {
+                $(`bar-${r.label}`).style.width = (r.tps / maxTps * 100).toFixed(1) + '%';
+            }
+        }, 50);
+    });
+
+    const best = results.reduce((a, b) => a.tps > b.tps ? a : b);
+    const speedup = (results[1].tps / results[0].tps).toFixed(1);
+    const winner = $('bench-winner');
+    winner.style.color = colors[best.label];
+    winner.innerHTML = `★ Winner: ${best.label} (${best.tps.toFixed(1)} tokens/sec)` +
+        `<span style="color:var(--text-secondary);font-weight:400"> — ${speedup}× speedup</span>`;
+    winner.style.display = 'block';
+}
+
+/* ==================================================================
+   Act 3: Text-to-Speech
+   ================================================================== */
+async function runAct3() {
+    el.outputContent.innerHTML =
+        '<div class="tts-text">' + escHtml(TTS_TEXT) + '</div>' +
+        `<div style="color:var(--text-muted);font-size:0.95rem" id="tts-status"><span class="spinner"></span> ${t('synthesizing')}</div>` +
+        '<div class="audio-progress hidden" id="audio-prog"><div class="audio-progress-bar" id="audio-bar"></div></div>';
+
+    try {
+        const ctrl = new AbortController();
+        STATE.abortControllers.push(ctrl);
+
+        const r = await fetch(`${CONFIG.serverUrl}/v1/audio/speech`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ model: 'kokoro-v1', voice: 'coral', input: TTS_TEXT, response_format: 'mp3' }),
+            signal: ctrl.signal,
+        });
+
+        const blob = await r.blob();
+        const url = URL.createObjectURL(blob);
+        const audio = new Audio(url);
+        STATE.audioEl = audio;
+
+        $('tts-status').textContent = t('playing');
+        $('audio-prog').classList.remove('hidden');
+
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) $('audio-bar').style.width = (audio.currentTime / audio.duration * 100) + '%';
+        });
+        audio.addEventListener('ended', () => {
+            $('tts-status').textContent = t('playDone');
+            $('audio-bar').style.width = '100%';
+            postJSON('/v1/unload', { model: 'kokoro-v1' }).catch(() => {});
+            actDone();
+        });
+        audio.addEventListener('error', () => {
+            $('tts-status').textContent = t('playFail');
+            actDone();
+        });
+
+        await audio.play().catch(() => {
+            $('tts-status').innerHTML = `<button onclick="STATE.audioEl.play();this.remove();" style="padding:0.5rem 1rem;border:1px solid var(--act3);background:transparent;color:var(--act3);border-radius:8px;cursor:pointer;font-size:1rem">${t('clickToPlay')}</button>`;
+        });
+    } catch (err) {
+        if (err.name !== 'AbortError') showError(I18N.actError[LANG](3), err.message, true);
+        actDone();
+    }
+}
+
+/* ==================================================================
+   Act 4: Image Generation
+   ================================================================== */
+async function runAct4() {
+    el.outputContent.innerHTML =
+        '<div class="image-prompt">"' + escHtml(IMAGE_PROMPT) + '"</div>' +
+        '<div class="image-container" id="img-container"><div class="shimmer" id="img-shimmer"></div><img id="gen-image" alt="Generated"></div>' +
+        '<div class="image-backend-badge" id="img-backend">Backend: ' + STATE.imageBackend.toUpperCase() + '</div>' +
+        `<div style="color:var(--text-muted);font-size:0.95rem;margin-top:0.5rem" id="img-status"><span class="spinner"></span> ${t('generating')}</div>`;
+
+    const startTime = performance.now();
+    try {
+        const r = await postJSON('/v1/images/generations', {
+            model: 'SD-Turbo', prompt: IMAGE_PROMPT, size: '512x512',
+            n: 1, response_format: 'b64_json', steps: 4, cfg_scale: 1.0,
+        });
+        const data = await r.json();
+        const b64 = data.data?.[0]?.b64_json;
+        if (!b64) throw new Error('No image data in response');
+
+        const elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+        const img = $('gen-image');
+        img.src = `data:image/png;base64,${b64}`;
+        img.onload = () => { img.classList.add('loaded'); $('img-shimmer').style.display = 'none'; };
+        $('img-status').textContent = I18N.genDone[LANG](elapsed);
+        postJSON('/v1/unload', { model: 'SD-Turbo' }).catch(() => {});
+    } catch (err) {
+        if (err.name !== 'AbortError') {
+            $('img-shimmer').style.display = 'none';
+            $('img-status').textContent = '⚠ ' + err.message;
+            showError(I18N.actError[LANG](4), err.message, true);
+        }
+    }
+    actDone();
+}
+
+/* ==================================================================
+   Act 5: Multi-Model Debate
+   ================================================================== */
+async function runAct5() {
+    let listHtml = '<ul class="debate-models">';
+    let totalGB = 0;
+    for (const m of DEBATE_MODELS) {
+        listHtml += `<li><span>${m.id}</span><span class="model-size">${m.size}</span></li>`;
+        totalGB += parseFloat(m.size);
+    }
+    listHtml += '</ul>';
+
+    el.outputContent.innerHTML =
+        listHtml +
+        `<div class="debate-total">${t('debateTotal')}${totalGB.toFixed(2)} GB <span style="color:var(--text-muted);font-weight:400">${t('debate890m')}</span></div>` +
+        `<div class="debate-slots" id="debate-slots"><span class="spinner"></span> ${t('checkingSlots')}</div>` +
+        '<div id="debate-restart" class="hidden"></div>';
+
+    try {
+        const cfg = await fetchJSON('/internal/config');
+        const slots = cfg?.max_loaded_models;
+        const slotsEl = $('debate-slots');
+        if (slots && slots >= 9) {
+            slotsEl.innerHTML = `<span style="color:var(--act4)">✔</span> ${I18N.slotsOk[LANG](slots)}`;
+        } else {
+            slotsEl.innerHTML = `<span style="color:#ef4444">✘</span> ${I18N.slotsFail[LANG](slots)}`;
+            $('debate-restart').classList.remove('hidden');
+            $('debate-restart').innerHTML =
+                `<div style="margin-top:0.5rem;color:var(--text-secondary)">${t('restartServer')}</div>` +
+                '<div class="debate-restart-cmd">lemonade-server serve --max-loaded-models 9</div>';
+        }
+    } catch (_) {
+        $('debate-slots').innerHTML = t('slotsUnknown');
+    }
+
+    const debatePath = new URL('../examples/llm-debate.html', location.href).href;
+    window.open(debatePath, '_blank');
+    el.outputContent.innerHTML += `<div style="margin-top:1.5rem;color:var(--act4);font-size:1.1rem">${t('debateOpened')}</div>`;
+    actDone();
+}
+
+/* ==================================================================
+   Utilities
+   ================================================================== */
+function escHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+/* ==================================================================
+   Initialization
+   ================================================================== */
+async function init() {
+    el.serverLabel.textContent = `${CONFIG.host}:${CONFIG.port}`;
+    renderWelcome();
+    buildFooter();
+
+    // Set initial error button text
+    $('error-close-btn').textContent = t('close');
+    $('error-skip-btn').textContent = t('skipAct');
+
+    // Welcome server status
+    el.welcomeSrv.textContent = t('connectingServer');
+
+    const ok = await checkHealth();
+    if (ok) {
+        el.welcomeSrv.textContent = I18N.serverOk[LANG](CONFIG.host, CONFIG.port);
+        el.welcomeSrv.style.color = 'var(--act4)';
+        el.btnStart.disabled = false;
+        await detectImageBackend();
+    } else {
+        el.welcomeSrv.textContent = I18N.serverFail[LANG](CONFIG.serverUrl);
+        el.welcomeSrv.style.color = '#ef4444';
+        const retryId = setInterval(async () => {
+            if (await checkHealth()) {
+                clearInterval(retryId);
+                el.welcomeSrv.textContent = I18N.serverOk[LANG](CONFIG.host, CONFIG.port);
+                el.welcomeSrv.style.color = 'var(--act4)';
+                el.btnStart.disabled = false;
+                await detectImageBackend();
+            }
+        }, 3000);
+    }
+
+    el.btnStart.addEventListener('click', () => {
+        el.welcome.classList.add('hidden');
+        const startIdx = Math.max(0, Math.min(4, CONFIG.startAt - 1));
+        showAct(startIdx);
+    });
+
+    setInterval(checkHealth, 5000);
+}
+
+init();
+</script>
+</body>
+</html>
