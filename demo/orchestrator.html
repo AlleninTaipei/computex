@@ -807,12 +807,12 @@ function getAct(idx) {
     const m = ACTS_META[idx];
     const i = I18N.acts[idx];
     let hw = m.hw;
-    // Act 4 hw varies by backend
-    if (idx === 3) {
+    // Act 4 hw varies by backend (Act 4 is now at idx 4 since Act 0 was prepended)
+    if (idx === 4) {
         hw = STATE.imageBackend === 'rocm' ? 'Radeon 890M (ROCm) · SD-Turbo' : 'CPU · SD-Turbo';
     }
     let cue;
-    if (idx === 3) {
+    if (idx === 4) {
         cue = STATE.imageBackend === 'rocm' ? i.cueRocm[LANG] : i.cueCpu[LANG];
     } else {
         cue = i.cue[LANG];
@@ -1267,7 +1267,7 @@ function runAct0() {
    Act 1: Whisper Realtime Transcription
    ================================================================== */
 async function runAct1() {
-    const act = getAct(0);
+    const act = getAct(1);
     el.actionBtn.textContent = act.btnStop;
     el.actionBtn.disabled = false;
 
