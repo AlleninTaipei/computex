@@ -191,7 +191,7 @@ python demo/computex_benchmark.py --host localhost --port 13305
 
 ```plaintext
                     ┌──────────────────────────┐
-                    │        應用層 (Apps)      │
+                    │   Application Layer      │
                     │  Chatbot / Copilot / RAG │
                     └────────────┬─────────────┘
                                  │
