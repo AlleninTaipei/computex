@@ -103,9 +103,19 @@ COMPUTE_ICONS  = {"CPU": "🖥 ", "NPU": "⚡", "Hybrid": "🚀", "GPU": "🎮"}
 # ---------------------------------------------------------------------------
 
 def strip_thinking(text):
-    """Remove <think>...</think> blocks emitted by DeepSeek-R1."""
-    text = re.sub(r'<think>[\s\S]*?</think>\s*', '', text)
-    return text.strip()
+    """
+    Remove <think>...</think> blocks emitted by DeepSeek-R1.
+    Uses index-based search (case-insensitive) for robustness.
+    Strategy: if </think> found, keep only what follows the last one.
+    If <think> but no </think>, the whole text is thinking → return empty.
+    """
+    lc = text.lower()
+    close_idx = lc.rfind('</think>')
+    if close_idx != -1:
+        return text[close_idx + len('</think>'):].lstrip()
+    if '<think>' in lc:
+        return ''  # Still inside thinking block (max_tokens hit?)
+    return text
 
 
 # ---------------------------------------------------------------------------
@@ -279,10 +289,9 @@ def run_benchmark(client, base_url, model_id, prompt, label, color):
         response = client.chat.completions.create(
             model=model_id,
             messages=[{"role": "user", "content": prompt}],
-            max_tokens=256,
+            max_tokens=512,
             stream=False,
             timeout=TIMEOUT_INFER,
-            extra_body={"enable_thinking": False},
         )
     except Exception as exc:
         _err(f"Inference failed: {exc}")

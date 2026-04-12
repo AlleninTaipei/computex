@@ -547,7 +547,7 @@ const I18N = {
             subtitle: { zh: 'Hybrid LLM Benchmark', en: 'Hybrid LLM Benchmark' },
             cue: {
                 zh: '「模型的權重切割——部分層在 NPU 跑，\n剩餘層在 CPU 跑，同時進行，\n這是 Ryzen AI 的 Hybrid 推論架構。」',
-                en: '"Model weights are split — some layers run on NPU,\nthe rest on CPU, simultaneously.\nThis is Ryzen AI\'s Hybrid inference architecture."',
+                en: '"Model weights are split — \nsome layers run on NPU,\nthe rest on CPU, simultaneously.\nThis is Ryzen AI\'s Hybrid inference architecture."',
             },
             hint: {
                 zh: 'Benchmark 自動執行，完成後顯示 NPU vs Hybrid 速度比較。',
@@ -769,7 +769,7 @@ const BENCHMARK_PROMPT =
     'silicon is important for privacy and performance.';
 
 const TTS_TEXT = 'An AI PC is about you. It doesn’t just run apps, it learns how you work and supports you throughout the day. Even when you’re working offline.';
-const IMAGE_PROMPT = 'COMPUTEX 2026 AMD x ASRock wallpaper, digital art';
+const IMAGE_PROMPT = 'COMPUTEX 2026 AMD Ryzen AI wallpaper, digital art';
 
 /* ==================================================================
    DOM References
@@ -805,13 +805,23 @@ const el = {
    ================================================================== */
 /**
  * Strip <think>...</think> blocks produced by DeepSeek-R1.
- * Handles both complete blocks and partial (still-streaming) opening blocks.
+ * Uses index-based search (case-insensitive) instead of regex, which is
+ * more reliable across different model output formats.
+ *
+ * Strategy:
+ *   - If </think> exists → show everything AFTER the last closing tag
+ *   - If <think> exists but no </think> → model is still in thinking phase, show nothing
+ *   - If neither tag → model doesn't use thinking tags, show full text
  */
 function stripThinking(text) {
-    // Remove fully-closed <think>...</think> blocks (including trailing whitespace)
-    text = text.replace(/<think>[\s\S]*?<\/think>\s*/g, '');
-    // Remove an unclosed opening block that is still streaming
-    text = text.replace(/<think>[\s\S]*$/, '');
+    const lc = text.toLowerCase();
+    const closeIdx = lc.lastIndexOf('</think>');
+    if (closeIdx !== -1) {
+        return text.slice(closeIdx + '</think>'.length).replace(/^\s+/, '');
+    }
+    if (lc.includes('<think>')) {
+        return ''; // Still streaming the thinking block
+    }
     return text;
 }
 
@@ -1261,8 +1271,14 @@ async function runBenchmarkPass(modelId, label, respId, statsId, spinId) {
     await streamSSE('/v1/chat/completions', {
         model: modelId,
         messages: [{ role: 'user', content: BENCHMARK_PROMPT }],
-        stream: true, max_tokens: 256, enable_thinking: false,
-    }, (full) => { $(respId).textContent = stripThinking(full); });
+        stream: true, max_tokens: 512,
+    }, (full) => {
+        // DEBUG: log raw content to browser console (open DevTools → Console)
+        if (full.length < 100 || full.length % 200 < 10) {
+            console.debug('[Act2 raw]', JSON.stringify(full.slice(0, 200)));
+        }
+        $(respId).textContent = stripThinking(full);
+    });
 
     const wallSecs = (performance.now() - wallStart) / 1000;
     $(spinId).classList.add('hidden');
@@ -1331,7 +1347,7 @@ async function runAct3() {
         const r = await fetch(`${CONFIG.serverUrl}/v1/audio/speech`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: 'kokoro-v1', voice: 'coral', input: TTS_TEXT, response_format: 'mp3' }),
+            body: JSON.stringify({ model: 'kokoro-v1', voice: 'af_sarah', input: TTS_TEXT, response_format: 'mp3' }),
             signal: ctrl.signal,
         });
 
