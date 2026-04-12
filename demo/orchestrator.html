@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Computex 2026 — AMD Ryzen AI Demo</title>
+    <title>Computex 2026 ASRock — AMD Ryzen AI Demo</title>
     <style>
         /* ================================================================
            CSS Variables & Reset
@@ -439,7 +439,7 @@
      Welcome Overlay
      ================================================================ -->
 <div id="welcome" class="overlay">
-    <div class="welcome-title">Computex 2026</div>
+    <div class="welcome-title">Computex 2026 ASRock</div>
     <div class="welcome-sub">AMD Ryzen AI &mdash; Demo Orchestrator</div>
     <ul class="welcome-hw" id="welcome-hw"></ul>
     <div class="welcome-lang" id="welcome-lang"></div>
@@ -464,7 +464,7 @@
     <!-- Header -->
     <div class="header">
         <div class="header-title">
-            Computex 2026 <span>&mdash; AMD Ryzen AI Demo</span>
+            Computex 2026 ASRock<span>&mdash; AMD Ryzen AI Demo</span>
         </div>
         <div class="header-right">
             <div class="lang-toggle" id="header-lang">
@@ -765,11 +765,11 @@ const DEBATE_MODELS = [
 
 const BENCHMARK_PROMPT =
     'You are a helpful AI assistant running locally on AMD hardware. ' +
-    'Briefly explain (in 4-5 sentences) why edge AI inference on AMD ' +
+    'Briefly explain (in 2 sentences) why edge AI inference on AMD ' +
     'silicon is important for privacy and performance.';
 
-const TTS_TEXT = 'Today is a wonderful day to build something people love!';
-const IMAGE_PROMPT = 'A serene mountain landscape at sunset, digital art';
+const TTS_TEXT = 'An AI PC is about you. It doesn’t just run apps, it learns how you work and supports you throughout the day. Even when you’re working offline.';
+const IMAGE_PROMPT = 'COMPUTEX 2026 AMD x ASRock wallpaper, digital art';
 
 /* ==================================================================
    DOM References
@@ -799,6 +799,21 @@ const el = {
     errorMsg:    $('error-msg'),
     errorSkip:   $('error-skip-btn'),
 };
+
+/* ==================================================================
+   Text Helpers
+   ================================================================== */
+/**
+ * Strip <think>...</think> blocks produced by DeepSeek-R1.
+ * Handles both complete blocks and partial (still-streaming) opening blocks.
+ */
+function stripThinking(text) {
+    // Remove fully-closed <think>...</think> blocks (including trailing whitespace)
+    text = text.replace(/<think>[\s\S]*?<\/think>\s*/g, '');
+    // Remove an unclosed opening block that is still streaming
+    text = text.replace(/<think>[\s\S]*$/, '');
+    return text;
+}
 
 /* ==================================================================
    Server Helpers
@@ -1246,8 +1261,8 @@ async function runBenchmarkPass(modelId, label, respId, statsId, spinId) {
     await streamSSE('/v1/chat/completions', {
         model: modelId,
         messages: [{ role: 'user', content: BENCHMARK_PROMPT }],
-        stream: true, max_tokens: 256,
-    }, (full) => { $(respId).textContent = full; });
+        stream: true, max_tokens: 256, enable_thinking: false,
+    }, (full) => { $(respId).textContent = stripThinking(full); });
 
     const wallSecs = (performance.now() - wallStart) / 1000;
     $(spinId).classList.add('hidden');

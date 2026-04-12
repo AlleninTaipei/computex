@@ -25,6 +25,7 @@ Requirements:
 """
 
 import argparse
+import re
 import sys
 import time
 import requests
@@ -95,6 +96,16 @@ DEFAULT_PROMPT = (
 
 COMPUTE_COLORS = {"CPU": YELLOW, "NPU": BLUE, "Hybrid": GREEN, "GPU": GREEN}
 COMPUTE_ICONS  = {"CPU": "🖥 ", "NPU": "⚡", "Hybrid": "🚀", "GPU": "🎮"}
+
+
+# ---------------------------------------------------------------------------
+# Text helpers
+# ---------------------------------------------------------------------------
+
+def strip_thinking(text):
+    """Remove <think>...</think> blocks emitted by DeepSeek-R1."""
+    text = re.sub(r'<think>[\s\S]*?</think>\s*', '', text)
+    return text.strip()
 
 
 # ---------------------------------------------------------------------------
@@ -271,6 +282,7 @@ def run_benchmark(client, base_url, model_id, prompt, label, color):
             max_tokens=256,
             stream=False,
             timeout=TIMEOUT_INFER,
+            extra_body={"enable_thinking": False},
         )
     except Exception as exc:
         _err(f"Inference failed: {exc}")
@@ -286,7 +298,7 @@ def run_benchmark(client, base_url, model_id, prompt, label, color):
         tps = output_tokens / wall_secs
 
     if response.choices:
-        text = (response.choices[0].message.content or "").strip()
+        text = strip_thinking(response.choices[0].message.content or "")
         for line in text.splitlines():
             print(f"       {_c(line, DIM)}")
 
