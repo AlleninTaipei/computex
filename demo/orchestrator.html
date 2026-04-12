@@ -437,6 +437,59 @@
         @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
         .pulsing { animation: pulse 1.5s ease-in-out infinite; }
         .hidden { display: none !important; }
+
+        /* ================================================================
+           Act 0: AMD AI Stack Diagram
+           ================================================================ */
+        .stack-diagram {
+            display: flex; flex-direction: column; gap: 0.55rem;
+            padding: 0.2rem; font-size: 0.93rem;
+        }
+        .stack-title {
+            font-size: 1.2rem; font-weight: 700; color: #ff8c00;
+            text-align: center; margin-bottom: 0.2rem; letter-spacing: 0.03em;
+        }
+        .stack-app-box {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.18); border-radius: 6px;
+            padding: 0.45rem 1rem; text-align: center; color: var(--text-primary);
+        }
+        .stack-row {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem;
+        }
+        .stack-row-arrow {
+            font-size: 1rem; color: var(--text-muted);
+            text-align: center; align-items: center; justify-items: center;
+            margin: -0.15rem 0;
+        }
+        .stack-col {
+            border-radius: 6px; padding: 0.45rem 0.6rem; text-align: center;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+        }
+        .stack-col.npu-col  { background: rgba(56,189,248,0.10); border-color: rgba(56,189,248,0.5); }
+        .stack-col.gpu-col  { background: rgba(34,197,94,0.10);  border-color: rgba(34,197,94,0.5); }
+        .stack-col.rocm-col { opacity: 0.38; filter: grayscale(0.6); }
+        .stack-col-title { font-weight: 600; color: var(--text-primary); font-size: 0.93rem; }
+        .stack-col.npu-col  .stack-col-title { color: #38bdf8; }
+        .stack-col.gpu-col  .stack-col-title { color: #22c55e; }
+        .stack-col-sub  { font-size: 0.76rem; color: var(--text-muted); margin-top: 0.12rem; }
+        .demo-badge {
+            display: inline-block; margin-top: 0.3rem;
+            font-size: 0.7rem; font-weight: 600;
+            background: rgba(255,255,255,0.12); border-radius: 4px;
+            padding: 0.08rem 0.35rem; color: var(--text-secondary);
+        }
+        .rocm-no { margin-top: 0.3rem; font-size: 0.7rem; color: #ef4444; font-weight: 600; }
+        .stack-cpu-note {
+            text-align: center; font-size: 0.85rem;
+            color: var(--act3); padding: 0.15rem 0;
+        }
+        .stack-insight {
+            background: rgba(255,140,0,0.07); border: 1px solid rgba(255,140,0,0.25);
+            border-radius: 6px; padding: 0.6rem 0.9rem;
+            font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;
+        }
+        .stack-insight strong { color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -534,6 +587,19 @@ const I18N = {
 
     // Acts — per-act bilingual content
     acts: [
+        { // Act 0
+            title:    { zh: 'AMD AI 軟體堆疊', en: 'AMD AI Software Stack' },
+            subtitle: { zh: '架構概覽', en: 'Architecture Overview' },
+            cue: {
+                zh: '「NPU、iGPU、CPU 各司其職——\n但 ROCm 不在這裡。\n這台機器靠另一套路徑跑 AI：\nXDNA2 NPU · Radeon 890M · Vulkan」\n\n「不需要獨顯，不需要雲端，\n這就是 Ryzen AI 的意義。」',
+                en: '"NPU, iGPU, and CPU each play a role —\nbut ROCm is not part of this.\nThis machine runs AI on a different path:\nXDNA2 NPU · Radeon 890M · Vulkan"\n\n"No discrete GPU. No cloud.\nThat\'s the point of Ryzen AI."',
+            },
+            hint: {
+                zh: '點擊「下一步」開始第一幕。',
+                en: 'Click Next to begin Act 1.',
+            },
+            btnStart: { zh: '📊 顯示架構圖', en: '📊 Show Stack' },
+        },
         { // Act 1
             title:    { zh: '語音進來', en: 'Speech In' },
             subtitle: { zh: 'Speech In', en: 'Realtime Transcription' },
@@ -608,8 +674,8 @@ const I18N = {
 
     // Footer labels
     footerNames: {
-        zh: ['語音', '思考', '說話', '畫', '辯論'],
-        en: ['Speech', 'Think', 'TTS', 'Image', 'Debate'],
+        zh: ['架構', '語音', '思考', '說話', '畫', '辯論'],
+        en: ['Stack', 'Speech', 'Think', 'TTS', 'Image', 'Debate'],
     },
 
     // Act badge prefix
@@ -689,7 +755,7 @@ function setLang(lang) {
 
     // Re-render dynamic content if visible
     if (STATE.phase === 'welcome') renderWelcome();
-    else if (STATE.phase === 'intro' || STATE.phase === 'done') showAct(STATE.currentAct - 1);
+    else if (STATE.phase === 'intro' || STATE.phase === 'done') showAct(STATE.currentAct);
     else if (STATE.phase === 'finale') showFinale();
 
     buildFooter();
@@ -707,7 +773,7 @@ const params = new URLSearchParams(location.search);
 const CONFIG = {
     host:    params.get('host') || 'localhost',
     port:    parseInt(params.get('port') || '13305', 10),
-    startAt: parseInt(params.get('start-at') || '1', 10),
+    startAt: parseInt(params.get('start-at') || '0', 10),
 };
 CONFIG.serverUrl = `http://${CONFIG.host}:${CONFIG.port}`;
 
@@ -729,6 +795,7 @@ const STATE = {
    Act Definitions (structural — text comes from I18N)
    ================================================================== */
 const ACTS_META = [
+    { num: 0, hw: 'Ryzen AI 9 HX 375 · XDNA2 + Radeon 890M', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
     { num: 1, hw: 'XDNA2 NPU · Whisper-Large-v3-Turbo', color: 'var(--act1)', colorHex: '#38bdf8', icon: '🎤' },
     { num: 2, hw: 'XDNA2 NPU + CPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
     { num: 3, hw: 'CPU · kokoro-v1', color: 'var(--act3)', colorHex: '#facc15', icon: '🔊' },
@@ -781,7 +848,7 @@ You just describe what you need, and the PC takes it from there. \
 Ryzen AI combines high-performance Zen 5 CPU cores, RDNA 3.5 GPU cores, and our latest XDNA 2 NPU delivering up to 60 TOPS of AI compute. \
 Now, powering the next generation of AI PC experiences takes more than just hardware. \
 It takes smarter software with models that are lighter, faster, and can run directly on device.`;
-const IMAGE_PROMPT = '8k, (masterpiece), (best quality), full body portrait of a powerful sorceress wearing ornate magic robe, (casting fire magic), round face, mysterious expression, flowing robes, amulet, ancient library, parchment scrolls, dusty tomes, wooden bookshelves, ink and quill, celestial globes, astrological charts, magic circle, sparks of fire, golden bracelets, ruby rings, intricate detail, (silvery blue themed)';
+const IMAGE_PROMPT = 'two cute and energetic shiba inu dogs playing with each other in a sunny park, fluffy fur, happy expression, tongue out, dynamic motion, bright sunlight, green grass, flowers, outdoor scenery, vibrant colors, soft lighting, depth of field, high detail, ultra realistic, 4k, cinematic composition';
 
 /* ==================================================================
    DOM References
@@ -956,18 +1023,18 @@ function renderWelcome() {
 }
 
 function buildFooter() {
-    const icons = ['🎤', '🧠', '🔊', '🎨', '⚔️'];
+    const icons = ['📊', '🎤', '🧠', '🔊', '🎨', '⚔️'];
     const names = I18N.footerNames[LANG];
     let html = '';
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i <= 5; i++) {
         if (i > 0) html += '<div class="footer-sep"></div>';
-        html += `<div class="footer-act" id="footer-act-${i+1}" onclick="goToAct(${i+1})">${icons[i]} ${names[i]}</div>`;
+        html += `<div class="footer-act" id="footer-act-${i}" onclick="goToAct(${i})">${icons[i]} ${names[i]}</div>`;
     }
     el.footer.innerHTML = html;
 }
 
 function updateFooter() {
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 0; i <= 5; i++) {
         const f = document.getElementById(`footer-act-${i}`);
         if (!f) continue;
         f.classList.remove('done', 'current');
@@ -1048,24 +1115,24 @@ function advance() {
     if (STATE.phase === 'welcome') return;
     if (STATE.phase === 'intro') runCurrentAct();
     else if (STATE.phase === 'done') nextAct();
-    else if (STATE.phase === 'finale') { STATE.currentAct = 0; showAct(0); }
+    else if (STATE.phase === 'finale') { showAct(0); }
 }
 
 function nextAct() {
-    const nextIdx = STATE.currentAct;
-    if (nextIdx >= 5) showFinale();
+    const nextIdx = STATE.currentAct + 1;
+    if (nextIdx > 5) showFinale();
     else showAct(nextIdx);
 }
 
 function goToAct(num) {
     if (STATE.phase === 'running') return;
     cleanupCurrentAct();
-    showAct(num - 1);
+    showAct(num);
 }
 
 function actDone() {
     STATE.phase = 'done';
-    const act = getAct(STATE.currentAct - 1);
+    const act = getAct(STATE.currentAct);
     el.actionBtn.textContent = STATE.currentAct < 5 ? t('nextAct') : t('finish');
     el.actionBtn.style.background = act.colorHex;
     el.actionBtn.disabled = false;
@@ -1112,7 +1179,88 @@ function cleanupCurrentAct() {
 function runCurrentAct() {
     STATE.phase = 'running';
     el.actionBtn.disabled = true;
-    [runAct1, runAct2, runAct3, runAct4, runAct5][STATE.currentAct - 1]();
+    [runAct0, runAct1, runAct2, runAct3, runAct4, runAct5][STATE.currentAct]();
+}
+
+/* ==================================================================
+   Act 0: AMD AI Software Stack Overview (static diagram)
+   ================================================================== */
+function runAct0() {
+    el.outputContent.innerHTML = `
+    <div class="stack-diagram">
+        <div class="stack-title">AMD AI PC Software Stack</div>
+
+        <div class="stack-app-box">
+            Application Layer &mdash; Local Chatbot &middot; Copilot &middot; RAG &middot; Image Generation
+        </div>
+
+        <div class="stack-row stack-row-arrow"><div>↓</div><div>↓</div><div>↓</div></div>
+
+        <div class="stack-row">
+            <div class="stack-col npu-col">
+                <div class="stack-col-title">⚡ Ryzen AI SDK</div>
+                <div class="stack-col-sub">NPU Runtime</div>
+            </div>
+            <div class="stack-col gpu-col">
+                <div class="stack-col-title">🦙 llama.cpp</div>
+                <div class="stack-col-sub">GGUF Runtime</div>
+            </div>
+            <div class="stack-col rocm-col">
+                <div class="stack-col-title">PyTorch / ONNX</div>
+                <div class="stack-col-sub">Training &middot; HPC Inference</div>
+            </div>
+        </div>
+
+        <div class="stack-row stack-row-arrow"><div>↓</div><div>↓</div><div>↓</div></div>
+
+        <div class="stack-row">
+            <div class="stack-col npu-col">
+                <div class="stack-col-title">ryzenai-llm</div>
+                <div class="stack-col-sub">NPU Driver</div>
+            </div>
+            <div class="stack-col gpu-col">
+                <div class="stack-col-title">Vulkan Backend</div>
+                <div class="stack-col-sub">AMD &middot; NVIDIA &middot; Intel</div>
+            </div>
+            <div class="stack-col rocm-col">
+                <div class="stack-col-title">ROCm</div>
+                <div class="stack-col-sub">HIP / OpenCL</div>
+                <div class="rocm-no">❌ Not in AI PC stack</div>
+            </div>
+        </div>
+
+        <div class="stack-row stack-row-arrow"><div>↓</div><div>↓</div><div>↓</div></div>
+
+        <div class="stack-row">
+            <div class="stack-col npu-col">
+                <div class="stack-col-title">XDNA2 NPU</div>
+                <div class="stack-col-sub">55 TOPS</div>
+                <div class="demo-badge">✦ Acts 1 &amp; 2</div>
+            </div>
+            <div class="stack-col gpu-col">
+                <div class="stack-col-title">Radeon 890M</div>
+                <div class="stack-col-sub">RDNA 3.5 &middot; iGPU</div>
+                <div class="demo-badge">✦ Acts 4 &amp; 5</div>
+            </div>
+            <div class="stack-col rocm-col">
+                <div class="stack-col-title">CDNA / RDNA dGPU</div>
+                <div class="stack-col-sub">MI300 &middot; Datacenter</div>
+                <div class="rocm-no">Datacenter only</div>
+            </div>
+        </div>
+
+        <div class="stack-cpu-note">
+            🖥 CPU (Zen 5 &middot; 12 cores) handles Act 3 &mdash; TTS &middot; kokoro-v1
+        </div>
+
+        <div class="stack-insight">
+            💡 <strong>Why no ROCm?</strong>
+            ROCm is AMD&rsquo;s datacenter GPU compute platform &mdash; Linux-first, HPC-targeted (AMD&rsquo;s answer to CUDA).
+            For AI PCs, AMD uses a completely separate path: <strong>Ryzen AI (NPU)</strong> + <strong>Vulkan (iGPU)</strong>.
+            No ROCm, no driver complexity, no cloud &mdash; just on-device inference.
+        </div>
+    </div>`;
+    actDone();
 }
 
 /* ==================================================================
@@ -1515,7 +1663,7 @@ async function init() {
 
     el.btnStart.addEventListener('click', () => {
         el.welcome.classList.add('hidden');
-        const startIdx = Math.max(0, Math.min(4, CONFIG.startAt - 1));
+        const startIdx = Math.max(0, Math.min(5, CONFIG.startAt));
         showAct(startIdx);
     });
 
