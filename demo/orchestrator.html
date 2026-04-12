@@ -71,7 +71,13 @@
             font-weight: 700;
             letter-spacing: 0.02em;
         }
-        .header-title span { color: var(--text-muted); font-weight: 400; }
+        .header-title span {
+            background: linear-gradient(90deg, #ff8c00, #e0393a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
         .header-right {
             display: flex;
             align-items: center;
@@ -768,24 +774,14 @@ const BENCHMARK_PROMPT =
     'Briefly explain (in 2 sentences) why edge AI inference on AMD ' +
     'silicon is important for privacy and performance.';
 
-const TTS_TEXT = `Let's shift from the cloud to the devices that make AI more personal, PCs. \
-So for decades, the PC has been about a powerful device helping us be more productive, whether at work or at school. \
-But with AI, the PC has become not just a tool, but it's a powerful, essential part of our lives as an active partner. \
-It learns how you work, and it adapts to your habits, and it can help you do things faster than you've ever expected, even when you're offline. \
-AI PCs are starting to deliver real value across a wide range of everyday tasks, from content creation and productivity to intelligent personal assistants. \
+const TTS_TEXT = `AI PCs are starting to deliver real value across a wide range of everyday tasks, from content creation and productivity to intelligent personal assistants. \
 Starting with content creation, videos can be generated from simple text prompts on a Ryzen AI PC — not in the cloud, but in a local environment. \
 Anyone can generate professional quality photos and videos in minutes with no design expertise. \
-For example, managing your meetings, summarizing emails, quickly finding files that you need, using real-time translation on video conferences. \
-Advanced AI capabilities are being built directly into the Windows experience to complete tasks faster. \
 You just describe what you need, and the PC takes it from there. \
-Now, at AMD, we saw the AI PC wave early, and we invested. That's why we've led every inflection point. \
-We were the first to integrate a dedicated on-chip AI engine in 2023, and the first to deliver Copilot Plus x86 PCs in 2024. \
-And with Ryzen AI Max, we created the first single-chip x86 platform that could run a 200 billion parameter model locally. \
-And now we're extending that leadership again with our next-gen Ryzen AI notebook and desktop processors. \
 Ryzen AI combines high-performance Zen 5 CPU cores, RDNA 3.5 GPU cores, and our latest XDNA 2 NPU delivering up to 60 TOPS of AI compute. \
 Now, powering the next generation of AI PC experiences takes more than just hardware. \
 It takes smarter software with models that are lighter, faster, and can run directly on device.`;
-const IMAGE_PROMPT = 'COMPUTEX 2026 AMD Ryzen AI wallpaper, digital art';
+const IMAGE_PROMPT = '8k, (masterpiece), (best quality), full body portrait of a powerful sorceress wearing ornate magic robe, (casting fire magic), round face, mysterious expression, flowing robes, amulet, ancient library, parchment scrolls, dusty tomes, wooden bookshelves, ink and quill, celestial globes, astrological charts, magic circle, sparks of fire, golden bracelets, ruby rings, intricate detail, (silvery blue themed)';
 
 /* ==================================================================
    DOM References
