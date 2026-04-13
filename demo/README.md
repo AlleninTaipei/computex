@@ -128,6 +128,47 @@ python demo/computex_benchmark.py --host localhost --port 13305
 
 > Numbers above are illustrative. Actual results depend on installed GPU and system memory configuration.
 
+## 準備指令
+
+* 安裝 Lemonade Server
+  * https://lemonade.ai/install_options.html#windows
+
+* 啟動 server
+
+```bash
+lemonade config set max-loaded-models=9
+```
+
+* 下載所有 demo 模型 (/demo/pullmodels.bat)
+
+* 安裝 Python 依賴
+
+```bash
+python -m pip install pyaudio
+python -m pip install websockets
+python -m pip install numpy
+python -m pip install openai[voice_helpers]
+python -m pip install sounddevice
+```
+
+* demo/setup.py — 驗證
+
+```bash
+  python demo/setup.py
+```
+
+* 輸出三個區塊的 checklist：
+  * Server — 連線健康檢查
+  * Models — 逐一確認 9 個模型已 pull（依幕分組標示）
+  * Backends — NPU / Vulkan / ROCm 狀態，自動顯示 fallback 提示
+
+* demo/orchestrator.py — 五幕主持腳本
+
+```bash
+  python demo/orchestrator.py           # 從第1幕開始
+  python demo/orchestrator.py --start-at 3   # 從第3幕繼續
+```
+
 ## Learning
 
 ### NPU only — NPU 專用路徑
