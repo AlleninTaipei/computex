@@ -13,8 +13,8 @@ Acts:
     1  語音進來      Whisper-Large-v3-Turbo    XDNA2 NPU
     2  大腦思考      DeepSeek-R1 Hybrid        NPU + CPU
     3  說話回來      kokoro-v1                 CPU
-    4  畫出來        SD-Turbo                  Radeon 890M (ROCm / CPU)
-    5  AI 辯論       5x GGUF                   Radeon 890M Vulkan
+    4  畫出來        SD-Turbo                  Radeon GPU (ROCm / CPU)
+    5  AI 辯論       5x GGUF                   Radeon GPU Vulkan
 """
 
 import argparse
@@ -69,7 +69,7 @@ def build_acts(base_url, image_backend):
 
     if image_backend == "rocm":
         img_cue = [
-            "「Radeon 890M，RDNA 3.5 架構，ROCm 加速 Stable Diffusion。",
+            "「Radeon GPU，RDNA 3.5 架構，ROCm 加速 Stable Diffusion。",
             " 沒有獨顯，一樣跑影像生成。」",
         ]
     else:
@@ -126,7 +126,7 @@ def build_acts(base_url, image_backend):
             "num":      4,
             "title":    "畫出來",
             "subtitle": "Image Generation",
-            "hw":       f"Radeon 890M (RDNA 3.5)  ·  SD-Turbo  [{image_backend.upper()}]",
+            "hw":       f"Radeon GPU (RDNA 3.5)  ·  SD-Turbo  [{image_backend.upper()}]",
             "hw_color": GREEN,
             "cue": img_cue,
             "cmd":  [py, str(ex / "api_image_generation.py"),
@@ -138,7 +138,7 @@ def build_acts(base_url, image_backend):
             "num":      5,
             "title":    "5 個 AI 同時辯論",
             "subtitle": "Multi-Model Debate",
-            "hw":       "Radeon 890M Vulkan  ·  5× GGUF",
+            "hw":       "Radeon GPU Vulkan  ·  5× GGUF",
             "hw_color": MAGENTA,
             "cue": [
                 "「五個模型同時串流辯論，890M 一張 iGPU 全部扛起來。」",
@@ -207,8 +207,8 @@ def print_banner():
     _blank()
     lines = [
         ("NPU 聽",     "XDNA2 55 TOPS",   BLUE),
-        ("CPU 說",     "Ryzen AI 9 HX 375", YELLOW),
-        ("iGPU 畫/辯", "Radeon 890M RDNA3.5", GREEN),
+        ("CPU 說",     "Ryzen AI CPU", YELLOW),
+        ("iGPU 畫/辯", "Radeon GPU RDNA3.5", GREEN),
     ]
     for role, hw, col in lines:
         print(f"  {c(role, col, BOLD):<28}  {c(hw, DIM)}")

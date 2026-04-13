@@ -571,13 +571,13 @@ const I18N = {
     welcomeHw: {
         zh: [
             { role: 'NPU 聽', desc: 'XDNA2 55 TOPS' },
-            { role: 'CPU 說', desc: 'Ryzen AI 9 HX 375' },
-            { role: 'iGPU 畫', desc: 'Radeon 890M RDNA 3.5' },
+            { role: 'CPU 說', desc: 'Ryzen AI CPU' },
+            { role: 'iGPU 畫', desc: 'Radeon GPU RDNA 3.5' },
         ],
         en: [
             { role: 'NPU Listens', desc: 'XDNA2 55 TOPS' },
-            { role: 'CPU Speaks', desc: 'Ryzen AI 9 HX 375' },
-            { role: 'iGPU Draws', desc: 'Radeon 890M RDNA 3.5' },
+            { role: 'CPU Speaks', desc: 'Ryzen AI CPU' },
+            { role: 'iGPU Draws', desc: 'Radeon GPU RDNA 3.5' },
         ],
     },
     connectingServer: { zh: '正在連線 server…', en: 'Connecting to server...' },
@@ -591,8 +591,8 @@ const I18N = {
             title:    { zh: 'AMD AI 軟體堆疊', en: 'AMD AI Software Stack' },
             subtitle: { zh: '架構概覽', en: 'Architecture Overview' },
             cue: {
-                zh: '「NPU、iGPU、CPU 各司其職——\n但 ROCm 不在這裡。\n這台機器靠另一套路徑跑 AI：\nXDNA2 NPU · Radeon 890M · Vulkan」\n\n「不需要獨顯，不需要雲端，\n這就是 Ryzen AI 的意義。」',
-                en: '"NPU, iGPU, and CPU each play a role —\nbut ROCm is not part of this.\nThis machine runs AI on a different path:\nXDNA2 NPU · Radeon 890M · Vulkan"\n\n"No discrete GPU. No cloud.\nThat\'s the point of Ryzen AI."',
+                zh: '「NPU、iGPU、CPU 各司其職——\n但 ROCm 不在這裡。\n這台機器靠另一套路徑跑 AI：\nXDNA2 NPU · Radeon GPU · Vulkan」\n\n「不需要獨顯，不需要雲端，\n這就是 Ryzen AI 的意義。」',
+                en: '"NPU, iGPU, and CPU each play a role —\nbut ROCm is not part of this.\nThis machine runs AI on a different path:\nXDNA2 NPU · Radeon GPU · Vulkan"\n\n"No discrete GPU. No cloud.\nThat\'s the point of Ryzen AI."',
             },
             hint: {
                 zh: '點擊「下一步」開始第一幕。',
@@ -644,8 +644,8 @@ const I18N = {
             title:    { zh: '畫出來', en: 'Draw It' },
             subtitle: { zh: 'Image Generation', en: 'Image Generation' },
             cueRocm: {
-                zh: '「Radeon 890M，RDNA 3.5 架構，\nROCm 加速 Stable Diffusion。\n沒有獨顯，一樣跑影像生成。」',
-                en: '"Radeon 890M, RDNA 3.5 architecture,\nROCm-accelerated Stable Diffusion.\nNo discrete GPU — still generating images."',
+                zh: '「Radeon GPU，RDNA 3.5 架構，\nROCm 加速 Stable Diffusion。\n沒有獨顯，一樣跑影像生成。」',
+                en: '"Radeon GPU, RDNA 3.5 architecture,\nROCm-accelerated Stable Diffusion.\nNo discrete GPU — still generating images."',
             },
             cueCpu: {
                 zh: '「SD-Turbo 在純 CPU 也能跑——\n這就是 Lemonade 的跨平台設計。\n不需要 ROCm，不需要獨顯。」',
@@ -795,12 +795,12 @@ const STATE = {
    Act Definitions (structural — text comes from I18N)
    ================================================================== */
 const ACTS_META = [
-    { num: 0, hw: 'Ryzen AI 9 HX 375 · XDNA2 + Radeon 890M', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
+    { num: 0, hw: 'Ryzen AI CPU · XDNA2 + Radeon GPU', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
     { num: 1, hw: 'XDNA2 NPU · Whisper-Large-v3-Turbo', color: 'var(--act1)', colorHex: '#38bdf8', icon: '🎤' },
     { num: 2, hw: 'XDNA2 NPU + CPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
     { num: 3, hw: 'CPU · kokoro-v1', color: 'var(--act3)', colorHex: '#facc15', icon: '🔊' },
-    { num: 4, hw: 'Radeon 890M · SD-Turbo', color: 'var(--act4)', colorHex: '#22c55e', icon: '🎨' },
-    { num: 5, hw: 'Radeon 890M Vulkan · 5× GGUF', color: 'var(--act5)', colorHex: '#a855f7', icon: '⚔️' },
+    { num: 4, hw: 'Radeon GPU · SD-Turbo', color: 'var(--act4)', colorHex: '#22c55e', icon: '🎨' },
+    { num: 5, hw: 'Radeon GPU Vulkan · 5× GGUF', color: 'var(--act5)', colorHex: '#a855f7', icon: '⚔️' },
 ];
 
 function getAct(idx) {
@@ -809,7 +809,7 @@ function getAct(idx) {
     let hw = m.hw;
     // Act 4 hw varies by backend (Act 4 is now at idx 4 since Act 0 was prepended)
     if (idx === 4) {
-        hw = STATE.imageBackend === 'rocm' ? 'Radeon 890M (ROCm) · SD-Turbo' : 'CPU · SD-Turbo';
+        hw = STATE.imageBackend === 'rocm' ? 'Radeon GPU (ROCm) · SD-Turbo' : 'CPU · SD-Turbo';
     }
     let cue;
     if (idx === 4) {
@@ -1238,7 +1238,7 @@ function runAct0() {
                 <div class="demo-badge">✦ Acts 1 &amp; 2</div>
             </div>
             <div class="stack-col gpu-col">
-                <div class="stack-col-title">Radeon 890M</div>
+                <div class="stack-col-title">Radeon GPU</div>
                 <div class="stack-col-sub">RDNA 3.5 &middot; iGPU</div>
                 <div class="demo-badge">✦ Acts 4 &amp; 5</div>
             </div>
