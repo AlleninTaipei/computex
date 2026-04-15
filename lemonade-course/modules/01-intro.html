@@ -1,0 +1,402 @@
+<section class="module" id="module-1" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">Your PC as an AI Factory</h1>
+      <p class="module-subtitle">What Lemonade does — and why it changes everything</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: Cloud AI vs Local AI
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">☁️ vs 🍋 — Where Does Your AI Live?</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-2);">
+          Every time you use a cloud AI, your words travel to a data center thousands of miles away — and back.
+          That journey costs money, takes time, and puts your private thoughts in someone else's hands.
+        </p>
+
+        <!-- Side-by-side comparison -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); margin:var(--space-8) 0;">
+
+          <!-- LEFT: Cloud AI -->
+          <div class="animate-in" style="padding:var(--space-6); background:var(--color-error-light); border-radius:var(--radius-md); border-top: 3px solid var(--color-error);">
+            <h4 style="font-family:var(--font-display); color:var(--color-error); margin-bottom:var(--space-4); font-size:var(--text-xl);">☁️ Cloud AI</h4>
+
+            <!-- Flow diagram -->
+            <div style="display:flex; flex-direction:column; gap:var(--space-2); margin-bottom:var(--space-5);">
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🧑</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">You</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🌐</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Internet</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🏭</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Remote Data Center</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">💬</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Response (eventually)</div>
+              </div>
+            </div>
+
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">⏱</span> Latency — every round-trip adds delay
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">💰</span> Cost — pay per token or per month
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">🔓</span> Privacy risk — your data leaves your machine
+              </li>
+            </ul>
+          </div>
+
+          <!-- RIGHT: Local AI -->
+          <div class="animate-in" style="padding:var(--space-6); background:var(--color-success-light); border-radius:var(--radius-md); border-top: 3px solid var(--color-success);">
+            <h4 style="font-family:var(--font-display); color:var(--color-success); margin-bottom:var(--space-4); font-size:var(--text-xl);">🍋 Local AI (Lemonade)</h4>
+
+            <!-- Flow diagram -->
+            <div style="display:flex; flex-direction:column; gap:var(--space-2); margin-bottom:var(--space-5);">
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🧑</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">You</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-success); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">💻</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Your PC</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-success); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">⚡</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Instant Response</div>
+              </div>
+              <div style="height: calc(1.8rem + var(--space-2) + var(--space-2) + var(--space-sm, 0.375rem))"></div>
+            </div>
+
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">⚡</span> Instant — no network round-trip
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">🆓</span> Free — no subscription, no token fees
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">🔒</span> Private — everything stays on your machine
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Callout -->
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <div class="callout-title">What is Lemonade?</div>
+            <p>Lemonade is <span class="term" data-definition="Software whose code is publicly available for anyone to read, modify, or use for free.">open-source</span>, free, and runs on regular PC hardware — no special cloud account needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: What Lemonade Can Do
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">Four Modalities. One Platform.</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Lemonade is not just a chatbot — it is a full local AI platform covering four modalities.
+        </p>
+
+        <div class="pattern-cards stagger-children">
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🗣️</div>
+            <div class="pattern-title">Speech to Text</div>
+            <div class="pattern-desc">
+              Talk into your mic and get a transcript in seconds.
+              Powered by <span class="term" data-definition="An AI model made by OpenAI that converts spoken audio into text (speech-to-text).">Whisper</span>, running on the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span>.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🧠</div>
+            <div class="pattern-title">Text Generation</div>
+            <div class="pattern-desc">
+              Chat, summarize, and analyze text — like ChatGPT but running entirely on your machine.
+              Powered by an <span class="term" data-definition="Large Language Model — the AI behind ChatGPT. A massive program trained on text that can understand and generate human language.">LLM</span>.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🔊</div>
+            <div class="pattern-title">Text to Speech</div>
+            <div class="pattern-desc">
+              Turn any written text into natural, lifelike voice output.
+              Powered by <span class="term" data-definition="A text-to-speech AI model that converts written text into natural-sounding spoken audio.">Kokoro</span>, running on the CPU.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🎨</div>
+            <div class="pattern-title">Image Generation</div>
+            <div class="pattern-desc">
+              Describe an image in words and watch it appear.
+              Powered by <span class="term" data-definition="An AI model that generates images from text descriptions.">Stable Diffusion</span>, running on your GPU.
+            </div>
+          </div>
+
+        </div>
+
+        <p class="animate-in" style="text-align:center; font-size:var(--text-lg); font-weight:600; font-family:var(--font-display); color:var(--color-accent); margin-top:var(--space-8); padding:var(--space-4); background:var(--color-accent-light); border-radius:var(--radius-md);">
+          All four can run simultaneously on the same PC.
+        </p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: The COMPUTEX Demo — 5 Acts
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎪 The COMPUTEX Demo — 5 Acts</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          At COMPUTEX 2026, AMD ran a fully automated 5-act live demo on a single PC.
+        </p>
+
+        <div class="step-cards" style="display:flex; flex-direction:column; gap:var(--space-4); margin:var(--space-6) 0;">
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-1);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-1); min-width:2rem; font-family:var(--font-display);">1</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🎤 Act 1: Speech In</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="An AI model made by OpenAI that converts spoken audio into text (speech-to-text).">Whisper</span> converts voice to text on the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span>. CPU and GPU sit completely idle.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-2);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-2); min-width:2rem; font-family:var(--font-display);">2</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🧠 Act 2: Brain Thinks</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                The DeepSeek <span class="term" data-definition="Large Language Model — the AI behind ChatGPT. A massive program trained on text that can understand and generate human language.">LLM</span> processes the text. <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> and iGPU work simultaneously in Hybrid mode.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-3);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-3); min-width:2rem; font-family:var(--font-display);">3</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🔊 Act 3: Speech Out</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="A text-to-speech AI model that converts written text into natural-sounding spoken audio.">Kokoro</span> speaks the response aloud. It runs on the CPU while NPU and GPU are free for other tasks.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-4);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-4); min-width:2rem; font-family:var(--font-display);">4</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🎨 Act 4: Image Created</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="An AI model that generates images from text descriptions.">Stable Diffusion</span> generates a visual from the conversation. The GPU takes over at full power.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-5);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-5); min-width:2rem; font-family:var(--font-display);">5</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">💬 Act 5: AI Debate</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                Five different AI models argue a topic simultaneously on the GPU. All at once, on the same laptop.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="animate-in" style="text-align:center; font-size:var(--text-xl); font-weight:700; font-family:var(--font-display); color:var(--color-surface); margin-top:var(--space-6); padding:var(--space-6); background:var(--color-text); border-radius:var(--radius-md); letter-spacing:0.02em;">
+          Three chips. Five AI tasks. One laptop. Zero cloud.
+        </p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: Group Chat — Components Meet
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🤝 Meet the Four Components</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Here are the four main components of Lemonade — meet them.
+        </p>
+
+        <div class="chat-window" id="chat-intro">
+          <div class="chat-messages">
+
+            <div class="chat-message" data-msg="0" data-sender="actor-app" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">🖥</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Desktop App</span>
+                <p>Hi! I am the Desktop App (built with <span class="term" data-definition="A framework for building desktop apps using web technologies. Used by VS Code, Slack, Discord, and many others.">Electron</span>). You interact with me to browse models and start chats.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="1" data-sender="actor-server" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">⚙</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">C++ Server</span>
+                <p>And I am the server running on <span class="term" data-definition="A port is like a door number on a building. Port 13305 is the specific door Lemonade's server listens at for incoming requests.">port 13305</span>. Every AI request flows through me — text, images, speech, everything.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="2" data-sender="actor-router" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-3)">🔀</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-3)">Router</span>
+                <p>I live inside the server. I decide which AI backend handles each request — and make sure nothing crashes.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="3" data-sender="actor-backend" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-4)">🤖</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-4)">Backend</span>
+                <p>And I am one of many backends: llama.cpp, whisper.cpp, or the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> runtime. I do the actual AI math.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="4" data-sender="actor-app" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">🖥</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Desktop App</span>
+                <p>Together, we make local AI feel like cloud AI — just without the cloud.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="chat-typing" style="display:none">
+            <div class="chat-avatar" id="chat-intro-typing-avatar">?</div>
+            <div class="chat-typing-dots">
+              <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+            </div>
+          </div>
+
+          <div class="chat-controls">
+            <button class="btn chat-next-btn">Next Message</button>
+            <button class="btn chat-all-btn">Play All</button>
+            <button class="btn chat-reset-btn">Replay</button>
+            <span class="chat-progress"></span>
+          </div>
+        </div>
+
+        <!-- Architecture legend -->
+        <div class="animate-in" style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-top:var(--space-8);">
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-1); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Desktop App</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Built with Electron · What you see</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-2); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">C++ Server</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Port 13305 · The backbone</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-3); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Router</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Inside the server · Traffic director</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-4); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Backend</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">llama.cpp / whisper.cpp / NPU · Does the AI math</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Why This Matters
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">💡 Why This Matters to You</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          You built something with AI. Now imagine it running offline, instantly, privately — for free.
+        </p>
+
+        <div class="pattern-cards stagger-children">
+
+          <div class="pattern-card">
+            <div class="pattern-icon">💸</div>
+            <div class="pattern-title">No API Bills</div>
+            <div class="pattern-desc">
+              Run 1 million requests or run just 1. Either way, the cost is $0.
+              No subscription, no per-token charges, no surprises.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🔒</div>
+            <div class="pattern-title">Total Privacy</div>
+            <div class="pattern-desc">
+              Medical records, trade secrets, personal notes — they never leave your machine.
+              Zero risk of data breaches, subpoenas, or policy changes.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">⚡</div>
+            <div class="pattern-title">No Rate Limits</div>
+            <div class="pattern-desc">
+              No "you have hit your limit" errors at 2am when you are deep in flow.
+              Your hardware is always available, 100% of the time.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Key insight callout -->
+        <div class="callout callout-accent animate-in" style="margin-top:var(--space-10);">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <div class="callout-title">Key Insight: Drop-in ChatGPT Replacement</div>
+            <p>
+              Lemonade exposes an <span class="term" data-definition="Application Programming Interface — a standardized way for software to talk to software. Like a menu: you order from the menu (API), the kitchen (server) does the work.">API</span> at <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">http://localhost:13305</code> that is fully compatible with OpenAI.
+              Any app built for ChatGPT works with Lemonade — just change one URL.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visual: URL swap -->
+        <div class="animate-in" style="margin-top:var(--space-8); padding:var(--space-6); background:var(--color-bg-code); border-radius:var(--radius-md); font-family:var(--font-mono); font-size:var(--text-sm); line-height:1.8;">
+          <div style="color:#6C7086; margin-bottom:var(--space-2);">// Before — using cloud AI</div>
+          <div style="color:#F38BA8;">base_url = <span style="color:#A6E3A1;">"https://api.openai.com/v1"</span></div>
+          <div style="color:#6C7086; margin-top:var(--space-4); margin-bottom:var(--space-2);">// After — using Lemonade</div>
+          <div style="color:#CDD6F4;">base_url = <span style="color:#A6E3A1;">"http://localhost:13305/api/v0/openai"</span></div>
+          <div style="margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid rgba(255,255,255,0.1); color:#A6E3A1; font-size:var(--text-xs);">✓ Everything else in your code stays exactly the same.</div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</section>

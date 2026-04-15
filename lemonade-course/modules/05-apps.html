@@ -1,0 +1,445 @@
+<section class="module" id="module-5" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">05</span>
+      <h1 class="module-title">Plug In Anything</h1>
+      <p class="module-subtitle">Connect any app to Lemonade — and build your own</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: One URL to Rule Them All
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔌 One URL to Rule Them All</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-4);">
+          Think of Lemonade's <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI API</span> compatibility as a universal travel adapter. Any device (app) built for one power standard (OpenAI) can plug into a different power source (local AI) without rewiring anything inside.
+        </p>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Every app below — from workflow automation to coding assistants — connects through a single address.
+        </p>
+
+        <!-- Plug board visual -->
+        <div style="background:var(--color-bg-code); border-radius:var(--radius-md); padding:var(--space-6); margin:var(--space-6) 0; color:#CDD6F4;">
+          <div style="text-align:center; margin-bottom:var(--space-6);">
+            <div style="font-size:var(--text-lg); font-family:var(--font-mono); color:#A6E3A1; margin-bottom:var(--space-2);">http://localhost:13305/api/v1</div>
+            <div style="font-size:var(--text-sm); color:#6C7086;">← One URL. Every app. Zero cloud.</div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-3); text-align:center;">
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">⚡</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span></div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">💻</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">VS Code</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🌐</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Open WebUI</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🔗</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Continue</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">📊</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Dify</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🤖</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">OpenHands</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🔄</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span></div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">📚</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="A Python framework for connecting LLMs to your own data — documents, PDFs, databases. Great for building AI that knows your specific content.">LlamaIndex</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side-by-side comparison -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); margin:var(--space-6) 0;">
+
+          <!-- LEFT: Cloud AI -->
+          <div class="callout callout-warning animate-in" style="flex-direction:column; align-items:flex-start;">
+            <div style="font-weight:700; font-size:var(--text-base); margin-bottom:var(--space-3); color:var(--color-error);">☁️ Cloud AI</div>
+            <div style="font-family:var(--font-mono); font-size:var(--text-xs); background:rgba(0,0,0,0.15); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); margin-bottom:var(--space-3); word-break:break-all;">https://api.openai.com/v1</div>
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">💳 Paid API keys required</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">⏱ Rate limits apply</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">📤 Data leaves your machine</li>
+            </ul>
+          </div>
+
+          <!-- RIGHT: Lemonade -->
+          <div class="callout callout-info animate-in" style="flex-direction:column; align-items:flex-start;">
+            <div style="font-weight:700; font-size:var(--text-base); margin-bottom:var(--space-3); color:var(--color-info);">🍋 Lemonade</div>
+            <div style="font-family:var(--font-mono); font-size:var(--text-xs); background:rgba(0,0,0,0.15); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); margin-bottom:var(--space-3); word-break:break-all;">http://localhost:13305/api/v1</div>
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">🆓 Free — no account needed</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">♾ Unlimited requests</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">🔒 Everything stays private</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">One Line. That Is All.</span>
+            <p>Change ONE line. That is all it takes to switch any <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible app to run entirely on your PC.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: The Python Client — Line by Line
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🐍 The Python Client — Line by Line</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Here is the complete code to talk to Lemonade from Python — using OpenAI's own library.
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (Python)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">from</span> openai <span class="code-keyword">import</span> <span class="code-function">OpenAI</span></span>
+<span class="code-line"></span>
+<span class="code-line">client = <span class="code-function">OpenAI</span>(</span>
+<span class="code-line">    <span class="code-property">base_url</span>=<span class="code-string">"http://localhost:13305/api/v1"</span>,</span>
+<span class="code-line">    <span class="code-property">api_key</span>=<span class="code-string">"lemonade"</span></span>
+<span class="code-line">)</span>
+<span class="code-line"></span>
+<span class="code-line">completion = client.chat.completions.<span class="code-function">create</span>(</span>
+<span class="code-line">    <span class="code-property">model</span>=<span class="code-string">"Llama-3.2-1B-Instruct-Hybrid"</span>,</span>
+<span class="code-line">    <span class="code-property">messages</span>=[{</span>
+<span class="code-line">        <span class="code-string">"role"</span>: <span class="code-string">"user"</span>,</span>
+<span class="code-line">        <span class="code-string">"content"</span>: <span class="code-string">"What is the capital of France?"</span></span>
+<span class="code-line">    }]</span>
+<span class="code-line">)</span>
+<span class="code-line"><span class="code-function">print</span>(completion.choices[<span class="code-number">0</span>].message.content)</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>from openai import OpenAI</strong> — Import OpenAI's own Python library. No Lemonade SDK needed.</p>
+              <p class="tl"><strong><span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span>=...</strong> — Instead of OpenAI's remote servers, point the client at Lemonade running on this machine.</p>
+              <p class="tl"><strong><span class="term" data-definition="A secret password used to authenticate with an API. OpenAI requires a real key. Lemonade accepts any string because it runs locally — no account to authenticate against.">api_key</span>="lemonade"</strong> — OpenAI needs a real secret key. Lemonade ignores the value — any string works because there is no account to authenticate.</p>
+              <p class="tl"><strong>chat.completions.create(...)</strong> — Send a message to the AI model and wait for a response.</p>
+              <p class="tl"><strong>model="Llama-3.2-1B-Instruct-Hybrid"</strong> — Which model to use. Must be downloaded first with lemonade pull.</p>
+              <p class="tl"><strong>messages=[...]</strong> — The conversation history in the standard chat format used by all <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible APIs.</p>
+              <p class="tl"><strong>print(completion.choices[0].message.content)</strong> — Print the first response the model generated.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Install with: <code style="font-family:var(--font-mono); font-size:var(--text-sm);">pip install openai</code></span>
+            <p>This is OpenAI's official library — no Lemonade-specific package needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: Group Chat — Apps Connect to Lemonade
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🌐 Group Chat — Apps Connect to Lemonade</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Here is what it looks like when multiple apps connect to the same Lemonade server simultaneously.
+        </p>
+
+        <div class="chat-window" id="chat-ecosystem">
+          <div class="chat-messages">
+            <div class="chat-message" data-msg="0" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>I am now listening on http://localhost:13305. <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI API</span> is live. All 9 models are loaded.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="1" data-sender="n8n" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">n8</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)"><span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span> Workflow</span>
+                <p>I need to summarize a document. Sending task through my OpenAI node — <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> pointed to localhost:13305.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="2" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Received. Routing to Llama-3.2-1B-Instruct-Hybrid. <span class="term" data-definition="Sending data in chunks as it is generated rather than waiting for the complete result. LLMs stream tokens so you see words appear one by one, not all at once.">Streaming</span> response back now.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="3" data-sender="vscode" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">VS</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">VS Code + Continue</span>
+                <p>I need a code completion for this TypeScript function. Sending request simultaneously.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="4" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Both requests handled. n8n gets its summary. VS Code gets its completion. Same server. Zero conflict.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="5" data-sender="openwebui" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-3)">OW</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-3)">Open WebUI</span>
+                <p>I want to provide a full chat interface for browsing all 9 models. Connecting now.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="6" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Connected. You can now browse and chat with all models through my API. No sign-up. No cloud. Ever.</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-typing" style="display:none">
+            <div class="chat-avatar" id="chat-ecosystem-typing-avatar">?</div>
+            <div class="chat-typing-dots">
+              <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+            </div>
+          </div>
+          <div class="chat-controls">
+            <button class="btn chat-next-btn">Next Message</button>
+            <button class="btn chat-all-btn">Play All</button>
+            <button class="btn chat-reset-btn">Replay</button>
+            <span class="chat-progress"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: The Realtime API — Beyond Text
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎤 The Realtime API — Beyond Text</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Lemonade also supports the <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span> Realtime API for live audio — the protocol that powers voice assistants.
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (realtime_transcription.py)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">async with</span> websockets.<span class="code-function">connect</span>(</span>
+<span class="code-line">    <span class="code-function">f</span><span class="code-string">"ws://{host}:{port}/v1/realtime"</span>,</span>
+<span class="code-line">    <span class="code-property">subprotocols</span>=[<span class="code-string">"realtime"</span>],</span>
+<span class="code-line">) <span class="code-keyword">as</span> ws:</span>
+<span class="code-line">    <span class="code-keyword">await</span> <span class="code-function">send_audio</span>(ws, audio_queue)</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>websockets.connect(...)</strong> — Open a persistent connection to Lemonade. Unlike HTTP (one question, one answer), this stays open the whole time.</p>
+              <p class="tl"><strong>"ws://.../v1/realtime"</strong> — The realtime <span class="term" data-definition="A specific URL path on a server that handles a particular type of request. /v1/chat/completions handles chat; /v1/realtime handles streaming audio.">endpoint</span>. "<span class="term" data-definition="A type of network connection that stays open and allows continuous two-way communication. Unlike HTTP (one request, one response), WebSocket lets both sides stream data simultaneously — essential for real-time audio.">WebSocket</span>" means a two-way streaming connection.</p>
+              <p class="tl"><strong><span class="term" data-definition="An additional communication layer on top of WebSocket that defines the message format. realtime is the subprotocol following OpenAI's specification for live audio streaming.">subprotocols</span>=["realtime"]</strong> — Identify ourselves as using the OpenAI realtime protocol — the standard format for real-time audio.</p>
+              <p class="tl"><strong>send_audio(ws, audio_queue)</strong> — Stream audio chunks to Lemonade continuously as the microphone captures them. Transcription arrives back in real time.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 pattern cards for Realtime capabilities -->
+        <div class="pattern-cards stagger-children" style="margin-top:var(--space-8); grid-template-columns:repeat(3,1fr);">
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-1);">
+            <div class="pattern-icon" style="background:rgba(42,123,155,0.12); font-size:1.4rem;">🎤</div>
+            <div class="pattern-title" style="color: var(--color-actor-1);">Live Transcription</div>
+            <div class="pattern-desc">
+              Audio <span class="term" data-definition="Sending data in chunks as it is generated rather than waiting for the complete result. LLMs stream tokens so you see words appear one by one, not all at once.">streams</span> in, text streams out in real time. No recording step — words appear as you speak.
+            </div>
+          </div>
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+            <div class="pattern-icon" style="background:rgba(123,109,170,0.12); font-size:1.4rem;">🗣️</div>
+            <div class="pattern-title" style="color: var(--color-actor-3);">Voice Assistants</div>
+            <div class="pattern-desc">
+              Build Siri-like apps entirely on your hardware: listen → think → speak. The full loop, no cloud required.
+            </div>
+          </div>
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+            <div class="pattern-icon" style="background:rgba(45,139,85,0.12); font-size:1.4rem;">📞</div>
+            <div class="pattern-title" style="color: var(--color-actor-5);">Call Analysis</div>
+            <div class="pattern-desc">
+              Process meetings or calls as they happen — transcribe, summarize, and flag action items in real time.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Build Your Own — The Cheat Sheet
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🛠 Build Your Own — The Cheat Sheet</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-8);">
+          Three steps to build any app on Lemonade:
+        </p>
+
+        <!-- 3 numbered step cards -->
+        <div style="display:flex; flex-direction:column; gap:var(--space-5); margin-bottom:var(--space-8);">
+
+          <!-- Step 1 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-2);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-2); min-width:2.5rem; font-family:var(--font-display); line-height:1;">1</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Pick your model</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                Run <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">lemonade pull Llama-3.2-1B-Instruct-Hybrid</code> or browse the Model Manager.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                Choose based on: size, quality, and your hardware — <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> vs GPU vs CPU.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-4);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-4); min-width:2.5rem; font-family:var(--font-display); line-height:1;">2</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Connect your tool</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                Set <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> to <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">http://localhost:13305/api/v1</code>.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                Works with Python's openai library, <span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span>, <span class="term" data-definition="A Python framework for connecting LLMs to your own data — documents, PDFs, databases. Great for building AI that knows your specific content.">LlamaIndex</span>, <span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span>, Open WebUI — anything <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-5);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-5); min-width:2.5rem; font-family:var(--font-display); line-height:1;">3</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Ship locally</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                No internet required. No <span class="term" data-definition="A secret password used to authenticate with an API. OpenAI requires a real key. Lemonade accepts any string because it runs locally — no account to authenticate against.">API key</span> to protect. No data leaving your machine.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                No monthly bill. Your hardware, your AI, your rules.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Pro tip for vibe coders</span>
+            <p>When describing your project to an AI coding agent, say: <em>"Use the OpenAI Python library with base_url set to http://localhost:13305/api/v1 and api_key set to lemonade."</em> The AI will write correct code immediately.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 6: Final Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🏆 Final Challenge</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Three questions to prove you are ready to build with Lemonade.
+        </p>
+
+        <div class="quiz-container" id="quiz-module5">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Final Challenge</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="LangChain uses the openai library internally. Changing base_url in the OpenAI client config propagates to all LangChain calls automatically — one line change, zero app rewrites."
+               data-explanation-wrong="LangChain uses the openai library under the hood. Redirecting base_url in the OpenAI client config is enough — LangChain never knows it switched to local AI.">
+            <h3 class="quiz-question">You have a <span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span> agent using OpenAI. What is the minimum change to switch it to Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Replace all LangChain calls with Lemonade-specific SDK calls</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Set <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> to http://localhost:13305/api/v1 in the OpenAI client config</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Export prompts from LangChain and re-import into the Lemonade UI</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="Real-time audio requires a persistent streaming connection. The WebSocket endpoint at /v1/realtime is designed for this — audio chunks flow in continuously, transcription flows back in real time."
+               data-explanation-wrong="Real-time audio needs a persistent two-way connection, not a one-shot HTTP request. The /v1/realtime WebSocket endpoint handles this.">
+            <h3 class="quiz-question">Your app needs real-time voice transcription (stream audio as the user speaks). Which Lemonade feature handles this?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>POST /v1/chat/completions with an audio file attachment</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Record a full audio file first, then send it to Lemonade in one request</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The <span class="term" data-definition="A type of network connection that stays open and allows continuous two-way communication. Unlike HTTP (one request, one response), WebSocket lets both sides stream data simultaneously — essential for real-time audio.">WebSocket</span> Realtime API at ws://localhost:13305/v1/realtime</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="This description is precise and actionable — it names the exact library, parameter, and value. An AI coding agent can write correct code from this with zero ambiguity."
+               data-explanation-wrong="Vague descriptions force the AI to guess or ask follow-ups. The more precise — library name, parameter name, exact value — the better the code it generates.">
+            <h3 class="quiz-question">You want an AI to build a Python chatbot using Lemonade. Which instruction produces the best code?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Use the openai Python library with base_url='http://localhost:13305/api/v1' and api_key='lemonade'"</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Build a chatbot using Lemonade local AI"</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Build an offline chatbot"</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Try Again</button>
+        </div>
+
+        <!-- Closing celebration -->
+        <div style="text-align:center; padding:var(--space-12) var(--space-6); margin-top:var(--space-8);">
+          <div style="font-size:3rem; margin-bottom:var(--space-4);">🍋</div>
+          <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">You made it.</h2>
+          <p style="color:var(--color-text-secondary); max-width:500px; margin:0 auto var(--space-6);">You now understand how Lemonade routes requests, manages hardware, organizes 159 models, and connects to any app — all without a single cloud dependency.</p>
+          <div style="display:inline-flex; gap:var(--space-3); flex-wrap:wrap; justify-content:center;">
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-accent-light); color:var(--color-accent); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">lemonade launch</span>
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-success-light); color:var(--color-success); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">lemonade pull &lt;model&gt;</span>
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-info-light); color:var(--color-info); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">base_url = localhost:13305</span>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</section>

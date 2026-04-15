@@ -1,0 +1,368 @@
+<section class="module" id="module-3" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">The Control Tower</h1>
+      <p class="module-subtitle">How Lemonade's C++ server routes requests, loads models, and keeps everything running</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: The Server — Four Components
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">✈️ The Control Tower — Four Components</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Think of the Lemonade server as an air traffic control tower: dozens of AI models want runway access, and the tower decides who lands when — preventing collisions and keeping traffic flowing.
+        </p>
+
+        <div class="pattern-cards stagger-children" style="grid-template-columns: repeat(2, 1fr);">
+
+          <!-- Card 1: C++ Server -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-2);">
+            <div class="pattern-icon" style="background: rgba(42,123,155,0.12); font-size:1.4rem;">⚙️</div>
+            <div class="pattern-title" style="color: var(--color-actor-2);">C++ Server</div>
+            <div class="pattern-desc">
+              Runs on <span class="term" data-definition="A port is like a numbered door on a computer. Programs listen for messages on specific ports. Lemonade always uses door 13305.">port 13305</span>. Always listening. Receives AI requests from any app and dispatches them.
+              A compiled <span class="term" data-definition="A compiled, executable program — the final form of C++ code after translation to machine instructions. Runs directly without an interpreter.">binary</span> that starts instantly and uses almost zero CPU when idle.
+            </div>
+          </div>
+
+          <!-- Card 2: Router -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+            <div class="pattern-icon" style="background: rgba(123,109,170,0.12); font-size:1.4rem;">🔀</div>
+            <div class="pattern-title" style="color: var(--color-actor-3);">Router</div>
+            <div class="pattern-desc">
+              Traffic director inside the server. Manages which models are loaded, enforces memory limits, prevents hardware conflicts.
+            </div>
+          </div>
+
+          <!-- Card 3: ModelManager -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-4);">
+            <div class="pattern-icon" style="background: rgba(212,168,67,0.12); font-size:1.4rem;">📋</div>
+            <div class="pattern-title" style="color: var(--color-actor-4);">ModelManager</div>
+            <div class="pattern-desc">
+              Knows all 159 models. Handles downloading from <span class="term" data-definition="A platform for sharing AI models and datasets, similar to GitHub but for machine learning files. Lemonade downloads models from here automatically.">Hugging Face</span>, local caching, and serving model metadata to the UI.
+            </div>
+          </div>
+
+          <!-- Card 4: BackendManager -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+            <div class="pattern-icon" style="background: rgba(45,139,85,0.12); font-size:1.4rem;">🔌</div>
+            <div class="pattern-title" style="color: var(--color-actor-5);">BackendManager</div>
+            <div class="pattern-desc">
+              Knows how to install and launch <span class="term" data-definition="Running an AI model to generate output. Separate from training (teaching the model). Inference is the using step.">inference</span> engines — llama.cpp, whisper.cpp, the NPU runtime, and more.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Always Ready, Never Wasteful</span>
+            <p>The server is a compiled <span class="term" data-definition="A compiled programming language known for raw speed. Unlike Python (interpreted line by line), C++ converts to machine code before running — making servers 10-100x faster for high-throughput workloads.">C++</span> <span class="term" data-definition="A compiled, executable program — the final form of C++ code after translation to machine instructions. Runs directly without an interpreter.">binary</span>. It starts in milliseconds and uses almost no CPU when idle — it is designed to run quietly in the background, always ready.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: Data Flow Animation
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">📡 A Message's Journey</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Here is the complete journey of a single chat message — from the moment you press Enter to when you see the first word of the response.
+        </p>
+
+        <div class="flow-animation" data-steps="[
+          {&quot;highlight&quot;:&quot;flow-actor-1&quot;,&quot;label&quot;:&quot;You type a message and press Enter&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-2&quot;,&quot;label&quot;:&quot;App sends an OpenAI-format HTTP request to localhost:13305&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-1&quot;,&quot;to&quot;:&quot;actor-2&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-3&quot;,&quot;label&quot;:&quot;Server receives the request and identifies the target model&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-2&quot;,&quot;to&quot;:&quot;actor-3&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-4&quot;,&quot;label&quot;:&quot;Router checks: is the model loaded? If not, load it first&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-3&quot;,&quot;to&quot;:&quot;actor-4&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-5&quot;,&quot;label&quot;:&quot;Backend (llama.cpp or NPU runtime) runs the AI inference&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-4&quot;,&quot;to&quot;:&quot;actor-5&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-1&quot;,&quot;label&quot;:&quot;Tokens stream back to you in real time&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-5&quot;,&quot;to&quot;:&quot;actor-1&quot;}
+        ]">
+          <div class="flow-actors">
+            <div class="flow-actor" id="flow-actor-1">
+              <div class="flow-actor-icon">🧑</div>
+              <span>You / App</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-2">
+              <div class="flow-actor-icon">🌐</div>
+              <span>HTTP Layer</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-3">
+              <div class="flow-actor-icon">⚙️</div>
+              <span>Server</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-4">
+              <div class="flow-actor-icon">🔀</div>
+              <span>Router</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-5">
+              <div class="flow-actor-icon">🤖</div>
+              <span>Backend</span>
+            </div>
+          </div>
+          <div class="flow-packet" id="flow-packet"></div>
+          <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+          <div class="flow-controls">
+            <button class="btn flow-next-btn">Next Step</button>
+            <button class="btn flow-reset-btn">Restart</button>
+            <span class="flow-progress"></span>
+          </div>
+        </div>
+
+        <!-- Concept legend -->
+        <div class="animate-in" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--space-3); margin-top:var(--space-6);">
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-1); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🧑</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">You / App</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Any app using the <span class="term" data-definition="The programming interface for ChatGPT. Lemonade copies this interface exactly — any app built for ChatGPT works with Lemonade without code changes.">OpenAI API</span> format</div>
+          </div>
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-2); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🌐</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">HTTP Layer</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);"><span class="term" data-definition="HyperText Transfer Protocol — the language of the web. When your browser loads a page or your app calls an API, it speaks HTTP.">HTTP</span> on <span class="term" data-definition="A port is like a numbered door on a computer. Programs listen for messages on specific ports. Lemonade always uses door 13305.">port 13305</span> — same format as OpenAI</div>
+          </div>
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-5); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🤖</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Backend</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);"><span class="term" data-definition="The basic unit of text in LLMs. Roughly one word or word-fragment. Streaming means tokens arrive one by one as generated — you see text appear in real time.">Tokens</span> stream back as they are generated</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: Code ↔ English — Router Load Logic
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔒 The Router's Load Logic</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          When a model needs to load, the Router runs this exact code to make sure only one model loads at a time:
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (router.cpp)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">void</span> <span class="code-function">Router::load_model</span>(</span>
+<span class="code-line">    <span class="code-keyword">const</span> std::string&amp; model_name, ...)</span>
+<span class="code-line">{</span>
+<span class="code-line">  std::unique_lock&lt;std::mutex&gt; lock(load_mutex_);</span>
+<span class="code-line">  <span class="code-keyword">while</span> (is_loading_) {</span>
+<span class="code-line">    load_cv_.wait(lock);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  is_loading_ = <span class="code-keyword">true</span>;</span>
+<span class="code-line">  WrappedServer* existing =</span>
+<span class="code-line">    <span class="code-function">find_server_by_model_name</span>(model_name);</span>
+<span class="code-line">  <span class="code-keyword">if</span> (existing) {</span>
+<span class="code-line">    existing-&gt;<span class="code-function">update_access_time</span>();</span>
+<span class="code-line">    is_loading_ = <span class="code-keyword">false</span>;</span>
+<span class="code-line">    <span class="code-keyword">return</span>;</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>Router::load_model</strong> — A function that loads an AI model into memory so it can handle requests.</p>
+              <p class="tl"><strong>unique_lock&lt;<span class="term" data-definition="Short for mutual exclusion. A mutex is a lock that ensures only one piece of code accesses shared data at a time — preventing crashes from simultaneous access.">mutex</span>&gt;</strong> — Grab a "do not disturb" lock. Only one model can load at a time — this prevents crashes from simultaneous loads.</p>
+              <p class="tl"><strong>while (is_loading_) wait</strong> — If another model is currently loading, sleep and wait patiently until it finishes.</p>
+              <p class="tl"><strong>is_loading_ = true</strong> — Mark "loading in progress" so any other requests know to wait.</p>
+              <p class="tl"><strong>find_server_by_model_name</strong> — Check if this model is already in memory.</p>
+              <p class="tl"><strong>if (existing)</strong> — If it IS already loaded, just update the timestamp and return immediately — no reload needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">A Real Engineering Safety Measure</span>
+            <p>The <span class="term" data-definition="Short for mutual exclusion. A mutex is a lock that ensures only one piece of code accesses shared data at a time — preventing crashes from simultaneous access.">mutex</span> (locking mechanism) prevents two models from loading at the same time — which could corrupt GPU memory or crash the NPU driver. This is a real engineering safety measure.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: LRU Eviction + NPU Exclusivity
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🏨 Memory Management: Hotel Rooms &amp; NPU Rules</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Memory is finite — Lemonade has two strategies for managing what stays loaded.
+        </p>
+
+        <!-- LRU Hotel Room Visual -->
+        <div class="animate-in" style="background:var(--color-surface); border-radius:var(--radius-lg); padding:var(--space-8); box-shadow:var(--shadow-md); margin-bottom:var(--space-8);">
+          <div style="font-family:var(--font-display); font-size:var(--text-lg); font-weight:700; margin-bottom:var(--space-6); display:flex; align-items:center; gap:var(--space-3);">
+            🏨 <span>Loaded Model Slots (like hotel rooms)</span>
+          </div>
+
+          <!-- Room grid -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-bottom:var(--space-6);">
+            <div style="padding:var(--space-5); background:var(--color-info-light); border:2px solid var(--color-info); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2);">🧠</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 1</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2);">Gemma-3</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-muted); background:var(--color-error-light); border-radius:var(--radius-full); padding:2px 8px; display:inline-block; color:var(--color-error);">idle 5 min</div>
+            </div>
+            <div style="padding:var(--space-5); background:var(--color-success-light); border:2px solid var(--color-success); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2);">🧠</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 2</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2);">Phi-4</div>
+              <div style="font-size:var(--text-xs); background:var(--color-success-light); border-radius:var(--radius-full); padding:2px 8px; display:inline-block; color:var(--color-success);">idle 1 min</div>
+            </div>
+            <div style="padding:var(--space-5); background:var(--color-bg-warm); border:2px dashed var(--color-border); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2); opacity:0.3;">🚪</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 3</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2); color:var(--color-text-muted);">EMPTY</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-muted);">available</div>
+            </div>
+          </div>
+
+          <!-- Arrows and explanations -->
+          <div style="display:flex; flex-direction:column; gap:var(--space-4);">
+            <div style="display:flex; align-items:flex-start; gap:var(--space-4); padding:var(--space-4); background:var(--color-success-light); border-radius:var(--radius-sm); border-left:3px solid var(--color-success);">
+              <span style="font-size:1.3rem;">✅</span>
+              <div>
+                <div style="font-weight:700; font-size:var(--text-sm); color:var(--color-success);">New model arrives → loads into empty Room 3</div>
+                <div style="font-size:var(--text-xs); color:var(--color-text-secondary); margin-top:var(--space-1);">Space available — no eviction needed.</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:var(--space-4); padding:var(--space-4); background:var(--color-error-light); border-radius:var(--radius-sm); border-left:3px solid var(--color-error);">
+              <span style="font-size:1.3rem;">🚨</span>
+              <div>
+                <div style="font-weight:700; font-size:var(--text-sm); color:var(--color-error);">Another model arrives → Room 3 is full! Evict Room 1 (oldest)</div>
+                <div style="font-size:var(--text-xs); color:var(--color-text-secondary); margin-top:var(--space-1);"><span class="term" data-definition="Least Recently Used — an eviction strategy where the item unused the longest gets removed first. Used in caches, operating systems, and model managers.">LRU</span> (Least Recently Used) — the model sitting idle the longest gets <span class="term" data-definition="Unloading a model from memory to make room for another. The evicted model can be reloaded later if needed.">evicted</span> first.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NPU Exclusivity code translation -->
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); font-weight:700; margin-bottom:var(--space-4);">⚡ The NPU Special Case: Strict Exclusivity</h3>
+
+        <div class="translation-block animate-in" style="margin-top:var(--space-8)">
+          <div class="translation-code">
+            <span class="translation-label">CODE (router.cpp — NPU rule)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">if</span> (device_type &amp; DEVICE_NPU) {</span>
+<span class="code-line">  <span class="code-keyword">if</span> (model_info.recipe == <span class="code-string">"ryzenai-llm"</span> ||</span>
+<span class="code-line">      model_info.recipe == <span class="code-string">"whispercpp"</span>) {</span>
+<span class="code-line">    <span class="code-keyword">if</span> (<span class="code-function">has_npu_server</span>()) {</span>
+<span class="code-line">      <span class="code-function">evict_all_npu_servers</span>();</span>
+<span class="code-line">    }</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>if (device_type &amp; DEVICE_NPU)</strong> — If this new model wants to use the NPU...</p>
+              <p class="tl"><strong>if (recipe == "ryzenai-llm" || "whispercpp")</strong> — ...and it requires exclusive NPU access (not shared)...</p>
+              <p class="tl"><strong>if (has_npu_server())</strong> — ...and something is already running on the NPU...</p>
+              <p class="tl"><strong>evict_all_npu_servers()</strong> — ...kick everything off the NPU immediately. This new model gets sole access.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning animate-in">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-content">
+            <span class="callout-title">NPU Exclusivity: Expected, Not a Bug</span>
+            <p>The NPU is different from GPU: it operates on strict exclusivity. Only ONE model can use the NPU at a time. Switching between Whisper and a Hybrid LLM means a 10-15 second reload — this is expected, not a bug.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🧪 Check Your Understanding</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Three scenarios — apply what you know about the Router, NPU exclusivity, and Lemonade's OpenAI compatibility.
+        </p>
+
+        <div class="quiz-container" id="quiz-module3">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Apply What You Learned</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Whisper and ryzenai-llm both require exclusive NPU access. Switching between them means the Router evicts the current model and loads the new one — that load time IS the 10-15 seconds. By design, not a bug."
+               data-explanation-wrong="Think about what Whisper and Hybrid LLMs have in common — and what the NPU exclusivity rule says about switching between them.">
+            <h3 class="quiz-question">Users report switching between Whisper and a Hybrid LLM takes 10-15 seconds. What is happening?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The server has a routing bug</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The NPU evicts the old model and loads the new one — expected due to NPU exclusivity</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The GPU is overloaded and throttling</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="The Router respects the max-loaded-models config. Setting it to 3 allows 3 models to stay warm in GPU memory simultaneously. The COMPUTEX demo uses max-loaded-models=9."
+               data-explanation-wrong="The Router controls how many models stay in memory. Which config command would change that limit?">
+            <h3 class="quiz-question">You want 3 LLMs loaded simultaneously for comparison. max-loaded-models defaults to 1. What do you run?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade config set max-loaded-models=3</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade backends --parallel=3</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade launch --gpu-split=3</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="One URL change — that is all. Lemonade is OpenAI API-compatible. The library never knows it switched to local AI."
+               data-explanation-wrong="Lemonade was designed as a drop-in replacement for the OpenAI API. Think about what changing base_url would accomplish.">
+            <h3 class="quiz-question">You have a Python app using the openai library pointing to api.openai.com. How do you switch it to Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Rewrite the app using a Lemonade-specific SDK</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>You cannot — Lemonade uses a different protocol</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Change base_url to http://localhost:13305/api/v1 — one line change</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>

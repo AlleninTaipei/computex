@@ -1,0 +1,370 @@
+<section class="module" id="module-4" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">159 Models, One Catalog</h1>
+      <p class="module-subtitle">How server_models.json powers the entire model ecosystem</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: The Catalog — Big Numbers
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎵 The Vinyl Shop Catalog</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Think of <span class="term" data-definition="JavaScript Object Notation — a human-readable file format for structured data, like a well-organized spreadsheet saved as plain text. Used everywhere for configuration and data exchange.">JSON</span> file <code>server_models.json</code> as a vinyl record shop catalog — every record (model) listed with its label (source), genre (<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>), and size, so you can browse it, order a record (<code>lemonade pull</code>), and the store plays it on the right turntable (backend).
+        </p>
+
+        <!-- Stats wall -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin:var(--space-8) 0;">
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-accent);">159</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Total Models</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-3);">5</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Recipe Types</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-2);">81</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">AMD-Optimized</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-4);">4</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Modalities</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1); font-family:var(--font-mono);">text · image · speech · <span class="term" data-definition="Text-to-Speech — AI that converts written text into spoken audio.">TTS</span></div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-5);">36</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Community <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> Models</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md); display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="font-size:2.4rem; margin-bottom:var(--space-2);">📄</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">One Plain-Text File</div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">One File to Rule Them All</span>
+            <p>All 159 models are described in a single plain-text file: <code>src/cpp/resources/server_models.json</code>. You can open it in any editor.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: Anatomy of a Model Entry
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔬 Anatomy of a Model Entry</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Every model entry has the same 4-5 fields — once you know them, you can read any entry in the catalog.
+        </p>
+
+        <!-- First translation block: Kokoro TTS (simple) -->
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (server_models.json)</span>
+            <pre><code><span class="code-line"><span class="code-string">"kokoro-v1"</span>: {</span>
+<span class="code-line">  <span class="code-property">"checkpoint"</span>: <span class="code-string">"mikkoph/kokoro-onnx"</span>,</span>
+<span class="code-line">  <span class="code-property">"recipe"</span>: <span class="code-string">"kokoro"</span>,</span>
+<span class="code-line">  <span class="code-property">"suggested"</span>: <span class="code-keyword">true</span>,</span>
+<span class="code-line">  <span class="code-property">"labels"</span>: [<span class="code-string">"tts"</span>, <span class="code-string">"speech"</span>],</span>
+<span class="code-line">  <span class="code-property">"size"</span>: <span class="code-number">0.34</span></span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>"kokoro-v1"</strong> — The model name. Type this in the CLI: <code>lemonade run kokoro-v1</code></p>
+              <p class="tl"><strong>"<span class="term" data-definition="A saved snapshot of an AI model after training — its learned knowledge stored as numbers. The checkpoint field in server_models.json tells Lemonade where to download those weights from.">checkpoint</span>"</strong> — Download from <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span>: user "mikkoph", repo "kokoro-onnx"</p>
+              <p class="tl"><strong>"<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>": "kokoro"</strong> — Use the Kokoro <span class="term" data-definition="Open Neural Network Exchange — a standardized file format for AI models. AMD pre-converts models to ONNX format, optimized for their NPU runtime.">ONNX</span> inference engine (specialized for text-to-speech)</p>
+              <p class="tl"><strong>"suggested": true</strong> — Show in the "Recommended" list in the Model Manager UI</p>
+              <p class="tl"><strong>"labels"</strong> — Tags used to filter models in the UI (<span class="term" data-definition="Text-to-Speech — AI that converts written text into spoken audio.">tts</span> = text-to-speech)</p>
+              <p class="tl"><strong>"size": 0.34</strong> — Only 340 MB! Tiny. Great for laptops with limited storage.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second translation block: Whisper with NPU cache (complex) -->
+        <div class="translation-block animate-in" style="margin-top:var(--space-6)">
+          <div class="translation-code">
+            <span class="translation-label">CODE (server_models.json — with NPU)</span>
+            <pre><code><span class="code-line"><span class="code-string">"Whisper-Large-v3-Turbo"</span>: {</span>
+<span class="code-line">  <span class="code-property">"checkpoints"</span>: {</span>
+<span class="code-line">    <span class="code-property">"main"</span>: <span class="code-string">"ggerganov/whisper.cpp:ggml-large-v3-turbo.bin"</span>,</span>
+<span class="code-line">    <span class="code-property">"npu_cache"</span>: <span class="code-string">"amd/whisper-large-turbo-onnx-npu:..."</span></span>
+<span class="code-line">  },</span>
+<span class="code-line">  <span class="code-property">"recipe"</span>: <span class="code-string">"whispercpp"</span></span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>"checkpoints"</strong> (plural!) — Two separate files: one for CPU/GPU, one for NPU</p>
+              <p class="tl"><strong>"main"</strong> — The base Whisper model in <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> format — used when no NPU is present</p>
+              <p class="tl"><strong>"npu_cache"</strong> — AMD's pre-compiled NPU-optimized audio <span class="term" data-definition="The part of an AI model that processes input and converts it to a compact internal representation. In Whisper, the encoder processes audio; the NPU cache accelerates this step.">encoder</span>. Downloaded separately, activates automatically on XDNA hardware</p>
+              <p class="tl"><strong>"<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>": "whispercpp"</strong> — Use whisper.cpp as the inference engine</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">The npu_cache Field — Additive, Not Required</span>
+            <p>Notice "npu_cache" — this is a pre-compiled version of the audio <span class="term" data-definition="The part of an AI model that processes input and converts it to a compact internal representation. In Whisper, the encoder processes audio; the NPU cache accelerates this step.">encoder</span>, optimized for AMD XDNA. Lemonade downloads both files and picks automatically based on your hardware.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: The Hugging Face Connection
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🤗 The Hugging Face Connection</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> is the GitHub of AI — where researchers publish models for anyone to download.
+        </p>
+
+        <!-- 3-column source diagram -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--space-4); margin:var(--space-6) 0;">
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-accent);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🤗</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">Hugging Face Hub</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">82,000+ AI models. Free to download. The world's largest public AI model library.</p>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-actor-2);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🔴</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">AMD Organization (amd/)</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">81 models pre-converted and optimized for Ryzen AI. Official AMD releases with NPU support.</p>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-actor-5);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🌍</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">Community (unsloth/, etc.)</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">36 <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> models from third-party publishers. Wider variety, often more aggressive <span class="term" data-definition="Compressing an AI model by reducing number precision. Full-precision uses 32-bit numbers; quantized versions use 4-8 bits, making models 4-8x smaller with minimal quality loss.">quantization</span>.</p>
+          </div>
+
+        </div>
+
+        <!-- lemonade pull — 4 step cards -->
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); font-weight:700; margin-top:var(--space-8); margin-bottom:var(--space-4);">⬇️ What happens when you run <code>lemonade pull Phi-4-mini-instruct-Hybrid</code></h3>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6);">
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-accent); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-accent); line-height:1; flex-shrink:0;">1</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Catalog Lookup</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Look up "Phi-4-mini-instruct-Hybrid" in <code>server_models.json</code> to find its <span class="term" data-definition="A saved snapshot of an AI model after training — its learned knowledge stored as numbers. The checkpoint field in server_models.json tells Lemonade where to download those weights from.">checkpoint</span> URL</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-3); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-3); line-height:1; flex-shrink:0;">2</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Download from Hugging Face</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Connect to <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> and download <span class="term" data-definition="Open Neural Network Exchange — a standardized file format for AI models. AMD pre-converts models to ONNX format, optimized for their NPU runtime.">ONNX</span> model files (~5.1 GB)</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-4); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-4); line-height:1; flex-shrink:0;">3</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Cache Locally</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Files saved to <code>~/.lemonade/models/</code> — subsequent loads are instant, no re-download</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-5); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-5); line-height:1; flex-shrink:0;">4</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Ready to Use</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Model appears in the UI and in <code>lemonade list</code> — ready to run immediately</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Beyond the Built-In Catalog</span>
+            <p>You can also add custom models. Drop any <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> file in the models folder, or paste a <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> URL into the Model Manager's "Add Custom Model" panel.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: The Model Manager UI — Architecture Diagram
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🖥️ The Model Manager UI</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          The Model Manager is the visual interface to the catalog — browse, download, and manage models without touching the command line.
+        </p>
+
+        <div class="arch-diagram animate-in">
+          <div class="arch-zone" style="background:var(--color-surface); border-radius:var(--radius-md); padding:var(--space-6); box-shadow:var(--shadow-md);">
+            <h4 class="arch-zone-label" style="font-family:var(--font-display); font-size:var(--text-sm); text-transform:uppercase; letter-spacing:.05em; color:var(--color-text-muted); margin-bottom:var(--space-4);">Model Manager — Click any panel to learn what it does</h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3);">
+
+              <div class="arch-component"
+                   data-desc="Browse the full catalog of 159 built-in models. Filter by recipe type (LLM, image, speech), size, or whether they are AMD-optimized. Click any model to see details and download."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">📋</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Browse Catalog</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="Shows download progress, file size, and estimated time remaining. Downloads happen in the background — you can still chat while a model downloads. Multiple models can download simultaneously."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">⬇️</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Download Manager</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="Paste any Hugging Face URL or local file path to add a model not in the built-in catalog. Lemonade auto-detects the recipe based on the file format (GGUF → llamacpp, ONNX → ryzenai-llm)."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">➕</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Add Custom Model</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="See which models are currently loaded in GPU memory and how much VRAM they are using. One click to unload a model and free the memory. Useful when switching between tasks."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">🗂️</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Loaded Models</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="arch-description" id="arch-desc" style="margin-top:var(--space-4); padding:var(--space-4); background:var(--color-accent-light); border-radius:var(--radius-sm); color:var(--color-text); min-height:3rem; font-size:var(--text-sm); line-height:var(--leading-loose);">Click any panel above to learn what it does</div>
+        </div>
+
+        <!-- Quick reference row -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-top:var(--space-8);">
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-accent);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">🔍</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Filter by label</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Use "tts", "speech", "vision", or "amd" to narrow the 159-model list instantly</div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-actor-3);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">💾</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);"><span class="term" data-definition="Video RAM — the memory on a GPU. Loading an AI model means copying its weights into VRAM. A 7B model needs 4-8 GB of VRAM depending on quantization level.">VRAM</span> usage visible</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Loaded Models panel shows live memory usage per model — unload with one click</div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-actor-5);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">🔄</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Background downloads</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Start a 5 GB download, keep chatting — the Download Manager tracks it silently</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🧪 Check Your Understanding</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Three scenarios — apply what you know about the model catalog, npu_cache, and memory management.
+        </p>
+
+        <div class="quiz-container" id="quiz-module4">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Apply What You Learned</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="The Model Manager has a dedicated Add Custom Model panel. Paste the Hugging Face URL (or local file path) and Lemonade downloads and registers it — no JSON editing required."
+               data-explanation-wrong="While editing server_models.json is technically possible, the Model Manager UI handles custom models through the Add Custom Model panel without touching config files.">
+            <h3 class="quiz-question">You find a GGUF model on Hugging Face not in the built-in catalog. How do you use it in Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>You cannot — Lemonade only supports models in server_models.json</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Use the Add Custom Model panel in the Model Manager</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Manually edit server_models.json and restart the server</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="npu_cache is additive — the model works fine without NPU; the cache just makes it faster when XDNA hardware is present. Lemonade picks automatically."
+               data-explanation-wrong="npu_cache is not exclusive. The model has two versions: one for CPU/GPU (main) and one for NPU (npu_cache). On systems without NPU, Lemonade uses the main checkpoint.">
+            <h3 class="quiz-question">A model entry has an "npu_cache" field. What does this mean for systems WITHOUT an NPU?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model will fail — it requires NPU hardware</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model only runs on NPU, not on GPU or CPU</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model works fine — Lemonade uses the "main" checkpoint and ignores npu_cache</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="max-loaded-models is the Router config that controls how many model backends stay in GPU memory simultaneously. Set it to 2 and both models stay warm, ready to respond instantly."
+               data-explanation-wrong="This is not controlled in server_models.json — that file just describes available models. The Router config (max-loaded-models) controls how many stay loaded at once.">
+            <h3 class="quiz-question">You want to compare two LLMs side-by-side with instant switching. What config change allows both to stay in memory?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade config set max-loaded-models=2</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Add "simultaneous": true to both model entries in server_models.json</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade pull --keep-loaded both models</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Try Again</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lemonade: The AI Factory in Your Pocket</title>
+
+  <!-- Google Fonts: Bricolage Grotesque · DM Sans · JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Teal accent — cool, techy, pairs with AMD's AI-PC direction -->
+  <style>
+    :root {
+      --color-accent:       #2A7B9B;
+      --color-accent-hover: #1F6280;
+      --color-accent-light: #E4F2F7;
+      --color-accent-muted: #5A9DB8;
+    }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="progress-bar" id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="nav-inner">
+      <span class="nav-title">Lemonade: The AI Factory in Your Pocket</span>
+      <div class="nav-dots" id="nav-dots" role="tablist">
+        <button class="nav-dot" data-target="module-1" data-tooltip="Your PC as an AI Factory" role="tab" aria-label="Module 1: Your PC as an AI Factory"></button>
+        <button class="nav-dot" data-target="module-2" data-tooltip="Three Chips, Three Jobs" role="tab" aria-label="Module 2: Three Chips, Three Jobs"></button>
+        <button class="nav-dot" data-target="module-3" data-tooltip="The Control Tower" role="tab" aria-label="Module 3: The Control Tower"></button>
+        <button class="nav-dot" data-target="module-4" data-tooltip="159 Models, One Catalog" role="tab" aria-label="Module 4: 159 Models, One Catalog"></button>
+        <button class="nav-dot" data-target="module-5" data-tooltip="Plug In Anything" role="tab" aria-label="Module 5: Plug In Anything"></button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <!-- modules/*.html content is assembled here by build.sh -->
+<section class="module" id="module-1" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">01</span>
+      <h1 class="module-title">Your PC as an AI Factory</h1>
+      <p class="module-subtitle">What Lemonade does — and why it changes everything</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: Cloud AI vs Local AI
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">☁️ vs 🍋 — Where Does Your AI Live?</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-2);">
+          Every time you use a cloud AI, your words travel to a data center thousands of miles away — and back.
+          That journey costs money, takes time, and puts your private thoughts in someone else's hands.
+        </p>
+
+        <!-- Side-by-side comparison -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); margin:var(--space-8) 0;">
+
+          <!-- LEFT: Cloud AI -->
+          <div class="animate-in" style="padding:var(--space-6); background:var(--color-error-light); border-radius:var(--radius-md); border-top: 3px solid var(--color-error);">
+            <h4 style="font-family:var(--font-display); color:var(--color-error); margin-bottom:var(--space-4); font-size:var(--text-xl);">☁️ Cloud AI</h4>
+
+            <!-- Flow diagram -->
+            <div style="display:flex; flex-direction:column; gap:var(--space-2); margin-bottom:var(--space-5);">
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🧑</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">You</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🌐</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Internet</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🏭</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Remote Data Center</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-error); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">💬</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Response (eventually)</div>
+              </div>
+            </div>
+
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">⏱</span> Latency — every round-trip adds delay
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">💰</span> Cost — pay per token or per month
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-error);">
+                <span style="font-size:1rem; margin-top:1px;">🔓</span> Privacy risk — your data leaves your machine
+              </li>
+            </ul>
+          </div>
+
+          <!-- RIGHT: Local AI -->
+          <div class="animate-in" style="padding:var(--space-6); background:var(--color-success-light); border-radius:var(--radius-md); border-top: 3px solid var(--color-success);">
+            <h4 style="font-family:var(--font-display); color:var(--color-success); margin-bottom:var(--space-4); font-size:var(--text-xl);">🍋 Local AI (Lemonade)</h4>
+
+            <!-- Flow diagram -->
+            <div style="display:flex; flex-direction:column; gap:var(--space-2); margin-bottom:var(--space-5);">
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">🧑</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">You</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-success); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">💻</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Your PC</div>
+              </div>
+              <div style="padding-left:1.1rem; color:var(--color-success); font-size:var(--text-xl); line-height:1;">↓</div>
+              <div style="display:flex; align-items:center; gap:var(--space-3);">
+                <div style="font-size:1.8rem;">⚡</div>
+                <div style="font-size:var(--text-sm); font-weight:600; color:var(--color-text);">Instant Response</div>
+              </div>
+              <div style="height: calc(1.8rem + var(--space-2) + var(--space-2) + var(--space-sm, 0.375rem))"></div>
+            </div>
+
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">⚡</span> Instant — no network round-trip
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">🆓</span> Free — no subscription, no token fees
+              </li>
+              <li style="display:flex; gap:var(--space-2); align-items:flex-start; font-size:var(--text-sm); color:var(--color-success);">
+                <span style="font-size:1rem; margin-top:1px;">🔒</span> Private — everything stays on your machine
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Callout -->
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <div class="callout-title">What is Lemonade?</div>
+            <p>Lemonade is <span class="term" data-definition="Software whose code is publicly available for anyone to read, modify, or use for free.">open-source</span>, free, and runs on regular PC hardware — no special cloud account needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: What Lemonade Can Do
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">Four Modalities. One Platform.</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Lemonade is not just a chatbot — it is a full local AI platform covering four modalities.
+        </p>
+
+        <div class="pattern-cards stagger-children">
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🗣️</div>
+            <div class="pattern-title">Speech to Text</div>
+            <div class="pattern-desc">
+              Talk into your mic and get a transcript in seconds.
+              Powered by <span class="term" data-definition="An AI model made by OpenAI that converts spoken audio into text (speech-to-text).">Whisper</span>, running on the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span>.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🧠</div>
+            <div class="pattern-title">Text Generation</div>
+            <div class="pattern-desc">
+              Chat, summarize, and analyze text — like ChatGPT but running entirely on your machine.
+              Powered by an <span class="term" data-definition="Large Language Model — the AI behind ChatGPT. A massive program trained on text that can understand and generate human language.">LLM</span>.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🔊</div>
+            <div class="pattern-title">Text to Speech</div>
+            <div class="pattern-desc">
+              Turn any written text into natural, lifelike voice output.
+              Powered by <span class="term" data-definition="A text-to-speech AI model that converts written text into natural-sounding spoken audio.">Kokoro</span>, running on the CPU.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🎨</div>
+            <div class="pattern-title">Image Generation</div>
+            <div class="pattern-desc">
+              Describe an image in words and watch it appear.
+              Powered by <span class="term" data-definition="An AI model that generates images from text descriptions.">Stable Diffusion</span>, running on your GPU.
+            </div>
+          </div>
+
+        </div>
+
+        <p class="animate-in" style="text-align:center; font-size:var(--text-lg); font-weight:600; font-family:var(--font-display); color:var(--color-accent); margin-top:var(--space-8); padding:var(--space-4); background:var(--color-accent-light); border-radius:var(--radius-md);">
+          All four can run simultaneously on the same PC.
+        </p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: The COMPUTEX Demo — 5 Acts
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎪 The COMPUTEX Demo — 5 Acts</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          At COMPUTEX 2026, AMD ran a fully automated 5-act live demo on a single PC.
+        </p>
+
+        <div class="step-cards" style="display:flex; flex-direction:column; gap:var(--space-4); margin:var(--space-6) 0;">
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-1);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-1); min-width:2rem; font-family:var(--font-display);">1</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🎤 Act 1: Speech In</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="An AI model made by OpenAI that converts spoken audio into text (speech-to-text).">Whisper</span> converts voice to text on the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span>. CPU and GPU sit completely idle.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-2);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-2); min-width:2rem; font-family:var(--font-display);">2</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🧠 Act 2: Brain Thinks</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                The DeepSeek <span class="term" data-definition="Large Language Model — the AI behind ChatGPT. A massive program trained on text that can understand and generate human language.">LLM</span> processes the text. <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> and iGPU work simultaneously in Hybrid mode.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-3);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-3); min-width:2rem; font-family:var(--font-display);">3</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🔊 Act 3: Speech Out</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="A text-to-speech AI model that converts written text into natural-sounding spoken audio.">Kokoro</span> speaks the response aloud. It runs on the CPU while NPU and GPU are free for other tasks.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-4);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-4); min-width:2rem; font-family:var(--font-display);">4</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">🎨 Act 4: Image Created</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                <span class="term" data-definition="An AI model that generates images from text descriptions.">Stable Diffusion</span> generates a visual from the conversation. The GPU takes over at full power.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-card animate-in" style="display:flex; gap:var(--space-4); padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-5);">
+            <div style="font-size:var(--text-2xl); font-weight:800; color:var(--color-actor-5); min-width:2rem; font-family:var(--font-display);">5</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:600; margin-bottom:var(--space-1); font-size:var(--text-lg);">💬 Act 5: AI Debate</h4>
+              <p style="color:var(--color-text-secondary); margin:0;">
+                Five different AI models argue a topic simultaneously on the GPU. All at once, on the same laptop.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="animate-in" style="text-align:center; font-size:var(--text-xl); font-weight:700; font-family:var(--font-display); color:var(--color-surface); margin-top:var(--space-6); padding:var(--space-6); background:var(--color-text); border-radius:var(--radius-md); letter-spacing:0.02em;">
+          Three chips. Five AI tasks. One laptop. Zero cloud.
+        </p>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: Group Chat — Components Meet
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🤝 Meet the Four Components</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Here are the four main components of Lemonade — meet them.
+        </p>
+
+        <div class="chat-window" id="chat-intro">
+          <div class="chat-messages">
+
+            <div class="chat-message" data-msg="0" data-sender="actor-app" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">🖥</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Desktop App</span>
+                <p>Hi! I am the Desktop App (built with <span class="term" data-definition="A framework for building desktop apps using web technologies. Used by VS Code, Slack, Discord, and many others.">Electron</span>). You interact with me to browse models and start chats.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="1" data-sender="actor-server" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">⚙</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">C++ Server</span>
+                <p>And I am the server running on <span class="term" data-definition="A port is like a door number on a building. Port 13305 is the specific door Lemonade's server listens at for incoming requests.">port 13305</span>. Every AI request flows through me — text, images, speech, everything.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="2" data-sender="actor-router" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-3)">🔀</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-3)">Router</span>
+                <p>I live inside the server. I decide which AI backend handles each request — and make sure nothing crashes.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="3" data-sender="actor-backend" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-4)">🤖</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-4)">Backend</span>
+                <p>And I am one of many backends: llama.cpp, whisper.cpp, or the <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> runtime. I do the actual AI math.</p>
+              </div>
+            </div>
+
+            <div class="chat-message" data-msg="4" data-sender="actor-app" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">🖥</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)">Desktop App</span>
+                <p>Together, we make local AI feel like cloud AI — just without the cloud.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="chat-typing" style="display:none">
+            <div class="chat-avatar" id="chat-intro-typing-avatar">?</div>
+            <div class="chat-typing-dots">
+              <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+            </div>
+          </div>
+
+          <div class="chat-controls">
+            <button class="btn chat-next-btn">Next Message</button>
+            <button class="btn chat-all-btn">Play All</button>
+            <button class="btn chat-reset-btn">Replay</button>
+            <span class="chat-progress"></span>
+          </div>
+        </div>
+
+        <!-- Architecture legend -->
+        <div class="animate-in" style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-top:var(--space-8);">
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-1); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Desktop App</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Built with Electron · What you see</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-2); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">C++ Server</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Port 13305 · The backbone</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-3); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Router</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Inside the server · Traffic director</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-3) var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm);">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--color-actor-4); flex-shrink:0;"></div>
+            <div>
+              <div style="font-weight:600; font-size:var(--text-sm);">Backend</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">llama.cpp / whisper.cpp / NPU · Does the AI math</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Why This Matters
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">💡 Why This Matters to You</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          You built something with AI. Now imagine it running offline, instantly, privately — for free.
+        </p>
+
+        <div class="pattern-cards stagger-children">
+
+          <div class="pattern-card">
+            <div class="pattern-icon">💸</div>
+            <div class="pattern-title">No API Bills</div>
+            <div class="pattern-desc">
+              Run 1 million requests or run just 1. Either way, the cost is $0.
+              No subscription, no per-token charges, no surprises.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">🔒</div>
+            <div class="pattern-title">Total Privacy</div>
+            <div class="pattern-desc">
+              Medical records, trade secrets, personal notes — they never leave your machine.
+              Zero risk of data breaches, subpoenas, or policy changes.
+            </div>
+          </div>
+
+          <div class="pattern-card">
+            <div class="pattern-icon">⚡</div>
+            <div class="pattern-title">No Rate Limits</div>
+            <div class="pattern-desc">
+              No "you have hit your limit" errors at 2am when you are deep in flow.
+              Your hardware is always available, 100% of the time.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Key insight callout -->
+        <div class="callout callout-accent animate-in" style="margin-top:var(--space-10);">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <div class="callout-title">Key Insight: Drop-in ChatGPT Replacement</div>
+            <p>
+              Lemonade exposes an <span class="term" data-definition="Application Programming Interface — a standardized way for software to talk to software. Like a menu: you order from the menu (API), the kitchen (server) does the work.">API</span> at <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">http://localhost:13305</code> that is fully compatible with OpenAI.
+              Any app built for ChatGPT works with Lemonade — just change one URL.
+            </p>
+          </div>
+        </div>
+
+        <!-- Visual: URL swap -->
+        <div class="animate-in" style="margin-top:var(--space-8); padding:var(--space-6); background:var(--color-bg-code); border-radius:var(--radius-md); font-family:var(--font-mono); font-size:var(--text-sm); line-height:1.8;">
+          <div style="color:#6C7086; margin-bottom:var(--space-2);">// Before — using cloud AI</div>
+          <div style="color:#F38BA8;">base_url = <span style="color:#A6E3A1;">"https://api.openai.com/v1"</span></div>
+          <div style="color:#6C7086; margin-top:var(--space-4); margin-bottom:var(--space-2);">// After — using Lemonade</div>
+          <div style="color:#CDD6F4;">base_url = <span style="color:#A6E3A1;">"http://localhost:13305/api/v0/openai"</span></div>
+          <div style="margin-top:var(--space-4); padding-top:var(--space-4); border-top:1px solid rgba(255,255,255,0.1); color:#A6E3A1; font-size:var(--text-xs);">✓ Everything else in your code stays exactly the same.</div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</section>
+<section class="module" id="module-2" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">02</span>
+      <h1 class="module-title">Three Chips, Three Jobs</h1>
+      <p class="module-subtitle">How <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span>, GPU, and CPU divide the AI workload</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════
+           SCREEN 1 — THE THREE CHIPS
+           ═══════════════════════════════════════════════ -->
+      <div class="screen animate-in">
+        <h2 class="screen-heading">The Three Chips</h2>
+
+        <p>A film set has specialists who never cross roles: the sound engineer (NPU), the cinematographer (GPU), and the director (CPU) — you would not ask the sound engineer to operate the camera. Your AMD laptop works exactly the same way, with three fundamentally different processors waiting to be assigned the right job.</p>
+
+        <!-- VISUAL: three chip cards -->
+        <div class="pattern-cards stagger-children" style="margin-top: var(--space-8);">
+
+          <!-- NPU Card -->
+          <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-2);">
+            <div class="pattern-icon" style="background: var(--color-actor-2); color: white;">🧠</div>
+            <p class="pattern-title">
+              <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span>
+              (Neural Processing Unit)
+            </p>
+            <p class="pattern-desc">
+              AMD XDNA — built specifically for AI math. Incredibly power-efficient. Like a dedicated calculator that only knows how to do AI calculations.
+            </p>
+            <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-actor-2); font-weight: 600; letter-spacing: 0.05em;">
+                <span class="term" data-definition="Tera Operations Per Second — how many AI calculations a chip can do per second. 55 TOPS means 55 trillion operations per second.">55 TOPS</span>
+              </span>
+              <span style="font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono);">Best for: Low-power, sustained AI tasks</span>
+            </div>
+          </div>
+
+          <!-- GPU Card -->
+          <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-5);">
+            <div class="pattern-icon" style="background: var(--color-actor-5); color: white;">🎮</div>
+            <p class="pattern-title">GPU (Graphics Processing Unit)</p>
+            <p class="pattern-desc">
+              AMD Radeon — massively parallel. Runs thousands of calculations simultaneously. Originally for games, now essential for AI.
+            </p>
+            <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-actor-5); font-weight: 600; letter-spacing: 0.05em;">
+                <span class="term" data-definition="Integrated GPU — built into the same chip as the CPU, sharing system RAM. Less powerful than a dedicated GPU but far more power-efficient.">iGPU</span>
+                &nbsp;/&nbsp;
+                <span class="term" data-definition="Dedicated GPU — a separate graphics card with its own video memory (like a Radeon RX 9070). More powerful but uses more power.">dGPU</span>
+              </span>
+              <span style="font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono);">Best for: Parallel AI tasks, image generation</span>
+            </div>
+          </div>
+
+          <!-- CPU Card -->
+          <div class="pattern-card animate-in" style="border-top: 3px solid var(--color-actor-4);">
+            <div class="pattern-icon" style="background: var(--color-actor-4); color: white;">💻</div>
+            <p class="pattern-title">CPU (Central Processing Unit)</p>
+            <p class="pattern-desc">
+              x86_64 — the general-purpose brain. Flexible but not specialized for AI. Great for coordination and lighter tasks.
+            </p>
+            <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
+              <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-actor-4); font-weight: 600; letter-spacing: 0.05em;">x86_64</span>
+              <span style="font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono);">Best for: Orchestration, TTS, fallback</span>
+            </div>
+          </div>
+
+        </div><!-- /pattern-cards -->
+
+        <!-- CALLOUT: shared die -->
+        <div class="callout callout-info animate-in" style="margin-top: var(--space-8);">
+          <span class="callout-icon">💡</span>
+          <div class="callout-content">
+            <span class="callout-title">One die, three specialists</span>
+            <p>On AMD Ryzen AI laptops, all three chips share the same die and memory — they work simultaneously without copying data between them.</p>
+          </div>
+        </div>
+
+      </div><!-- /screen 1 -->
+
+
+      <!-- ═══════════════════════════════════════════════
+           SCREEN 2 — WHO DOES WHAT
+           ═══════════════════════════════════════════════ -->
+      <div class="screen animate-in" style="margin-top: var(--space-16);">
+        <h2 class="screen-heading">Who Does What</h2>
+
+        <p>In the COMPUTEX demo, each AI task was assigned to the chip best suited for it:</p>
+
+        <!-- JOB ASSIGNMENT TABLE -->
+        <div class="animate-in" style="margin-top: var(--space-6); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-border);">
+          <table style="width: 100%; border-collapse: collapse; font-size: var(--text-sm);">
+            <thead>
+              <tr style="background: var(--color-bg-code);">
+                <th style="padding: var(--space-4) var(--space-5); text-align: left; color: #CDD6F4; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-right: 1px solid rgba(255,255,255,0.08);">AI Task</th>
+                <th style="padding: var(--space-4) var(--space-5); text-align: left; color: #CDD6F4; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; border-right: 1px solid rgba(255,255,255,0.08);">Chip</th>
+                <th style="padding: var(--space-4) var(--space-5); text-align: left; color: #CDD6F4; font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;">Why</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: var(--color-surface);">
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); font-weight: 500;">🎤 Speech Recognition (Whisper)</td>
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+                  <span style="display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-2); background: var(--color-info-light); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);">
+                    <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span>
+                    (XDNA)
+                  </span>
+                </td>
+                <td style="padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); color: var(--color-text-secondary);">Most efficient for sustained audio encoding</td>
+              </tr>
+              <tr style="background: var(--color-surface-warm);">
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); font-weight: 500;">🧠 LLM Chat (Hybrid)</td>
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+                  <span style="display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-2); background: var(--color-info-light); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);">
+                    <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span>
+                    +
+                    <span class="term" data-definition="Integrated GPU — built into the same chip as the CPU, sharing system RAM. Less powerful than a dedicated GPU but far more power-efficient.">iGPU</span>
+                  </span>
+                </td>
+                <td style="padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); color: var(--color-text-secondary);">Model split across chips; both run simultaneously</td>
+              </tr>
+              <tr style="background: var(--color-surface);">
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); font-weight: 500;">🔊 Text to Speech (Kokoro)</td>
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+                  <span style="display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-4); background: #FDF3D8; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);">CPU</span>
+                </td>
+                <td style="padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); color: var(--color-text-secondary);">Light computation; CPU free while NPU/GPU are busy</td>
+              </tr>
+              <tr style="background: var(--color-surface-warm);">
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light); font-weight: 500;">🎨 Image Generation (SD-Turbo)</td>
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); border-bottom: 1px solid var(--color-border-light);">
+                  <span style="display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-5); background: var(--color-success-light); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);">GPU</span>
+                </td>
+                <td style="padding: var(--space-4) var(--space-5); border-bottom: 1px solid var(--color-border-light); color: var(--color-text-secondary);">Parallel synthesis needs raw GPU parallelism</td>
+              </tr>
+              <tr style="background: var(--color-surface);">
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light); font-weight: 500;">💬 Multi-model Debate (5x)</td>
+                <td style="padding: var(--space-4) var(--space-5); border-right: 1px solid var(--color-border-light);">
+                  <span style="display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-5); background: var(--color-success-light); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);">GPU (<span class="term" data-definition="A cross-platform graphics API that works on AMD, NVIDIA, and Intel GPUs on both Windows and Linux — without needing proprietary drivers like CUDA or ROCm.">Vulkan</span>)</span>
+                </td>
+                <td style="padding: var(--space-4) var(--space-5); color: var(--color-text-secondary);">5 concurrent models; <span class="term" data-definition="A cross-platform graphics API that works on AMD, NVIDIA, and Intel GPUs on both Windows and Linux — without needing proprietary drivers like CUDA or ROCm.">Vulkan</span> enables cross-GPU parallel</td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- /table -->
+
+        <!-- VISUAL: simultaneous parallelism diagram -->
+        <div class="animate-in" style="margin-top: var(--space-8); background: var(--color-surface); border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-sm);">
+          <p style="font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted); margin-bottom: var(--space-5);">Running simultaneously — right now in the demo</p>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 140px; background: var(--color-info-light); border: 2px solid var(--color-actor-2); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">🧠</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-2);">NPU</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-1);">Whisper ASR</div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--color-text-muted); font-size: var(--text-xl); font-weight: 300;">+</div>
+            <div style="flex: 1; min-width: 140px; background: var(--color-success-light); border: 2px solid var(--color-actor-5); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">🎮</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-5);">GPU</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-1);">LLM + Image Gen</div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--color-text-muted); font-size: var(--text-xl); font-weight: 300;">+</div>
+            <div style="flex: 1; min-width: 140px; background: #FDF3D8; border: 2px solid var(--color-actor-4); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">💻</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-4);">CPU</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-1);">Kokoro TTS</div>
+            </div>
+            <div style="display: flex; align-items: center; color: var(--color-text-muted); font-size: var(--text-xl); font-weight: 300;">=</div>
+            <div style="flex: 1; min-width: 140px; background: var(--color-accent-light); border: 2px solid var(--color-accent); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.5rem; margin-bottom: var(--space-2);">⚡</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-accent);">Zero idle time</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-1);">All chips busy</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /screen 2 -->
+
+
+      <!-- ═══════════════════════════════════════════════
+           SCREEN 3 — SOFTWARE STACK FLOW ANIMATION
+           ═══════════════════════════════════════════════ -->
+      <div class="screen animate-in" style="margin-top: var(--space-16);">
+        <h2 class="screen-heading">The Software Stack</h2>
+
+        <p>Here is what happens under the hood when you run a single CLI command:</p>
+
+        <!-- FLOW ANIMATION -->
+        <div class="flow-animation animate-in" data-steps='[
+          {"highlight":"flow-actor-1","label":"You type: lemonade run Gemma-3-4b-it-GGUF"},
+          {"highlight":"flow-actor-2","label":"Lemonade Router looks up the recipe: llamacpp + Vulkan","packet":true,"from":"actor-1","to":"actor-2"},
+          {"highlight":"flow-actor-3","label":"llama.cpp loads the GGUF model file from disk","packet":true,"from":"actor-2","to":"actor-3"},
+          {"highlight":"flow-actor-4","label":"Vulkan backend sends computation to the GPU","packet":true,"from":"actor-3","to":"actor-4"},
+          {"highlight":"flow-actor-5","label":"GPU generates tokens and streams them back to you","packet":true,"from":"actor-4","to":"actor-5"}
+        ]'>
+          <div class="flow-actors">
+            <div class="flow-actor" id="flow-actor-1">
+              <div class="flow-actor-icon">🧑</div>
+              <span>You</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-2">
+              <div class="flow-actor-icon">🔀</div>
+              <span>Router</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-3">
+              <div class="flow-actor-icon">📦</div>
+              <span>llama.cpp</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-4">
+              <div class="flow-actor-icon">🎮</div>
+              <span>Vulkan</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-5">
+              <div class="flow-actor-icon">⚡</div>
+              <span>GPU</span>
+            </div>
+          </div>
+          <div class="flow-packet" id="flow-packet"></div>
+          <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+          <div class="flow-controls">
+            <button class="btn flow-next-btn">Next Step</button>
+            <button class="btn flow-reset-btn">Restart</button>
+            <span class="flow-progress"></span>
+          </div>
+        </div>
+
+        <!-- RECIPE REFERENCE: static summary of all five stacks -->
+        <div class="animate-in" style="margin-top: var(--space-8);">
+          <p style="font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted); margin-bottom: var(--space-4);">The five recipe types — each routes to a different chip</p>
+          <div class="badge-list">
+            <div class="badge-item">
+              <span class="badge-code">ryzenai-llm</span>
+              <span class="badge-desc"><span class="term" data-definition="AMD's proprietary inference runtime for running AI models on the Ryzen AI NPU and GPU together. Only works on AMD Ryzen AI hardware.">AMD's NPU+GPU hybrid runtime</span> — uses <span class="term" data-definition="Open Neural Network Exchange — a file format that many AI runtimes can load. AMD pre-converts models to ONNX for their NPU runtime.">ONNX</span> format. The &ldquo;Hybrid&rdquo; models.</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-code">llamacpp</span>
+              <span class="badge-desc">llama.cpp — uses <span class="term" data-definition="A compressed file format for AI models, used by llama.cpp. Think of it as a ZIP file containing an AI model's learned knowledge.">GGUF</span> format, GPU via <span class="term" data-definition="A cross-platform graphics API that works on AMD, NVIDIA, and Intel GPUs on both Windows and Linux — without needing proprietary drivers like CUDA or ROCm.">Vulkan</span> or <span class="term" data-definition="AMD's compute platform for AI and HPC, mainly on Linux. Lemonade uses Vulkan instead for consumer PCs because it is more broadly compatible.">ROCm</span>.</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-code">whispercpp</span>
+              <span class="badge-desc">whisper.cpp — speech recognition, routed to the <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span> for power efficiency.</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-code">sd-cpp</span>
+              <span class="badge-desc">stable-diffusion.cpp — image generation, GPU only via <span class="term" data-definition="A cross-platform graphics API that works on AMD, NVIDIA, and Intel GPUs on both Windows and Linux — without needing proprietary drivers like CUDA or ROCm.">Vulkan</span>.</span>
+            </div>
+            <div class="badge-item">
+              <span class="badge-code">kokoro</span>
+              <span class="badge-desc">Kokoro <span class="term" data-definition="Open Neural Network Exchange — a file format that many AI runtimes can load. AMD pre-converts models to ONNX for their NPU runtime.">ONNX</span> TTS — text to speech, runs on CPU while the other chips are busy.</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /screen 3 -->
+
+
+      <!-- ═══════════════════════════════════════════════
+           SCREEN 4 — CODE ↔ ENGLISH TRANSLATION
+           ═══════════════════════════════════════════════ -->
+      <div class="screen animate-in" style="margin-top: var(--space-16);">
+        <h2 class="screen-heading">Code &harr; English: The Recipe System</h2>
+
+        <p>Every model in Lemonade has a JSON entry that specifies exactly which chip and engine to use.</p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (server_models.json)</span>
+            <pre><code><span class="code-line"><span class="code-string">"Phi-4-mini-instruct-Hybrid"</span>: {</span>
+<span class="code-line">  <span class="code-property">"checkpoint"</span>: <span class="code-string">"amd/Phi-4-mini-instruct-onnx-ryzenai-1.7-hybrid"</span>,</span>
+<span class="code-line">  <span class="code-property">"recipe"</span>: <span class="code-string">"ryzenai-llm"</span>,</span>
+<span class="code-line">  <span class="code-property">"suggested"</span>: <span class="code-keyword">true</span>,</span>
+<span class="code-line">  <span class="code-property">"size"</span>: <span class="code-number">5.1</span></span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>"Phi-4-mini-instruct-Hybrid"</strong> — This model's name. Type it in the CLI or select it in the app.</p>
+              <p class="tl"><strong>"checkpoint"</strong> — Download this model from AMD's <span class="term" data-definition="The GitHub of AI models — a website where anyone can publish and download AI models for free.">Hugging Face</span> organization — pre-optimized for Ryzen AI hardware.</p>
+              <p class="tl"><strong>"recipe": "ryzenai-llm"</strong> — Use AMD's special <span class="term" data-definition="AMD's proprietary inference runtime for running AI models on the Ryzen AI NPU and GPU together. Only works on AMD Ryzen AI hardware.">NPU+GPU runtime</span> to run this model. This is what makes it "Hybrid."</p>
+              <p class="tl"><strong>"suggested": true</strong> — Show this in the "Recommended" section of the Model Manager UI.</p>
+              <p class="tl"><strong>"size": 5.1</strong> — 5.1 GB download. Shown in the UI so you know what you're getting into.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISUAL: recipe comparison grid -->
+        <div class="animate-in" style="margin-top: var(--space-6);">
+          <p style="font-family: var(--font-mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-muted); margin-bottom: var(--space-4);">Same model weights, different preparation</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-3);">
+            <div style="background: var(--color-info-light); border: 1px solid var(--color-actor-2); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.25rem; margin-bottom: var(--space-2);">🧠</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-2); margin-bottom: var(--space-1);">ryzenai-llm</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary);">ONNX &rarr; NPU+GPU</div>
+            </div>
+            <div style="background: var(--color-success-light); border: 1px solid var(--color-actor-5); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.25rem; margin-bottom: var(--space-2);">🎮</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-5); margin-bottom: var(--space-1);">llamacpp</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary);">GGUF &rarr; GPU (Vulkan)</div>
+            </div>
+            <div style="background: #FDF3D8; border: 1px solid var(--color-actor-4); border-radius: var(--radius-md); padding: var(--space-4); text-align: center;">
+              <div style="font-size: 1.25rem; margin-bottom: var(--space-2);">💻</div>
+              <div style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 700; color: var(--color-actor-4); margin-bottom: var(--space-1);">kokoro / cpu</div>
+              <div style="font-size: var(--text-xs); color: var(--color-text-secondary);">ONNX &rarr; CPU</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent animate-in" style="margin-top: var(--space-6);">
+          <span class="callout-icon">🍳</span>
+          <div class="callout-content">
+            <span class="callout-title">The recipe is everything</span>
+            <p>The "recipe" field is the critical piece. It is like specifying a cooking method: same ingredients (model weights), different preparation (CPU vs GPU vs <span class="term" data-definition="Neural Processing Unit — a chip built specifically for AI math. Power-efficient and purpose-built, unlike the GPU which was originally for graphics.">NPU</span>).</p>
+          </div>
+        </div>
+
+      </div><!-- /screen 4 -->
+
+
+      <!-- ═══════════════════════════════════════════════
+           SCREEN 5 — QUIZ
+           ═══════════════════════════════════════════════ -->
+      <div class="screen animate-in" style="margin-top: var(--space-16);">
+        <h2 class="screen-heading">Test Your Understanding</h2>
+
+        <p>Three questions — think about which chip handles each situation best.</p>
+
+        <div class="quiz-container" id="quiz-module2">
+          <h3 style="font-family: var(--font-display); margin-bottom: var(--space-6);">Test Your Understanding</h3>
+
+          <!-- Question 1 -->
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Vulkan on the GPU is designed for parallel workloads. The GPU can juggle multiple model threads simultaneously — that is why the 5-model debate in the COMPUTEX demo uses Vulkan."
+               data-explanation-wrong="Think about which chip handles parallel workloads best. The NPU is great for single-model efficiency; the GPU shines when you want to run many things at once.">
+            <h3 class="quiz-question">You want to run 5 AI models simultaneously. Which backend makes the most sense?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>ryzenai-llm (NPU runtime)</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>llamacpp + Vulkan (GPU)</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>kokoro (TTS engine)</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Question 2 -->
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="The NPU is specifically designed for power-efficient AI math. Whisper on NPU draws a fraction of the power that the GPU would — critical for a laptop on battery."
+               data-explanation-wrong="Consider which chip was built for sustained, power-efficient AI tasks. Hint: it is not the GPU (power hungry) or CPU (slow for AI math).">
+            <h3 class="quiz-question">Your app transcribes audio and the laptop is on battery. Which chip gives the best battery life?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>NPU (XDNA)</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>GPU (Vulkan)</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>CPU</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <!-- Question 3 -->
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="This is exactly what the COMPUTEX demo does — NPU handles Whisper while CPU handles Kokoro. They do not compete for the same hardware, so both run in parallel. Zero waiting."
+               data-explanation-wrong="The magic of three chips is that they work independently at the same time. Transcription and TTS use different chips — no need to share resources.">
+            <h3 class="quiz-question">You are building a voice assistant that BOTH transcribes AND speaks. What is the smart architecture?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Use NPU for everything — it handles all AI tasks</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Use GPU for everything — it is the most powerful chip</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>NPU for Whisper (transcription) + CPU for Kokoro (TTS) — they run simultaneously</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module2')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module2')">Try Again</button>
+        </div><!-- /quiz-container -->
+
+      </div><!-- /screen 5 -->
+
+    </div><!-- /module-body -->
+  </div><!-- /module-content -->
+</section>
+<section class="module" id="module-3" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">03</span>
+      <h1 class="module-title">The Control Tower</h1>
+      <p class="module-subtitle">How Lemonade's C++ server routes requests, loads models, and keeps everything running</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: The Server — Four Components
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">✈️ The Control Tower — Four Components</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Think of the Lemonade server as an air traffic control tower: dozens of AI models want runway access, and the tower decides who lands when — preventing collisions and keeping traffic flowing.
+        </p>
+
+        <div class="pattern-cards stagger-children" style="grid-template-columns: repeat(2, 1fr);">
+
+          <!-- Card 1: C++ Server -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-2);">
+            <div class="pattern-icon" style="background: rgba(42,123,155,0.12); font-size:1.4rem;">⚙️</div>
+            <div class="pattern-title" style="color: var(--color-actor-2);">C++ Server</div>
+            <div class="pattern-desc">
+              Runs on <span class="term" data-definition="A port is like a numbered door on a computer. Programs listen for messages on specific ports. Lemonade always uses door 13305.">port 13305</span>. Always listening. Receives AI requests from any app and dispatches them.
+              A compiled <span class="term" data-definition="A compiled, executable program — the final form of C++ code after translation to machine instructions. Runs directly without an interpreter.">binary</span> that starts instantly and uses almost zero CPU when idle.
+            </div>
+          </div>
+
+          <!-- Card 2: Router -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+            <div class="pattern-icon" style="background: rgba(123,109,170,0.12); font-size:1.4rem;">🔀</div>
+            <div class="pattern-title" style="color: var(--color-actor-3);">Router</div>
+            <div class="pattern-desc">
+              Traffic director inside the server. Manages which models are loaded, enforces memory limits, prevents hardware conflicts.
+            </div>
+          </div>
+
+          <!-- Card 3: ModelManager -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-4);">
+            <div class="pattern-icon" style="background: rgba(212,168,67,0.12); font-size:1.4rem;">📋</div>
+            <div class="pattern-title" style="color: var(--color-actor-4);">ModelManager</div>
+            <div class="pattern-desc">
+              Knows all 159 models. Handles downloading from <span class="term" data-definition="A platform for sharing AI models and datasets, similar to GitHub but for machine learning files. Lemonade downloads models from here automatically.">Hugging Face</span>, local caching, and serving model metadata to the UI.
+            </div>
+          </div>
+
+          <!-- Card 4: BackendManager -->
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+            <div class="pattern-icon" style="background: rgba(45,139,85,0.12); font-size:1.4rem;">🔌</div>
+            <div class="pattern-title" style="color: var(--color-actor-5);">BackendManager</div>
+            <div class="pattern-desc">
+              Knows how to install and launch <span class="term" data-definition="Running an AI model to generate output. Separate from training (teaching the model). Inference is the using step.">inference</span> engines — llama.cpp, whisper.cpp, the NPU runtime, and more.
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Always Ready, Never Wasteful</span>
+            <p>The server is a compiled <span class="term" data-definition="A compiled programming language known for raw speed. Unlike Python (interpreted line by line), C++ converts to machine code before running — making servers 10-100x faster for high-throughput workloads.">C++</span> <span class="term" data-definition="A compiled, executable program — the final form of C++ code after translation to machine instructions. Runs directly without an interpreter.">binary</span>. It starts in milliseconds and uses almost no CPU when idle — it is designed to run quietly in the background, always ready.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: Data Flow Animation
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">📡 A Message's Journey</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Here is the complete journey of a single chat message — from the moment you press Enter to when you see the first word of the response.
+        </p>
+
+        <div class="flow-animation" data-steps="[
+          {&quot;highlight&quot;:&quot;flow-actor-1&quot;,&quot;label&quot;:&quot;You type a message and press Enter&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-2&quot;,&quot;label&quot;:&quot;App sends an OpenAI-format HTTP request to localhost:13305&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-1&quot;,&quot;to&quot;:&quot;actor-2&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-3&quot;,&quot;label&quot;:&quot;Server receives the request and identifies the target model&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-2&quot;,&quot;to&quot;:&quot;actor-3&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-4&quot;,&quot;label&quot;:&quot;Router checks: is the model loaded? If not, load it first&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-3&quot;,&quot;to&quot;:&quot;actor-4&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-5&quot;,&quot;label&quot;:&quot;Backend (llama.cpp or NPU runtime) runs the AI inference&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-4&quot;,&quot;to&quot;:&quot;actor-5&quot;},
+          {&quot;highlight&quot;:&quot;flow-actor-1&quot;,&quot;label&quot;:&quot;Tokens stream back to you in real time&quot;,&quot;packet&quot;:true,&quot;from&quot;:&quot;actor-5&quot;,&quot;to&quot;:&quot;actor-1&quot;}
+        ]">
+          <div class="flow-actors">
+            <div class="flow-actor" id="flow-actor-1">
+              <div class="flow-actor-icon">🧑</div>
+              <span>You / App</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-2">
+              <div class="flow-actor-icon">🌐</div>
+              <span>HTTP Layer</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-3">
+              <div class="flow-actor-icon">⚙️</div>
+              <span>Server</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-4">
+              <div class="flow-actor-icon">🔀</div>
+              <span>Router</span>
+            </div>
+            <div class="flow-actor" id="flow-actor-5">
+              <div class="flow-actor-icon">🤖</div>
+              <span>Backend</span>
+            </div>
+          </div>
+          <div class="flow-packet" id="flow-packet"></div>
+          <div class="flow-step-label" id="flow-label">Click "Next Step" to begin</div>
+          <div class="flow-controls">
+            <button class="btn flow-next-btn">Next Step</button>
+            <button class="btn flow-reset-btn">Restart</button>
+            <span class="flow-progress"></span>
+          </div>
+        </div>
+
+        <!-- Concept legend -->
+        <div class="animate-in" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--space-3); margin-top:var(--space-6);">
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-1); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🧑</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">You / App</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Any app using the <span class="term" data-definition="The programming interface for ChatGPT. Lemonade copies this interface exactly — any app built for ChatGPT works with Lemonade without code changes.">OpenAI API</span> format</div>
+          </div>
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-2); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🌐</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">HTTP Layer</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);"><span class="term" data-definition="HyperText Transfer Protocol — the language of the web. When your browser loads a page or your app calls an API, it speaks HTTP.">HTTP</span> on <span class="term" data-definition="A port is like a numbered door on a computer. Programs listen for messages on specific ports. Lemonade always uses door 13305.">port 13305</span> — same format as OpenAI</div>
+          </div>
+          <div style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); border-left:3px solid var(--color-actor-5); box-shadow:var(--shadow-sm);">
+            <div style="font-size:1.4rem; margin-bottom:var(--space-2);">🤖</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Backend</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);"><span class="term" data-definition="The basic unit of text in LLMs. Roughly one word or word-fragment. Streaming means tokens arrive one by one as generated — you see text appear in real time.">Tokens</span> stream back as they are generated</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: Code ↔ English — Router Load Logic
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔒 The Router's Load Logic</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          When a model needs to load, the Router runs this exact code to make sure only one model loads at a time:
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (router.cpp)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">void</span> <span class="code-function">Router::load_model</span>(</span>
+<span class="code-line">    <span class="code-keyword">const</span> std::string&amp; model_name, ...)</span>
+<span class="code-line">{</span>
+<span class="code-line">  std::unique_lock&lt;std::mutex&gt; lock(load_mutex_);</span>
+<span class="code-line">  <span class="code-keyword">while</span> (is_loading_) {</span>
+<span class="code-line">    load_cv_.wait(lock);</span>
+<span class="code-line">  }</span>
+<span class="code-line">  is_loading_ = <span class="code-keyword">true</span>;</span>
+<span class="code-line">  WrappedServer* existing =</span>
+<span class="code-line">    <span class="code-function">find_server_by_model_name</span>(model_name);</span>
+<span class="code-line">  <span class="code-keyword">if</span> (existing) {</span>
+<span class="code-line">    existing-&gt;<span class="code-function">update_access_time</span>();</span>
+<span class="code-line">    is_loading_ = <span class="code-keyword">false</span>;</span>
+<span class="code-line">    <span class="code-keyword">return</span>;</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>Router::load_model</strong> — A function that loads an AI model into memory so it can handle requests.</p>
+              <p class="tl"><strong>unique_lock&lt;<span class="term" data-definition="Short for mutual exclusion. A mutex is a lock that ensures only one piece of code accesses shared data at a time — preventing crashes from simultaneous access.">mutex</span>&gt;</strong> — Grab a "do not disturb" lock. Only one model can load at a time — this prevents crashes from simultaneous loads.</p>
+              <p class="tl"><strong>while (is_loading_) wait</strong> — If another model is currently loading, sleep and wait patiently until it finishes.</p>
+              <p class="tl"><strong>is_loading_ = true</strong> — Mark "loading in progress" so any other requests know to wait.</p>
+              <p class="tl"><strong>find_server_by_model_name</strong> — Check if this model is already in memory.</p>
+              <p class="tl"><strong>if (existing)</strong> — If it IS already loaded, just update the timestamp and return immediately — no reload needed.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">A Real Engineering Safety Measure</span>
+            <p>The <span class="term" data-definition="Short for mutual exclusion. A mutex is a lock that ensures only one piece of code accesses shared data at a time — preventing crashes from simultaneous access.">mutex</span> (locking mechanism) prevents two models from loading at the same time — which could corrupt GPU memory or crash the NPU driver. This is a real engineering safety measure.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: LRU Eviction + NPU Exclusivity
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🏨 Memory Management: Hotel Rooms &amp; NPU Rules</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Memory is finite — Lemonade has two strategies for managing what stays loaded.
+        </p>
+
+        <!-- LRU Hotel Room Visual -->
+        <div class="animate-in" style="background:var(--color-surface); border-radius:var(--radius-lg); padding:var(--space-8); box-shadow:var(--shadow-md); margin-bottom:var(--space-8);">
+          <div style="font-family:var(--font-display); font-size:var(--text-lg); font-weight:700; margin-bottom:var(--space-6); display:flex; align-items:center; gap:var(--space-3);">
+            🏨 <span>Loaded Model Slots (like hotel rooms)</span>
+          </div>
+
+          <!-- Room grid -->
+          <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-bottom:var(--space-6);">
+            <div style="padding:var(--space-5); background:var(--color-info-light); border:2px solid var(--color-info); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2);">🧠</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 1</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2);">Gemma-3</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-muted); background:var(--color-error-light); border-radius:var(--radius-full); padding:2px 8px; display:inline-block; color:var(--color-error);">idle 5 min</div>
+            </div>
+            <div style="padding:var(--space-5); background:var(--color-success-light); border:2px solid var(--color-success); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2);">🧠</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 2</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2);">Phi-4</div>
+              <div style="font-size:var(--text-xs); background:var(--color-success-light); border-radius:var(--radius-full); padding:2px 8px; display:inline-block; color:var(--color-success);">idle 1 min</div>
+            </div>
+            <div style="padding:var(--space-5); background:var(--color-bg-warm); border:2px dashed var(--color-border); border-radius:var(--radius-md); text-align:center;">
+              <div style="font-size:1.6rem; margin-bottom:var(--space-2); opacity:0.3;">🚪</div>
+              <div style="font-family:var(--font-mono); font-size:var(--text-xs); color:var(--color-text-muted); margin-bottom:var(--space-1);">Room 3</div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-2); color:var(--color-text-muted);">EMPTY</div>
+              <div style="font-size:var(--text-xs); color:var(--color-text-muted);">available</div>
+            </div>
+          </div>
+
+          <!-- Arrows and explanations -->
+          <div style="display:flex; flex-direction:column; gap:var(--space-4);">
+            <div style="display:flex; align-items:flex-start; gap:var(--space-4); padding:var(--space-4); background:var(--color-success-light); border-radius:var(--radius-sm); border-left:3px solid var(--color-success);">
+              <span style="font-size:1.3rem;">✅</span>
+              <div>
+                <div style="font-weight:700; font-size:var(--text-sm); color:var(--color-success);">New model arrives → loads into empty Room 3</div>
+                <div style="font-size:var(--text-xs); color:var(--color-text-secondary); margin-top:var(--space-1);">Space available — no eviction needed.</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:var(--space-4); padding:var(--space-4); background:var(--color-error-light); border-radius:var(--radius-sm); border-left:3px solid var(--color-error);">
+              <span style="font-size:1.3rem;">🚨</span>
+              <div>
+                <div style="font-weight:700; font-size:var(--text-sm); color:var(--color-error);">Another model arrives → Room 3 is full! Evict Room 1 (oldest)</div>
+                <div style="font-size:var(--text-xs); color:var(--color-text-secondary); margin-top:var(--space-1);"><span class="term" data-definition="Least Recently Used — an eviction strategy where the item unused the longest gets removed first. Used in caches, operating systems, and model managers.">LRU</span> (Least Recently Used) — the model sitting idle the longest gets <span class="term" data-definition="Unloading a model from memory to make room for another. The evicted model can be reloaded later if needed.">evicted</span> first.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NPU Exclusivity code translation -->
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); font-weight:700; margin-bottom:var(--space-4);">⚡ The NPU Special Case: Strict Exclusivity</h3>
+
+        <div class="translation-block animate-in" style="margin-top:var(--space-8)">
+          <div class="translation-code">
+            <span class="translation-label">CODE (router.cpp — NPU rule)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">if</span> (device_type &amp; DEVICE_NPU) {</span>
+<span class="code-line">  <span class="code-keyword">if</span> (model_info.recipe == <span class="code-string">"ryzenai-llm"</span> ||</span>
+<span class="code-line">      model_info.recipe == <span class="code-string">"whispercpp"</span>) {</span>
+<span class="code-line">    <span class="code-keyword">if</span> (<span class="code-function">has_npu_server</span>()) {</span>
+<span class="code-line">      <span class="code-function">evict_all_npu_servers</span>();</span>
+<span class="code-line">    }</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>if (device_type &amp; DEVICE_NPU)</strong> — If this new model wants to use the NPU...</p>
+              <p class="tl"><strong>if (recipe == "ryzenai-llm" || "whispercpp")</strong> — ...and it requires exclusive NPU access (not shared)...</p>
+              <p class="tl"><strong>if (has_npu_server())</strong> — ...and something is already running on the NPU...</p>
+              <p class="tl"><strong>evict_all_npu_servers()</strong> — ...kick everything off the NPU immediately. This new model gets sole access.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-warning animate-in">
+          <div class="callout-icon">⚠️</div>
+          <div class="callout-content">
+            <span class="callout-title">NPU Exclusivity: Expected, Not a Bug</span>
+            <p>The NPU is different from GPU: it operates on strict exclusivity. Only ONE model can use the NPU at a time. Switching between Whisper and a Hybrid LLM means a 10-15 second reload — this is expected, not a bug.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🧪 Check Your Understanding</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Three scenarios — apply what you know about the Router, NPU exclusivity, and Lemonade's OpenAI compatibility.
+        </p>
+
+        <div class="quiz-container" id="quiz-module3">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Apply What You Learned</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="Whisper and ryzenai-llm both require exclusive NPU access. Switching between them means the Router evicts the current model and loads the new one — that load time IS the 10-15 seconds. By design, not a bug."
+               data-explanation-wrong="Think about what Whisper and Hybrid LLMs have in common — and what the NPU exclusivity rule says about switching between them.">
+            <h3 class="quiz-question">Users report switching between Whisper and a Hybrid LLM takes 10-15 seconds. What is happening?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The server has a routing bug</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The NPU evicts the old model and loads the new one — expected due to NPU exclusivity</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The GPU is overloaded and throttling</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="The Router respects the max-loaded-models config. Setting it to 3 allows 3 models to stay warm in GPU memory simultaneously. The COMPUTEX demo uses max-loaded-models=9."
+               data-explanation-wrong="The Router controls how many models stay in memory. Which config command would change that limit?">
+            <h3 class="quiz-question">You want 3 LLMs loaded simultaneously for comparison. max-loaded-models defaults to 1. What do you run?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade config set max-loaded-models=3</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade backends --parallel=3</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade launch --gpu-split=3</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="One URL change — that is all. Lemonade is OpenAI API-compatible. The library never knows it switched to local AI."
+               data-explanation-wrong="Lemonade was designed as a drop-in replacement for the OpenAI API. Think about what changing base_url would accomplish.">
+            <h3 class="quiz-question">You have a Python app using the openai library pointing to api.openai.com. How do you switch it to Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Rewrite the app using a Lemonade-specific SDK</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>You cannot — Lemonade uses a different protocol</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Change base_url to http://localhost:13305/api/v1 — one line change</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module3')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module3')">Try Again</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>
+<section class="module" id="module-4" style="background: var(--color-bg-warm)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">04</span>
+      <h1 class="module-title">159 Models, One Catalog</h1>
+      <p class="module-subtitle">How server_models.json powers the entire model ecosystem</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: The Catalog — Big Numbers
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎵 The Vinyl Shop Catalog</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Think of <span class="term" data-definition="JavaScript Object Notation — a human-readable file format for structured data, like a well-organized spreadsheet saved as plain text. Used everywhere for configuration and data exchange.">JSON</span> file <code>server_models.json</code> as a vinyl record shop catalog — every record (model) listed with its label (source), genre (<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>), and size, so you can browse it, order a record (<code>lemonade pull</code>), and the store plays it on the right turntable (backend).
+        </p>
+
+        <!-- Stats wall -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin:var(--space-8) 0;">
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-accent);">159</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Total Models</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-3);">5</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Recipe Types</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-2);">81</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">AMD-Optimized</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-4);">4</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Modalities</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-muted); margin-top:var(--space-1); font-family:var(--font-mono);">text · image · speech · <span class="term" data-definition="Text-to-Speech — AI that converts written text into spoken audio.">TTS</span></div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md);">
+            <div style="font-size:var(--text-5xl); font-weight:800; font-family:var(--font-display); color:var(--color-actor-5);">36</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">Community <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> Models</div>
+          </div>
+
+          <div class="animate-in" style="text-align:center; padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-md); display:flex; flex-direction:column; align-items:center; justify-content:center;">
+            <div style="font-size:2.4rem; margin-bottom:var(--space-2);">📄</div>
+            <div style="font-size:var(--text-sm); color:var(--color-text-secondary); text-transform:uppercase; letter-spacing:.05em; font-family:var(--font-mono);">One Plain-Text File</div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">One File to Rule Them All</span>
+            <p>All 159 models are described in a single plain-text file: <code>src/cpp/resources/server_models.json</code>. You can open it in any editor.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: Anatomy of a Model Entry
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔬 Anatomy of a Model Entry</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          Every model entry has the same 4-5 fields — once you know them, you can read any entry in the catalog.
+        </p>
+
+        <!-- First translation block: Kokoro TTS (simple) -->
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (server_models.json)</span>
+            <pre><code><span class="code-line"><span class="code-string">"kokoro-v1"</span>: {</span>
+<span class="code-line">  <span class="code-property">"checkpoint"</span>: <span class="code-string">"mikkoph/kokoro-onnx"</span>,</span>
+<span class="code-line">  <span class="code-property">"recipe"</span>: <span class="code-string">"kokoro"</span>,</span>
+<span class="code-line">  <span class="code-property">"suggested"</span>: <span class="code-keyword">true</span>,</span>
+<span class="code-line">  <span class="code-property">"labels"</span>: [<span class="code-string">"tts"</span>, <span class="code-string">"speech"</span>],</span>
+<span class="code-line">  <span class="code-property">"size"</span>: <span class="code-number">0.34</span></span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>"kokoro-v1"</strong> — The model name. Type this in the CLI: <code>lemonade run kokoro-v1</code></p>
+              <p class="tl"><strong>"<span class="term" data-definition="A saved snapshot of an AI model after training — its learned knowledge stored as numbers. The checkpoint field in server_models.json tells Lemonade where to download those weights from.">checkpoint</span>"</strong> — Download from <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span>: user "mikkoph", repo "kokoro-onnx"</p>
+              <p class="tl"><strong>"<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>": "kokoro"</strong> — Use the Kokoro <span class="term" data-definition="Open Neural Network Exchange — a standardized file format for AI models. AMD pre-converts models to ONNX format, optimized for their NPU runtime.">ONNX</span> inference engine (specialized for text-to-speech)</p>
+              <p class="tl"><strong>"suggested": true</strong> — Show in the "Recommended" list in the Model Manager UI</p>
+              <p class="tl"><strong>"labels"</strong> — Tags used to filter models in the UI (<span class="term" data-definition="Text-to-Speech — AI that converts written text into spoken audio.">tts</span> = text-to-speech)</p>
+              <p class="tl"><strong>"size": 0.34</strong> — Only 340 MB! Tiny. Great for laptops with limited storage.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second translation block: Whisper with NPU cache (complex) -->
+        <div class="translation-block animate-in" style="margin-top:var(--space-6)">
+          <div class="translation-code">
+            <span class="translation-label">CODE (server_models.json — with NPU)</span>
+            <pre><code><span class="code-line"><span class="code-string">"Whisper-Large-v3-Turbo"</span>: {</span>
+<span class="code-line">  <span class="code-property">"checkpoints"</span>: {</span>
+<span class="code-line">    <span class="code-property">"main"</span>: <span class="code-string">"ggerganov/whisper.cpp:ggml-large-v3-turbo.bin"</span>,</span>
+<span class="code-line">    <span class="code-property">"npu_cache"</span>: <span class="code-string">"amd/whisper-large-turbo-onnx-npu:..."</span></span>
+<span class="code-line">  },</span>
+<span class="code-line">  <span class="code-property">"recipe"</span>: <span class="code-string">"whispercpp"</span></span>
+<span class="code-line">}</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>"checkpoints"</strong> (plural!) — Two separate files: one for CPU/GPU, one for NPU</p>
+              <p class="tl"><strong>"main"</strong> — The base Whisper model in <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> format — used when no NPU is present</p>
+              <p class="tl"><strong>"npu_cache"</strong> — AMD's pre-compiled NPU-optimized audio <span class="term" data-definition="The part of an AI model that processes input and converts it to a compact internal representation. In Whisper, the encoder processes audio; the NPU cache accelerates this step.">encoder</span>. Downloaded separately, activates automatically on XDNA hardware</p>
+              <p class="tl"><strong>"<span class="term" data-definition="In Lemonade, a recipe specifies which inference engine to use. Like a cooking method — same ingredients (model weights), different preparation (different engine).">recipe</span>": "whispercpp"</strong> — Use whisper.cpp as the inference engine</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">The npu_cache Field — Additive, Not Required</span>
+            <p>Notice "npu_cache" — this is a pre-compiled version of the audio <span class="term" data-definition="The part of an AI model that processes input and converts it to a compact internal representation. In Whisper, the encoder processes audio; the NPU cache accelerates this step.">encoder</span>, optimized for AMD XDNA. Lemonade downloads both files and picks automatically based on your hardware.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: The Hugging Face Connection
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🤗 The Hugging Face Connection</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> is the GitHub of AI — where researchers publish models for anyone to download.
+        </p>
+
+        <!-- 3-column source diagram -->
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:var(--space-4); margin:var(--space-6) 0;">
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-accent);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🤗</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">Hugging Face Hub</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">82,000+ AI models. Free to download. The world's largest public AI model library.</p>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-actor-2);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🔴</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">AMD Organization (amd/)</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">81 models pre-converted and optimized for Ryzen AI. Official AMD releases with NPU support.</p>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); text-align:center; border-top:3px solid var(--color-actor-5);">
+            <div style="font-size:1.8rem; margin-bottom:var(--space-3);">🌍</div>
+            <h4 style="font-family:var(--font-display); font-size:var(--text-base); margin-bottom:var(--space-2);">Community (unsloth/, etc.)</h4>
+            <p style="font-size:var(--text-sm); color:var(--color-text-secondary);">36 <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> models from third-party publishers. Wider variety, often more aggressive <span class="term" data-definition="Compressing an AI model by reducing number precision. Full-precision uses 32-bit numbers; quantized versions use 4-8 bits, making models 4-8x smaller with minimal quality loss.">quantization</span>.</p>
+          </div>
+
+        </div>
+
+        <!-- lemonade pull — 4 step cards -->
+        <h3 style="font-family:var(--font-display); font-size:var(--text-xl); font-weight:700; margin-top:var(--space-8); margin-bottom:var(--space-4);">⬇️ What happens when you run <code>lemonade pull Phi-4-mini-instruct-Hybrid</code></h3>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4); margin-bottom:var(--space-6);">
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-accent); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-accent); line-height:1; flex-shrink:0;">1</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Catalog Lookup</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Look up "Phi-4-mini-instruct-Hybrid" in <code>server_models.json</code> to find its <span class="term" data-definition="A saved snapshot of an AI model after training — its learned knowledge stored as numbers. The checkpoint field in server_models.json tells Lemonade where to download those weights from.">checkpoint</span> URL</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-3); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-3); line-height:1; flex-shrink:0;">2</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Download from Hugging Face</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Connect to <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> and download <span class="term" data-definition="Open Neural Network Exchange — a standardized file format for AI models. AMD pre-converts models to ONNX format, optimized for their NPU runtime.">ONNX</span> model files (~5.1 GB)</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-4); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-4); line-height:1; flex-shrink:0;">3</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Cache Locally</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Files saved to <code>~/.lemonade/models/</code> — subsequent loads are instant, no re-download</div>
+            </div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-5); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left:4px solid var(--color-actor-5); display:flex; gap:var(--space-4); align-items:flex-start;">
+            <div style="font-family:var(--font-display); font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-5); line-height:1; flex-shrink:0;">4</div>
+            <div>
+              <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Ready to Use</div>
+              <div style="font-size:var(--text-sm); color:var(--color-text-secondary);">Model appears in the UI and in <code>lemonade list</code> — ready to run immediately</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Beyond the Built-In Catalog</span>
+            <p>You can also add custom models. Drop any <span class="term" data-definition="A compressed AI model file format used by llama.cpp. Stores model weights efficiently — a 7B parameter model is typically 4-8 GB in GGUF format.">GGUF</span> file in the models folder, or paste a <span class="term" data-definition="The primary platform for sharing AI models — like GitHub but for AI. Free to use, 82,000+ models published.">Hugging Face</span> URL into the Model Manager's "Add Custom Model" panel.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: The Model Manager UI — Architecture Diagram
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🖥️ The Model Manager UI</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-8);">
+          The Model Manager is the visual interface to the catalog — browse, download, and manage models without touching the command line.
+        </p>
+
+        <div class="arch-diagram animate-in">
+          <div class="arch-zone" style="background:var(--color-surface); border-radius:var(--radius-md); padding:var(--space-6); box-shadow:var(--shadow-md);">
+            <h4 class="arch-zone-label" style="font-family:var(--font-display); font-size:var(--text-sm); text-transform:uppercase; letter-spacing:.05em; color:var(--color-text-muted); margin-bottom:var(--space-4);">Model Manager — Click any panel to learn what it does</h4>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-3);">
+
+              <div class="arch-component"
+                   data-desc="Browse the full catalog of 159 built-in models. Filter by recipe type (LLM, image, speech), size, or whether they are AMD-optimized. Click any model to see details and download."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">📋</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Browse Catalog</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="Shows download progress, file size, and estimated time remaining. Downloads happen in the background — you can still chat while a model downloads. Multiple models can download simultaneously."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">⬇️</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Download Manager</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="Paste any Hugging Face URL or local file path to add a model not in the built-in catalog. Lemonade auto-detects the recipe based on the file format (GGUF → llamacpp, ONNX → ryzenai-llm)."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">➕</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Add Custom Model</span>
+              </div>
+
+              <div class="arch-component"
+                   data-desc="See which models are currently loaded in GPU memory and how much VRAM they are using. One click to unload a model and free the memory. Useful when switching between tasks."
+                   style="padding:var(--space-4); background:var(--color-surface-warm); border-radius:var(--radius-sm); cursor:pointer; border:2px solid var(--color-border); transition:border-color 200ms;">
+                <div class="arch-icon" style="font-size:1.5rem; margin-bottom:var(--space-2);">🗂️</div>
+                <span style="font-family:var(--font-display); font-weight:600;">Loaded Models</span>
+              </div>
+
+            </div>
+          </div>
+          <div class="arch-description" id="arch-desc" style="margin-top:var(--space-4); padding:var(--space-4); background:var(--color-accent-light); border-radius:var(--radius-sm); color:var(--color-text); min-height:3rem; font-size:var(--text-sm); line-height:var(--leading-loose);">Click any panel above to learn what it does</div>
+        </div>
+
+        <!-- Quick reference row -->
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-top:var(--space-8);">
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-accent);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">🔍</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Filter by label</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Use "tts", "speech", "vision", or "amd" to narrow the 159-model list instantly</div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-actor-3);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">💾</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);"><span class="term" data-definition="Video RAM — the memory on a GPU. Loading an AI model means copying its weights into VRAM. A 7B model needs 4-8 GB of VRAM depending on quantization level.">VRAM</span> usage visible</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Loaded Models panel shows live memory usage per model — unload with one click</div>
+          </div>
+
+          <div class="animate-in" style="padding:var(--space-4); background:var(--color-surface); border-radius:var(--radius-sm); box-shadow:var(--shadow-sm); border-left:3px solid var(--color-actor-5);">
+            <div style="font-size:1.3rem; margin-bottom:var(--space-2);">🔄</div>
+            <div style="font-weight:700; font-size:var(--text-sm); margin-bottom:var(--space-1);">Background downloads</div>
+            <div style="font-size:var(--text-xs); color:var(--color-text-secondary);">Start a 5 GB download, keep chatting — the Download Manager tracks it silently</div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🧪 Check Your Understanding</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:640px; margin-bottom:var(--space-6);">
+          Three scenarios — apply what you know about the model catalog, npu_cache, and memory management.
+        </p>
+
+        <div class="quiz-container" id="quiz-module4">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Apply What You Learned</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="The Model Manager has a dedicated Add Custom Model panel. Paste the Hugging Face URL (or local file path) and Lemonade downloads and registers it — no JSON editing required."
+               data-explanation-wrong="While editing server_models.json is technically possible, the Model Manager UI handles custom models through the Add Custom Model panel without touching config files.">
+            <h3 class="quiz-question">You find a GGUF model on Hugging Face not in the built-in catalog. How do you use it in Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>You cannot — Lemonade only supports models in server_models.json</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Use the Add Custom Model panel in the Model Manager</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Manually edit server_models.json and restart the server</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="npu_cache is additive — the model works fine without NPU; the cache just makes it faster when XDNA hardware is present. Lemonade picks automatically."
+               data-explanation-wrong="npu_cache is not exclusive. The model has two versions: one for CPU/GPU (main) and one for NPU (npu_cache). On systems without NPU, Lemonade uses the main checkpoint.">
+            <h3 class="quiz-question">A model entry has an "npu_cache" field. What does this mean for systems WITHOUT an NPU?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model will fail — it requires NPU hardware</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model only runs on NPU, not on GPU or CPU</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The model works fine — Lemonade uses the "main" checkpoint and ignores npu_cache</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="max-loaded-models is the Router config that controls how many model backends stay in GPU memory simultaneously. Set it to 2 and both models stay warm, ready to respond instantly."
+               data-explanation-wrong="This is not controlled in server_models.json — that file just describes available models. The Router config (max-loaded-models) controls how many stay loaded at once.">
+            <h3 class="quiz-question">You want to compare two LLMs side-by-side with instant switching. What config change allows both to stay in memory?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade config set max-loaded-models=2</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Add "simultaneous": true to both model entries in server_models.json</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>lemonade pull --keep-loaded both models</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module4')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module4')">Try Again</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</section>
+<section class="module" id="module-5" style="background: var(--color-bg)">
+  <div class="module-content">
+
+    <header class="module-header animate-in">
+      <span class="module-number">05</span>
+      <h1 class="module-title">Plug In Anything</h1>
+      <p class="module-subtitle">Connect any app to Lemonade — and build your own</p>
+    </header>
+
+    <div class="module-body">
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 1: One URL to Rule Them All
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🔌 One URL to Rule Them All</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-4);">
+          Think of Lemonade's <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI API</span> compatibility as a universal travel adapter. Any device (app) built for one power standard (OpenAI) can plug into a different power source (local AI) without rewiring anything inside.
+        </p>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Every app below — from workflow automation to coding assistants — connects through a single address.
+        </p>
+
+        <!-- Plug board visual -->
+        <div style="background:var(--color-bg-code); border-radius:var(--radius-md); padding:var(--space-6); margin:var(--space-6) 0; color:#CDD6F4;">
+          <div style="text-align:center; margin-bottom:var(--space-6);">
+            <div style="font-size:var(--text-lg); font-family:var(--font-mono); color:#A6E3A1; margin-bottom:var(--space-2);">http://localhost:13305/api/v1</div>
+            <div style="font-size:var(--text-sm); color:#6C7086;">← One URL. Every app. Zero cloud.</div>
+          </div>
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-3); text-align:center;">
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">⚡</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span></div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">💻</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">VS Code</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🌐</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Open WebUI</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🔗</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Continue</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">📊</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">Dify</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🤖</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);">OpenHands</div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">🔄</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span></div>
+            </div>
+            <div style="padding:var(--space-3); background:rgba(255,255,255,0.05); border-radius:var(--radius-sm);">
+              <div style="font-size:1.4rem;">📚</div><div style="font-size:var(--text-xs); color:#CBA6F7; font-family:var(--font-mono);"><span class="term" data-definition="A Python framework for connecting LLMs to your own data — documents, PDFs, databases. Great for building AI that knows your specific content.">LlamaIndex</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side-by-side comparison -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-6); margin:var(--space-6) 0;">
+
+          <!-- LEFT: Cloud AI -->
+          <div class="callout callout-warning animate-in" style="flex-direction:column; align-items:flex-start;">
+            <div style="font-weight:700; font-size:var(--text-base); margin-bottom:var(--space-3); color:var(--color-error);">☁️ Cloud AI</div>
+            <div style="font-family:var(--font-mono); font-size:var(--text-xs); background:rgba(0,0,0,0.15); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); margin-bottom:var(--space-3); word-break:break-all;">https://api.openai.com/v1</div>
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">💳 Paid API keys required</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">⏱ Rate limits apply</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">📤 Data leaves your machine</li>
+            </ul>
+          </div>
+
+          <!-- RIGHT: Lemonade -->
+          <div class="callout callout-info animate-in" style="flex-direction:column; align-items:flex-start;">
+            <div style="font-weight:700; font-size:var(--text-base); margin-bottom:var(--space-3); color:var(--color-info);">🍋 Lemonade</div>
+            <div style="font-family:var(--font-mono); font-size:var(--text-xs); background:rgba(0,0,0,0.15); padding:var(--space-2) var(--space-3); border-radius:var(--radius-sm); margin-bottom:var(--space-3); word-break:break-all;">http://localhost:13305/api/v1</div>
+            <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:var(--space-2);">
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">🆓 Free — no account needed</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">♾ Unlimited requests</li>
+              <li style="font-size:var(--text-sm); color:var(--color-text-secondary);">🔒 Everything stays private</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">🔑</div>
+          <div class="callout-content">
+            <span class="callout-title">One Line. That Is All.</span>
+            <p>Change ONE line. That is all it takes to switch any <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible app to run entirely on your PC.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 2: The Python Client — Line by Line
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🐍 The Python Client — Line by Line</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Here is the complete code to talk to Lemonade from Python — using OpenAI's own library.
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (Python)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">from</span> openai <span class="code-keyword">import</span> <span class="code-function">OpenAI</span></span>
+<span class="code-line"></span>
+<span class="code-line">client = <span class="code-function">OpenAI</span>(</span>
+<span class="code-line">    <span class="code-property">base_url</span>=<span class="code-string">"http://localhost:13305/api/v1"</span>,</span>
+<span class="code-line">    <span class="code-property">api_key</span>=<span class="code-string">"lemonade"</span></span>
+<span class="code-line">)</span>
+<span class="code-line"></span>
+<span class="code-line">completion = client.chat.completions.<span class="code-function">create</span>(</span>
+<span class="code-line">    <span class="code-property">model</span>=<span class="code-string">"Llama-3.2-1B-Instruct-Hybrid"</span>,</span>
+<span class="code-line">    <span class="code-property">messages</span>=[{</span>
+<span class="code-line">        <span class="code-string">"role"</span>: <span class="code-string">"user"</span>,</span>
+<span class="code-line">        <span class="code-string">"content"</span>: <span class="code-string">"What is the capital of France?"</span></span>
+<span class="code-line">    }]</span>
+<span class="code-line">)</span>
+<span class="code-line"><span class="code-function">print</span>(completion.choices[<span class="code-number">0</span>].message.content)</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>from openai import OpenAI</strong> — Import OpenAI's own Python library. No Lemonade SDK needed.</p>
+              <p class="tl"><strong><span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span>=...</strong> — Instead of OpenAI's remote servers, point the client at Lemonade running on this machine.</p>
+              <p class="tl"><strong><span class="term" data-definition="A secret password used to authenticate with an API. OpenAI requires a real key. Lemonade accepts any string because it runs locally — no account to authenticate against.">api_key</span>="lemonade"</strong> — OpenAI needs a real secret key. Lemonade ignores the value — any string works because there is no account to authenticate.</p>
+              <p class="tl"><strong>chat.completions.create(...)</strong> — Send a message to the AI model and wait for a response.</p>
+              <p class="tl"><strong>model="Llama-3.2-1B-Instruct-Hybrid"</strong> — Which model to use. Must be downloaded first with lemonade pull.</p>
+              <p class="tl"><strong>messages=[...]</strong> — The conversation history in the standard chat format used by all <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible APIs.</p>
+              <p class="tl"><strong>print(completion.choices[0].message.content)</strong> — Print the first response the model generated.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout callout-info animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Install with: <code style="font-family:var(--font-mono); font-size:var(--text-sm);">pip install openai</code></span>
+            <p>This is OpenAI's official library — no Lemonade-specific package needed.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 3: Group Chat — Apps Connect to Lemonade
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🌐 Group Chat — Apps Connect to Lemonade</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Here is what it looks like when multiple apps connect to the same Lemonade server simultaneously.
+        </p>
+
+        <div class="chat-window" id="chat-ecosystem">
+          <div class="chat-messages">
+            <div class="chat-message" data-msg="0" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>I am now listening on http://localhost:13305. <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI API</span> is live. All 9 models are loaded.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="1" data-sender="n8n" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-1)">n8</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-1)"><span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span> Workflow</span>
+                <p>I need to summarize a document. Sending task through my OpenAI node — <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> pointed to localhost:13305.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="2" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Received. Routing to Llama-3.2-1B-Instruct-Hybrid. <span class="term" data-definition="Sending data in chunks as it is generated rather than waiting for the complete result. LLMs stream tokens so you see words appear one by one, not all at once.">Streaming</span> response back now.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="3" data-sender="vscode" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-2)">VS</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-2)">VS Code + Continue</span>
+                <p>I need a code completion for this TypeScript function. Sending request simultaneously.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="4" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Both requests handled. n8n gets its summary. VS Code gets its completion. Same server. Zero conflict.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="5" data-sender="openwebui" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-3)">OW</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-3)">Open WebUI</span>
+                <p>I want to provide a full chat interface for browsing all 9 models. Connecting now.</p>
+              </div>
+            </div>
+            <div class="chat-message" data-msg="6" data-sender="lemonade" style="display:none">
+              <div class="chat-avatar" style="background: var(--color-actor-5)">🍋</div>
+              <div class="chat-bubble">
+                <span class="chat-sender" style="color: var(--color-actor-5)">Lemonade Server</span>
+                <p>Connected. You can now browse and chat with all models through my API. No sign-up. No cloud. Ever.</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-typing" style="display:none">
+            <div class="chat-avatar" id="chat-ecosystem-typing-avatar">?</div>
+            <div class="chat-typing-dots">
+              <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+            </div>
+          </div>
+          <div class="chat-controls">
+            <button class="btn chat-next-btn">Next Message</button>
+            <button class="btn chat-all-btn">Play All</button>
+            <button class="btn chat-reset-btn">Replay</button>
+            <span class="chat-progress"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 4: The Realtime API — Beyond Text
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🎤 The Realtime API — Beyond Text</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Lemonade also supports the <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span> Realtime API for live audio — the protocol that powers voice assistants.
+        </p>
+
+        <div class="translation-block animate-in">
+          <div class="translation-code">
+            <span class="translation-label">CODE (realtime_transcription.py)</span>
+            <pre><code><span class="code-line"><span class="code-keyword">async with</span> websockets.<span class="code-function">connect</span>(</span>
+<span class="code-line">    <span class="code-function">f</span><span class="code-string">"ws://{host}:{port}/v1/realtime"</span>,</span>
+<span class="code-line">    <span class="code-property">subprotocols</span>=[<span class="code-string">"realtime"</span>],</span>
+<span class="code-line">) <span class="code-keyword">as</span> ws:</span>
+<span class="code-line">    <span class="code-keyword">await</span> <span class="code-function">send_audio</span>(ws, audio_queue)</span>
+</code></pre>
+          </div>
+          <div class="translation-english">
+            <span class="translation-label">PLAIN ENGLISH</span>
+            <div class="translation-lines">
+              <p class="tl"><strong>websockets.connect(...)</strong> — Open a persistent connection to Lemonade. Unlike HTTP (one question, one answer), this stays open the whole time.</p>
+              <p class="tl"><strong>"ws://.../v1/realtime"</strong> — The realtime <span class="term" data-definition="A specific URL path on a server that handles a particular type of request. /v1/chat/completions handles chat; /v1/realtime handles streaming audio.">endpoint</span>. "<span class="term" data-definition="A type of network connection that stays open and allows continuous two-way communication. Unlike HTTP (one request, one response), WebSocket lets both sides stream data simultaneously — essential for real-time audio.">WebSocket</span>" means a two-way streaming connection.</p>
+              <p class="tl"><strong><span class="term" data-definition="An additional communication layer on top of WebSocket that defines the message format. realtime is the subprotocol following OpenAI's specification for live audio streaming.">subprotocols</span>=["realtime"]</strong> — Identify ourselves as using the OpenAI realtime protocol — the standard format for real-time audio.</p>
+              <p class="tl"><strong>send_audio(ws, audio_queue)</strong> — Stream audio chunks to Lemonade continuously as the microphone captures them. Transcription arrives back in real time.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 pattern cards for Realtime capabilities -->
+        <div class="pattern-cards stagger-children" style="margin-top:var(--space-8); grid-template-columns:repeat(3,1fr);">
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-1);">
+            <div class="pattern-icon" style="background:rgba(42,123,155,0.12); font-size:1.4rem;">🎤</div>
+            <div class="pattern-title" style="color: var(--color-actor-1);">Live Transcription</div>
+            <div class="pattern-desc">
+              Audio <span class="term" data-definition="Sending data in chunks as it is generated rather than waiting for the complete result. LLMs stream tokens so you see words appear one by one, not all at once.">streams</span> in, text streams out in real time. No recording step — words appear as you speak.
+            </div>
+          </div>
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-3);">
+            <div class="pattern-icon" style="background:rgba(123,109,170,0.12); font-size:1.4rem;">🗣️</div>
+            <div class="pattern-title" style="color: var(--color-actor-3);">Voice Assistants</div>
+            <div class="pattern-desc">
+              Build Siri-like apps entirely on your hardware: listen → think → speak. The full loop, no cloud required.
+            </div>
+          </div>
+
+          <div class="pattern-card animate-in" style="border-top-color: var(--color-actor-5);">
+            <div class="pattern-icon" style="background:rgba(45,139,85,0.12); font-size:1.4rem;">📞</div>
+            <div class="pattern-title" style="color: var(--color-actor-5);">Call Analysis</div>
+            <div class="pattern-desc">
+              Process meetings or calls as they happen — transcribe, summarize, and flag action items in real time.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 5: Build Your Own — The Cheat Sheet
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🛠 Build Your Own — The Cheat Sheet</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-8);">
+          Three steps to build any app on Lemonade:
+        </p>
+
+        <!-- 3 numbered step cards -->
+        <div style="display:flex; flex-direction:column; gap:var(--space-5); margin-bottom:var(--space-8);">
+
+          <!-- Step 1 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-2);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-2); min-width:2.5rem; font-family:var(--font-display); line-height:1;">1</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Pick your model</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                Run <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">lemonade pull Llama-3.2-1B-Instruct-Hybrid</code> or browse the Model Manager.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                Choose based on: size, quality, and your hardware — <span class="term" data-definition="Neural Processing Unit — a chip designed specifically for AI math. Like a GPU but dedicated purely to AI calculations.">NPU</span> vs GPU vs CPU.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-4);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-4); min-width:2.5rem; font-family:var(--font-display); line-height:1;">2</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Connect your tool</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                Set <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> to <code style="background:var(--color-bg-code); color:#A6E3A1; padding:2px 6px; border-radius:4px; font-family:var(--font-mono); font-size:var(--text-sm);">http://localhost:13305/api/v1</code>.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                Works with Python's openai library, <span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span>, <span class="term" data-definition="A Python framework for connecting LLMs to your own data — documents, PDFs, databases. Great for building AI that knows your specific content.">LlamaIndex</span>, <span class="term" data-definition="An open-source workflow automation tool. It connects hundreds of services together, including AI via an OpenAI-compatible node.">n8n</span>, Open WebUI — anything <span class="term" data-definition="The programming interface for ChatGPT. It became the de facto standard for AI communication — hundreds of tools are built around it. Lemonade copies this interface exactly.">OpenAI</span>-compatible.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="animate-in" style="display:flex; gap:var(--space-5); padding:var(--space-6); background:var(--color-surface); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); border-left: 4px solid var(--color-actor-5);">
+            <div style="font-size:var(--text-3xl); font-weight:800; color:var(--color-actor-5); min-width:2.5rem; font-family:var(--font-display); line-height:1;">3</div>
+            <div>
+              <h4 style="font-family:var(--font-display); font-weight:700; margin-bottom:var(--space-2); font-size:var(--text-lg);">Ship locally</h4>
+              <p style="color:var(--color-text-secondary); margin:0 0 var(--space-3);">
+                No internet required. No <span class="term" data-definition="A secret password used to authenticate with an API. OpenAI requires a real key. Lemonade accepts any string because it runs locally — no account to authenticate against.">API key</span> to protect. No data leaving your machine.
+              </p>
+              <p style="font-size:var(--text-sm); color:var(--color-text-muted); margin:0;">
+                No monthly bill. Your hardware, your AI, your rules.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-accent animate-in">
+          <div class="callout-icon">💡</div>
+          <div class="callout-content">
+            <span class="callout-title">Pro tip for vibe coders</span>
+            <p>When describing your project to an AI coding agent, say: <em>"Use the OpenAI Python library with base_url set to http://localhost:13305/api/v1 and api_key set to lemonade."</em> The AI will write correct code immediately.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════════
+           SCREEN 6: Final Quiz
+           ═══════════════════════════════════════════════════ -->
+      <section class="screen animate-in">
+        <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">🏆 Final Challenge</h2>
+        <p style="font-size:var(--text-lg); color:var(--color-text-secondary); max-width:660px; margin-bottom:var(--space-6);">
+          Three questions to prove you are ready to build with Lemonade.
+        </p>
+
+        <div class="quiz-container" id="quiz-module5">
+          <h3 style="font-family:var(--font-display); margin-bottom:var(--space-6);">Final Challenge</h3>
+
+          <div class="quiz-question-block"
+               data-correct="option-b"
+               data-explanation-right="LangChain uses the openai library internally. Changing base_url in the OpenAI client config propagates to all LangChain calls automatically — one line change, zero app rewrites."
+               data-explanation-wrong="LangChain uses the openai library under the hood. Redirecting base_url in the OpenAI client config is enough — LangChain never knows it switched to local AI.">
+            <h3 class="quiz-question">You have a <span class="term" data-definition="A popular Python framework for building AI applications. It connects LLMs with tools, databases, and APIs in chains of operations.">LangChain</span> agent using OpenAI. What is the minimum change to switch it to Lemonade?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Replace all LangChain calls with Lemonade-specific SDK calls</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Set <span class="term" data-definition="In the openai Python library, this setting controls which server receives your requests. Normally OpenAI's cloud; override it to point at Lemonade.">base_url</span> to http://localhost:13305/api/v1 in the OpenAI client config</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Export prompts from LangChain and re-import into the Lemonade UI</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-c"
+               data-explanation-right="Real-time audio requires a persistent streaming connection. The WebSocket endpoint at /v1/realtime is designed for this — audio chunks flow in continuously, transcription flows back in real time."
+               data-explanation-wrong="Real-time audio needs a persistent two-way connection, not a one-shot HTTP request. The /v1/realtime WebSocket endpoint handles this.">
+            <h3 class="quiz-question">Your app needs real-time voice transcription (stream audio as the user speaks). Which Lemonade feature handles this?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>POST /v1/chat/completions with an audio file attachment</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>Record a full audio file first, then send it to Lemonade in one request</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>The <span class="term" data-definition="A type of network connection that stays open and allows continuous two-way communication. Unlike HTTP (one request, one response), WebSocket lets both sides stream data simultaneously — essential for real-time audio.">WebSocket</span> Realtime API at ws://localhost:13305/v1/realtime</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <div class="quiz-question-block"
+               data-correct="option-a"
+               data-explanation-right="This description is precise and actionable — it names the exact library, parameter, and value. An AI coding agent can write correct code from this with zero ambiguity."
+               data-explanation-wrong="Vague descriptions force the AI to guess or ask follow-ups. The more precise — library name, parameter name, exact value — the better the code it generates.">
+            <h3 class="quiz-question">You want an AI to build a Python chatbot using Lemonade. Which instruction produces the best code?</h3>
+            <div class="quiz-options">
+              <button class="quiz-option" data-value="option-a" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Use the openai Python library with base_url='http://localhost:13305/api/v1' and api_key='lemonade'"</span>
+              </button>
+              <button class="quiz-option" data-value="option-b" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Build a chatbot using Lemonade local AI"</span>
+              </button>
+              <button class="quiz-option" data-value="option-c" onclick="selectOption(this)">
+                <div class="quiz-option-radio"></div>
+                <span>"Build an offline chatbot"</span>
+              </button>
+            </div>
+            <div class="quiz-feedback"></div>
+          </div>
+
+          <button class="quiz-check-btn" onclick="checkQuiz('quiz-module5')">Check Answers</button>
+          <button class="quiz-reset-btn" onclick="resetQuiz('quiz-module5')">Try Again</button>
+        </div>
+
+        <!-- Closing celebration -->
+        <div style="text-align:center; padding:var(--space-12) var(--space-6); margin-top:var(--space-8);">
+          <div style="font-size:3rem; margin-bottom:var(--space-4);">🍋</div>
+          <h2 style="font-family:var(--font-display); font-size:var(--text-3xl); margin-bottom:var(--space-4);">You made it.</h2>
+          <p style="color:var(--color-text-secondary); max-width:500px; margin:0 auto var(--space-6);">You now understand how Lemonade routes requests, manages hardware, organizes 159 models, and connects to any app — all without a single cloud dependency.</p>
+          <div style="display:inline-flex; gap:var(--space-3); flex-wrap:wrap; justify-content:center;">
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-accent-light); color:var(--color-accent); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">lemonade launch</span>
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-success-light); color:var(--color-success); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">lemonade pull &lt;model&gt;</span>
+            <span style="padding:var(--space-2) var(--space-4); background:var(--color-info-light); color:var(--color-info); border-radius:var(--radius-full); font-family:var(--font-mono); font-size:var(--text-sm);">base_url = localhost:13305</span>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</section>
+  </main>
+
+</body>
+</html>
