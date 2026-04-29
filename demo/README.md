@@ -128,20 +128,20 @@ python demo/computex_benchmark.py --host localhost --port 13305
 
 > Numbers above are illustrative. Actual results depend on installed GPU and system memory configuration.
 
-## 準備指令
+## Setup Instructions
 
-* 安裝 Lemonade Server
+* Install Lemonade Server
   * https://lemonade.ai/install_options.html#windows
 
-* 啟動 server
+* Start the server
 
 ```bash
 lemonade config set max-loaded-models=9
 ```
 
-* 下載所有 demo 模型 (/demo/pullmodels.bat)
+* Download all demo models (`/demo/pullmodels.bat`)
 
-* 安裝 Python 依賴
+* Install Python dependencies
 
 ```bash
 python -m pip install pyaudio
@@ -151,84 +151,82 @@ python -m pip install openai[voice_helpers]
 python -m pip install sounddevice
 ```
 
-* demo/setup.py — 驗證
+* demo/setup.py — Validate environment
 
 ```bash
   python demo/setup.py
 ```
 
-* 輸出三個區塊的 checklist：
-  * Server — 連線健康檢查
-  * Models — 逐一確認 9 個模型已 pull（依幕分組標示）
-  * Backends — NPU / Vulkan / ROCm 狀態，自動顯示 fallback 提示
+* Outputs three checklist sections:
+  * Server — connectivity health check
+  * Models — verify all 9 models are pulled (grouped by stage)
+  * Backends — NPU / Vulkan / ROCm status with automatic fallback hints
 
-* demo/orchestrator.py — 五幕主持腳本
+* demo/orchestrator.py — Five-act host script
 
 ```bash
-  python demo/orchestrator.py           # 從第1幕開始
-  python demo/orchestrator.py --start-at 3   # 從第3幕繼續
+  python demo/orchestrator.py           # start from act 1
+  python demo/orchestrator.py --start-at 3   # resume from act 3
 ```
 
 ## Learning
 
-### NPU only — NPU 專用路徑
+### NPU Only — Dedicated NPU Path
 
-* Example : Phi-4-mini-instruct-NPU
-* 完全跑在 Ryzen AI 的 NPU（XDNA）, 使用 AMD 自家的 runtime（ryzenai-llm）, 不走 GPU、不走 CPU
-* 特點： 功耗最低（筆電超重要）, 靜音 / 低溫, 延遲穩定（但吞吐通常不高）
-* 限制： 模型要轉成 NPU 支援格式（通常是 INT8 / 特殊編譯）, 不支援太大的模型（記憶體 + NPU算力限制）
+* Example: Phi-4-mini-instruct-NPU
+* Runs entirely on Ryzen AI NPU (XDNA) using AMD's own runtime (ryzenai-llm), no GPU or CPU involved
+* Characteristics: lowest power consumption (critical for laptops), silent / low temperature, stable latency (but throughput is usually lower)
+* Limitations: model must be converted to NPU-supported format (usually INT8 / special compilation), does not support large models (memory + NPU compute constraints)
 
-### GPU only — GPU 推論路徑
+### GPU Only — GPU Inference Path
 
-* Examplel : Phi-4-mini-instruct-GGUF
-* 模型轉成 GGUF 用 llama.cpp 跑, GPU 用的是 Vulkan backend
-* 比 CPU 快很多, 支援模型種類最廣, 最成熟、社群最大
-* 這裡是「跨平台 GPU」方案（Vulkan），不是 AMD 專用 stack
+* Example: Phi-4-mini-instruct-GGUF
+* Model converted to GGUF and run with llama.cpp, using Vulkan backend for GPU
+* Much faster than CPU, broadest model compatibility, most mature ecosystem with largest community
+* This is a "cross-platform GPU" solution (Vulkan), not an AMD-specific stack
 
-### GPU + NPU — Hybrid 混合推論
+### GPU + NPU — Hybrid Inference
 
-* Example : Phi-4-mini-instruct-Hybrid
-* 一部分 layer 在 NPU, 一部分在 GPU（或 CPU）, runtime 會幫你切 workload
-* 平衡效能 vs 功耗, 比純 NPU 快, 比純 GPU 省電
+* Example: Phi-4-mini-instruct-Hybrid
+* Some layers run on NPU, some on GPU (or CPU), runtime automatically splits the workload
+* Balances performance vs power efficiency — faster than NPU-only, more power-efficient than GPU-only
 
-### 為什麼「沒有 ROCm」？（重點）
+### Why "No ROCm"? (Key Insight)
 
-* 這是關鍵設計選擇
-  * 1️⃣ ROCm ≠ 消費級 Windows 主流方案
-    * ROCm 是 AMD 的 CUDA 對應平台，主要在 Linux
-    * 偏向 Data center（MI300）, AI training / HPC
-    * Windows 支援 有限 / 不穩定
+* This is an intentional design choice
+  * 1️⃣ ROCm ≠ mainstream consumer Windows solution
+    * ROCm is AMD's CUDA equivalent, primarily Linux-based
+    * Geared toward datacenter (MI300), AI training / HPC
+    * Windows support is limited / unstable
 
-  * 2️⃣ llama.cpp 選 Vulkan，是為了「通用性」, Vulkan backend 的優勢：
-    * 支援 AMD / NVIDIA / Intel
-    * Windows / Linux 都能跑
-    * 不需要 ROCm / CUDA
-    * 所以這條路刻意「避開 ROCm」
+  * 2️⃣ llama.cpp chose Vulkan for "portability". Vulkan backend advantages:
+    * Supports AMD / NVIDIA / Intel
+    * Runs on Windows / Linux
+    * No ROCm / CUDA required
+    * This path intentionally avoids ROCm
 
-  * 3️⃣ Ryzen AI 軟體棧本來就不走 ROCm, AMD 在 AI PC 的策略是：
+  * 3️⃣ Ryzen AI software stack does not rely on ROCm. AMD's AI PC strategy:
     * NPU → ryzenai-llm
-    * GPU → Vulkan / DirectML（有時）
-    * 不強推 ROCm
+    * GPU → Vulkan / DirectML (sometimes)
+    * ROCm is not pushed
 
-  * 4️⃣ ROCm 不適合這種「edge / client AI」, ROCm 的問題在這裡：
-    * 安裝重
-    * 相容性限制（特定 GPU）
-    * driver + kernel 綁死
-    * 不適合 OEM / end-user 發佈
+  * 4️⃣ ROCm is not suitable for "edge / client AI". ROCm's issues:
+    * Heavy installation
+    * Compatibility constraints (specific GPUs)
+    * Driver + kernel coupling
+    * Not suitable for OEM / end-user distribution
 
-* 「讓使用者開箱即用 AI PC」, 這三種模式其實代表三條產品策略：
-  * NPU → 省電、AI PC differentiation
-  * GPU (Vulkan) → 最大相容性
-  * Hybrid → 最佳體驗
-  * ❗ ROCm 被刻意排除，因為它不是「consumer AI PC」的最佳路徑
+* "Out-of-box AI PC experience". These three modes represent three product strategies:
+  * NPU → power efficiency, AI PC differentiation
+  * GPU (Vulkan) → maximum compatibility
+  * Hybrid → best experience
+  * ❗ ROCm is intentionally excluded — it is not the optimal path for consumer AI PCs
 
-* 這其實透露 AMD 的方向：
-  * ROCm → datacenter（對標 CUDA）
-  * Ryzen AI → client AI（完全另一套 stack）
+* This reveals AMD's strategic direction:
+  * ROCm → datacenter (competing against CUDA)
+  * Ryzen AI → client AI (a completely separate stack)
 
-如果你想，我可以幫你畫一張：
-
-### 「AMD AI Software Stack（ROCm vs Ryzen AI vs Vulkan）」的完整架構圖
+### AMD AI Software Stack (ROCm vs Ryzen AI vs Vulkan)
 
 ```plaintext
                     ┌──────────────────────────┐
@@ -260,64 +258,64 @@ python -m pip install sounddevice
  └───────────────┘     └────────────────┘     └──────────────────┘
 ```
 
-### 為什麼它們「沒有整合」？ 這是 AMD 現在最大結構問題 ?
+### Why Are They Not Integrated? AMD's Biggest Structural Challenge
 
-* 三套完全不互通的 execution model
+* Three completely incompatible execution models
 
-|層面|Ryzen AI|Vulkan|ROCm|
-|:-|:-|:-|:-|
-|API|專有|通用|HIP|
-|OS|Windows-first|全平台|Linux|
-|HW|NPU|GPU|Datacenter GPU|
-|模型格式|編譯後|GGUF|PyTorch|
+| Dimension | Ryzen AI | Vulkan | ROCm |
+|:----------|:---------|:-------|:-----|
+| API | Proprietary | Universal | HIP |
+| OS | Windows-first | Cross-platform | Linux |
+| HW | NPU | GPU | Datacenter GPU |
+| Model Format | Compiled | GGUF | PyTorch |
 
-* 結果就是：模型要轉 3 次, runtime 不共用 ,developer 體驗割裂
+* Result: models must be converted 3 times, runtimes are not shared, fragmented developer experience
 
-* 從產品策略看, 現在看到的現象，其實代表 AMD 在做切割, 故意讓 ROCm 留在 datacenter，不進 client AI stack ?
-  * Datacenter（對打 NVIDIA CUDA）
+* From a product strategy perspective, this pattern suggests AMD is deliberately segmenting its stack — keeping ROCm in the datacenter, separate from the client AI stack:
+  * Datacenter (competing against NVIDIA CUDA)
     * ROCm + MI300
-    * target：OpenAI / hyperscaler
-  * AI PC（對打 Intel / Apple）
+    * Target: OpenAI / hyperscalers
+  * AI PC (competing against Intel / Apple)
     * Ryzen AI + NPU
-    * target：Copilot+ PC / OEM
-  * Developer / 開源社群
+    * Target: Copilot+ PC / OEM
+  * Developer / Open-source community
     * Vulkan / llama.cpp
-    * target：local AI / hobby / prototyping
+    * Target: local AI / hobby / prototyping
   
-### 機會？ 還是根本是晶片產品線使然 ？
+### Opportunity? Or Simply a Consequence of the Chip Product Line?
 
-| 廠商     | 狀態                             |
-| ------ | ------------------------------ |
-| NVIDIA | CUDA（統一）                       |
-| AMD    | 三裂（ROCm / Ryzen AI / Vulkan） |
-| Intel  | oneAPI（但很弱）                     |
-| Apple  | CoreML（封閉）                     |
+| Vendor | Status |
+| ------ | ------ |
+| NVIDIA | CUDA (unified) |
+| AMD    | Fragmented (ROCm / Ryzen AI / Vulkan) |
+| Intel  | oneAPI (but weak) |
+| Apple  | CoreML (closed) |
 
 ### @src/cpp/resources/server_models.json
 
->「屬性（property）」或「鍵（key）」
+> Model entry properties ("keys")
 
 #### checkpoint
 
-指向模型權重檔案的下載來源，格式是 HuggingFace repo/模型名稱[:檔案名]。Lemonade 執行 lemonade pull <模型名> 時，就是去這個路徑抓檔案。
+Points to the download source for model weight files, in the format `HuggingFace repo/model-name[:filename]`. When Lemonade runs `lemonade pull <model-name>`, it fetches from this path.
 
-|來源前綴|數量|說明|
+| Source Prefix | Count | Description |
 |-|-|-|
-|amd| 81| AMD 官方量化版本，針對 Ryzen AI 優化|
-|unsloth|     36|    第三方 GGUF 量化|
-|stabilityai|  3|     SD 原廠|
-|mikkoph|      1|     kokoro TTS| 
-|  (無) |         12|    Whisper 系列等，由 recipe 自行處理下載| 
+| amd | 81 | Official AMD quantized versions, optimized for Ryzen AI |
+| unsloth | 36 | Third-party GGUF quantization |
+| stabilityai | 3 | Stability AI official |
+| mikkoph | 1 | kokoro TTS |
+| (none) | 12 | Whisper series etc., download handled by recipe |
 
-#### recipe  
+#### recipe
 
-指定用哪個推論引擎來執行這個模型
+Specifies which inference engine to use for this model.
 
-|recipe|引擎|說明|
+| Recipe | Engine | Description |
 |-|-|-|
-|ryzenai-llm|  AMD RyzenAI ONNX runtime|Hybrid LLM|
-|llamacpp|llama.cpp（Vulkan/CPU ||
-|whispercpp|whisper.cpp| 語音辨識|
-|sd-cpp|       stable-diffusion.cpp| 影像生成|
-|kokoro|       kokoro ONNX |TTS|
-|experience|   複合套裝||
+| ryzenai-llm | AMD RyzenAI ONNX runtime | Hybrid LLM |
+| llamacpp | llama.cpp (Vulkan/CPU) | |
+| whispercpp | whisper.cpp | Speech recognition |
+| sd-cpp | stable-diffusion.cpp | Image generation |
+| kokoro | kokoro ONNX | TTS |
+| experience | Bundled composite | |
