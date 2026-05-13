@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AMD Hybrid Inference Benchmark — COMPUTEX 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+           background: #f0f4f8; color: #1a202c; line-height: 1.7; }
+
+    header { background: linear-gradient(135deg, #dbeafe 0%, #f0f4f8 100%);
+             border-bottom: 1px solid #bfdbfe; padding: 48px 24px 40px; text-align: center; }
+    header h1 { font-size: 2.2rem; font-weight: 700; color: #1e3a5f; }
+    header p  { margin-top: 10px; color: #4a5568; font-size: 1.05rem;
+                max-width: 640px; margin-inline: auto; }
+
+    main    { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+    section { margin-bottom: 52px; }
+    h2 { font-size: 1.4rem; font-weight: 600; color: #1e40af;
+         border-left: 4px solid #3b82f6; padding-left: 14px; margin-bottom: 20px; }
+    h3 { font-size: 1.05rem; font-weight: 600; color: #1a202c; margin: 20px 0 8px; }
+    p  { color: #4a5568; margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    .code-block { background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 8px;
+      padding: 16px 18px; font-family: monospace; font-size: 0.82rem; color: #1a202c;
+      overflow-x: auto; margin-top: 14px; line-height: 1.7; white-space: pre; }
+    .kw  { color: #7c3aed; }
+    .fn  { color: #16a34a; }
+    .str { color: #d97706; }
+    .cmt { color: #94a3b8; font-style: italic; }
+    .key { color: #2563eb; }
+
+    .info-box { background: #dbeafe; border: 1px solid #93c5fd; border-radius: 10px;
+      padding: 16px 20px; margin-top: 14px; }
+    .info-box .tag { display: inline-block; background: #3b82f6; color: #fff;
+      font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+      margin-bottom: 10px; letter-spacing: 0.05em; }
+    .info-box p { color: #1e3a5f; font-size: 0.88rem; }
+    .info-box p + p { margin-top: 6px; }
+
+    .takeaway { background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+      border: 1px solid #4ade80; border-radius: 10px; padding: 20px 24px; margin-top: 16px; }
+    .takeaway p { color: #166534; font-size: 0.9rem; }
+
+    .api-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .field { background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; padding: 14px 16px; }
+    .field .name { font-family: monospace; font-size: 0.85rem; color: #16a34a; font-weight: 600; }
+    .field .desc { font-size: 0.82rem; color: #4a5568; margin-top: 4px; }
+
+    .event-list { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .event-item { background: #fff; border: 1px solid #cbd5e0; border-radius: 6px;
+      padding: 9px 14px; display: flex; gap: 14px; align-items: baseline; }
+    .event-name { font-family: monospace; font-size: 0.82rem; color: #16a34a;
+      min-width: 200px; flex-shrink: 0; }
+    .event-desc { font-size: 0.82rem; color: #4a5568; }
+
+    .response-box { background: #fff; border: 1px solid #cbd5e0; border-radius: 10px;
+      padding: 20px; margin-top: 16px; }
+    .response-field { display: flex; gap: 16px; padding: 8px 0; border-bottom: 1px solid #e2e8f0; }
+    .response-field:last-child { border-bottom: none; }
+    .rf-key { font-family: monospace; font-size: 0.82rem; color: #d97706; width: 130px; flex-shrink: 0; }
+    .rf-val { font-size: 0.85rem; color: #374151; }
+
+    .btn { padding: 9px 20px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+    .btn-primary:disabled { background: #cbd5e0; color: #9ca3af; cursor: default; }
+    .btn-ghost { background: #fff; color: #4a5568; border: 1px solid #cbd5e0; }
+    .btn-ghost:hover:not(:disabled) { color: #1a202c; border-color: #6b7280; }
+    .btn-ghost:disabled { opacity: 0.4; cursor: default; }
+    .step-indicator { color: #6b7280; font-size: 0.82rem; margin-left: auto; }
+    .demo-controls  { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; align-items: center; }
+
+    .stage-tabs { display: flex; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+    .stage-tab  { padding: 7px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; border: 1px solid #cbd5e0; background: #e2e8f0; color: #4a5568; transition: all 0.2s; }
+    .stage-tab.active { background: #2563eb; border-color: #3b82f6; color: #fff; }
+    .stage-tab.done   { background: #166534; border-color: #4ade80; color: #dcfce7; }
+
+    .demo-panel { display: none; }
+    .demo-panel.visible { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(6px) } to { opacity:1; transform:none } }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+    .col-card { background: #fff; border: 1px solid #cbd5e0; border-radius: 10px; padding: 16px 18px; }
+    .col-card-title { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.07em;
+      text-transform: uppercase; color: #6b7280; margin-bottom: 10px; }
+    .col-card p { font-size: 0.83rem; color: #4a5568; margin-bottom: 6px; }
+    .col-card p:last-child { margin-bottom: 0; }
+
+    .chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+    .chip-label { font-size: 0.75rem; color: #6b7280; }
+    .chip { padding: 5px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+      cursor: pointer; border: 1px solid #cbd5e0; background: #e2e8f0; color: #4a5568; transition: all 0.2s; }
+    .chip.active { background: #dcfce7; border-color: #4ade80; color: #166534; }
+
+    /* TPS visualization */
+    .tps-row { display: flex; align-items: center; gap: 12px; margin: 10px 0; flex-wrap: wrap; }
+    .tps-label { font-family: monospace; font-size: 0.8rem; width: 84px; flex-shrink: 0; color: #374151; font-weight: 600; }
+    .tps-track { flex: 1; min-width: 140px; background: #e2e8f0; border-radius: 6px; height: 22px; overflow: hidden; }
+    .tps-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 10px; font-size: 0.73rem; font-weight: 700; color: #fff; }
+    .tps-fill.npu    { background: linear-gradient(90deg, #7c3aed, #9f7aea); width: 83%; }
+    .tps-fill.hybrid { background: linear-gradient(90deg, #16a34a, #22c55e); width: 100%; }
+    .tps-value { font-size: 0.8rem; color: #374151; min-width: 180px; font-family: monospace; }
+    .winner-box { background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+      border: 1px solid #4ade80; border-radius: 10px; padding: 14px 20px; margin-top: 16px;
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .winner-star { font-size: 1.4rem; }
+    .winner-text { font-size: 0.9rem; font-weight: 700; color: #166534; }
+    .winner-sub  { font-size: 0.8rem; color: #4a7c59; }
+    .speedup-badge { background: #dcfce7; border: 1px solid #4ade80; color: #166534;
+      font-size: 0.82rem; font-weight: 700; padding: 3px 12px; border-radius: 12px; margin-left: auto; }
+
+    /* AMD Stack diagram */
+    .stack-app-row { background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      border: 1px solid #93c5fd; border-radius: 8px; padding: 10px 16px;
+      text-align: center; font-size: 0.88rem; font-weight: 600; color: #1e3a5f; margin-bottom: 10px; }
+    .stack-diagram { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 0; }
+    .stack-col { display: flex; flex-direction: column; gap: 6px; }
+    .stack-col-title { text-align: center; font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase; padding: 6px 10px; border-radius: 6px; }
+    .stack-box { background: #fff; border: 1px solid #cbd5e0; border-radius: 6px;
+      padding: 8px 10px; text-align: center; font-size: 0.78rem; color: #374151; }
+    .stack-box small { font-size: 0.68rem; color: #6b7280; display: block; }
+    .stack-box.hw { font-weight: 600; }
+    .stack-arrow { text-align: center; color: #94a3b8; font-size: 1rem; line-height: 1; }
+    .stack-col-npu .stack-col-title    { background: #ede9fe; color: #6d28d9; }
+    .stack-col-npu .stack-box.hw       { background: #ede9fe; border-color: #a78bfa; }
+    .stack-col-vulkan .stack-col-title { background: #dcfce7; color: #166534; }
+    .stack-col-vulkan .stack-box.hw    { background: #dcfce7; border-color: #4ade80; }
+    .stack-col-rocm .stack-col-title   { background: #fef3c7; color: #92400e; }
+    .stack-col-rocm .stack-box.hw      { background: #fef3c7; border-color: #fcd34d; }
+
+    /* Integration table */
+    .int-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 0.82rem; }
+    .int-table th { background: #dbeafe; color: #1e3a5f; padding: 8px 12px;
+      text-align: left; font-weight: 700; border: 1px solid #cbd5e0; }
+    .int-table td { padding: 8px 12px; border: 1px solid #e2e8f0; color: #374151; vertical-align: top; }
+    .int-table tr:nth-child(even) td { background: #f8fafc; }
+    .int-table .row-label { font-weight: 600; color: #1a202c; }
+
+    @media (max-width: 640px) {
+      .api-fields, .two-col, .stack-diagram { grid-template-columns: 1fr; }
+      .tps-track { min-width: 80px; }
+    }
+
+    #themeToggle { position: fixed; top: 16px; right: 16px; z-index: 9999;
+      padding: 7px 14px; border-radius: 20px; font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; border: 1px solid #cbd5e0; background: #fff; color: #1a202c;
+      transition: all 0.25s; box-shadow: 0 2px 8px rgba(0,0,0,0.12); letter-spacing: 0.03em; }
+    #themeToggle:hover { border-color: #2563eb; color: #2563eb; }
+
+    /* Dark mode */
+    body.dark { background: #0f1117; color: #e2e8f0; }
+    body.dark header { background: linear-gradient(135deg, #1a1f2e 0%, #0f1117 100%); border-bottom-color: #2d3748; }
+    body.dark header h1 { color: #f7fafc; }
+    body.dark header p  { color: #a0aec0; }
+    body.dark h2 { color: #90cdf4; border-left-color: #4299e1; }
+    body.dark h3 { color: #e2e8f0; }
+    body.dark p  { color: #a0aec0; }
+    body.dark .code-block { background: #0d1117; border-color: #2d3748; color: #e2e8f0; }
+    body.dark .kw  { color: #9f7aea; }
+    body.dark .fn  { color: #68d391; }
+    body.dark .str { color: #f6ad55; }
+    body.dark .cmt { color: #4a5568; }
+    body.dark .key { color: #63b3ed; }
+    body.dark .info-box { background: #1a202c; border-color: #2a4a6a; }
+    body.dark .info-box .tag { background: #2a4a6a; color: #90cdf4; }
+    body.dark .info-box p { color: #a0aec0; }
+    body.dark .takeaway { background: linear-gradient(135deg, #1a2a1a, #1a202c); border-color: #276749; }
+    body.dark .takeaway p { color: #c6f6d5; }
+    body.dark .field { background: #1a202c; border-color: #2d3748; }
+    body.dark .field .name { color: #68d391; }
+    body.dark .field .desc { color: #718096; }
+    body.dark .event-item { background: #1a202c; border-color: #2d3748; }
+    body.dark .event-name { color: #68d391; }
+    body.dark .event-desc { color: #718096; }
+    body.dark .response-box { background: #1a202c; border-color: #2d3748; }
+    body.dark .response-field { border-bottom-color: #2d3748; }
+    body.dark .rf-key { color: #f6ad55; }
+    body.dark .rf-val { color: #a0aec0; }
+    body.dark .btn-primary { background: #2b6cb0; }
+    body.dark .btn-primary:hover:not(:disabled) { background: #3182ce; }
+    body.dark .btn-primary:disabled { background: #2d3748; color: #4a5568; }
+    body.dark .btn-ghost { background: transparent; color: #718096; border-color: #2d3748; }
+    body.dark .btn-ghost:hover:not(:disabled) { color: #e2e8f0; border-color: #4a5568; }
+    body.dark .btn-ghost:disabled { opacity: 0.4; }
+    body.dark .step-indicator { color: #718096; }
+    body.dark .stage-tab { background: #1a202c; border-color: #2d3748; color: #718096; }
+    body.dark .stage-tab.active { background: #2b6cb0; border-color: #4299e1; color: #fff; }
+    body.dark .stage-tab.done   { background: #276749; border-color: #48bb78; color: #c6f6d5; }
+    body.dark .col-card { background: #1a202c; border-color: #2d3748; }
+    body.dark .col-card-title { color: #4a5568; }
+    body.dark .col-card p { color: #a0aec0; }
+    body.dark .chip { background: #1a202c; border-color: #2d3748; color: #718096; }
+    body.dark .chip.active { background: #1c3a2a; border-color: #38a169; color: #68d391; }
+    body.dark #themeToggle { background: #1a202c; color: #e2e8f0; border-color: #4a5568; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+    body.dark #themeToggle:hover { border-color: #90cdf4; color: #90cdf4; }
+    body.dark .tps-track { background: #2d3748; }
+    body.dark .tps-label { color: #a0aec0; }
+    body.dark .tps-value { color: #a0aec0; }
+    body.dark .winner-box { background: linear-gradient(135deg, #1a3a28, #1a202c); border-color: #276749; }
+    body.dark .winner-text { color: #68d391; }
+    body.dark .winner-sub  { color: #4a7c59; }
+    body.dark .speedup-badge { background: #1c3a2a; border-color: #38a169; color: #68d391; }
+    body.dark .stack-app-row { background: linear-gradient(135deg, #1a2040, #1a202c); border-color: #2d4a6a; color: #90cdf4; }
+    body.dark .stack-box { background: #1a202c; border-color: #2d3748; color: #a0aec0; }
+    body.dark .stack-box small { color: #4a5568; }
+    body.dark .stack-arrow { color: #4a5568; }
+    body.dark .stack-col-npu .stack-col-title    { background: #2d1f4a; color: #b794f4; }
+    body.dark .stack-col-npu .stack-box.hw       { background: #2d1f4a; border-color: #553c8b; }
+    body.dark .stack-col-vulkan .stack-col-title { background: #1a3a28; color: #68d391; }
+    body.dark .stack-col-vulkan .stack-box.hw    { background: #1a3a28; border-color: #276749; }
+    body.dark .stack-col-rocm .stack-col-title   { background: #3a2a10; color: #f6ad55; }
+    body.dark .stack-col-rocm .stack-box.hw      { background: #3a2a10; border-color: #7a5a20; }
+    body.dark .int-table th { background: #1a2040; color: #90cdf4; border-color: #2d3748; }
+    body.dark .int-table td { border-color: #2d3748; color: #a0aec0; }
+    body.dark .int-table tr:nth-child(even) td { background: #1a202c; }
+    body.dark .int-table .row-label { color: #e2e8f0; }
+  </style>
+</head>
+<body>
+
+<button id="themeToggle" onclick="toggleTheme()">🌙 暗色模式</button>
+
+<header>
+  <h1>AMD Hybrid Inference Benchmark</h1>
+  <p>COMPUTEX 2026 — NPU · GPU · Hybrid inference on AMD Ryzen AI. Auto-detects hardware, compares throughput, and shows AMD's three-stack AI strategy.</p>
+</header>
+
+<main>
+
+  <!-- ── 1. Benchmark Design ── -->
+  <section id="sec-design">
+    <h2>Benchmark Design</h2>
+    <p>The script calls <code>/v1/system-info</code> on startup, detects available hardware, and automatically selects the matching benchmark scenario.</p>
+
+    <h3>Hardware Detection</h3>
+    <div class="event-list">
+      <div class="event-item">
+        <span class="event-name">AMD XDNA 2 NPU (Ryzen AI 300+)</span>
+        <span class="event-desc">→ NPU-only vs GPU+NPU Hybrid 2-way comparison</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">AMD Radeon GPU / iGPU (Vulkan, no NPU)</span>
+        <span class="event-desc">→ CPU vs GPU benchmark</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">CPU only</span>
+        <span class="event-desc">→ CPU baseline only</span>
+      </div>
+    </div>
+
+    <h3>Benchmark Scenario</h3>
+    <div class="chip-row">
+      <span class="chip-label">Detected hardware:</span>
+      <span class="chip bd-chip active" onclick="bdSelect(0)">⚡ XDNA 2 NPU</span>
+      <span class="chip bd-chip" onclick="bdSelect(1)">🎮 GPU only (no NPU)</span>
+    </div>
+
+    <div class="bd-panel demo-panel visible" id="bd-p0">
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-title">⚡ NPU Only — baseline</div>
+          <p><strong>Model:</strong> DeepSeek-R1-Distill-Qwen-1.5B-NPU</p>
+          <p><strong>Recipe:</strong> ryzenai-llm</p>
+          <p><strong>Path:</strong> XDNA 2 NPU only, no GPU or CPU</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">🚀 GPU+NPU Hybrid</div>
+          <p><strong>Model:</strong> DeepSeek-R1-Distill-Qwen-1.5B-Hybrid</p>
+          <p><strong>Recipe:</strong> ryzenai-llm</p>
+          <p><strong>Path:</strong> XDNA 2 NPU + integrated GPU (iGPU)</p>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="tag">WHY NPU vs HYBRID — NOT CPU or dGPU?</div>
+        <p>Both variants share the same <code>ryzenai-llm</code> recipe and model family, making TPS numbers directly comparable. Comparing against a discrete Radeon GPU (Vulkan GGUF) would use a different inference stack and different hardware — giving a misleading result. NPU vs Hybrid isolates the exact contribution of adding the iGPU to the NPU workload.</p>
+      </div>
+    </div>
+
+    <div class="bd-panel demo-panel" id="bd-p1">
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-title">🖥 CPU — baseline</div>
+          <p><strong>Model:</strong> &lt;model&gt;-GGUF</p>
+          <p><strong>Engine:</strong> llamacpp + cpu</p>
+          <p>Pure CPU inference used as the baseline.</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">🎮 GPU (Vulkan)</div>
+          <p><strong>Model:</strong> &lt;model&gt;-GGUF</p>
+          <p><strong>Engine:</strong> llamacpp + Vulkan</p>
+          <p>GPU-accelerated GGUF inference. Cross-platform, no ROCm required.</p>
+        </div>
+      </div>
+      <div class="info-box">
+        <div class="tag">DEFAULT MODEL</div>
+        <p>GPU-only scenario uses <strong>Qwen3-4B-GGUF</strong> by default. Override with <code>--gpu-model</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2. Model Selection ── -->
+  <section id="sec-models">
+    <h2>Model Selection</h2>
+    <p>The NPU benchmark uses the <strong>DeepSeek-R1-Distill-Qwen-1.5B</strong> family. Both variants share the same <code>ryzenai-llm</code> recipe, so throughput numbers are apples-to-apples.</p>
+
+    <div class="two-col">
+      <div class="col-card">
+        <div class="col-card-title" style="color:#6d28d9;">⚡ NPU Only</div>
+        <div class="response-box" style="margin-top:8px;">
+          <div class="response-field">
+            <span class="rf-key">Model</span>
+            <span class="rf-val">DeepSeek-R1-Distill-Qwen-1.5B-NPU</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Recipe</span>
+            <span class="rf-val">ryzenai-llm</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Size</span>
+            <span class="rf-val">~3 GB</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Hardware</span>
+            <span class="rf-val">XDNA 2 NPU only</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-card">
+        <div class="col-card-title" style="color:#166534;">🚀 GPU+NPU Hybrid</div>
+        <div class="response-box" style="margin-top:8px;">
+          <div class="response-field">
+            <span class="rf-key">Model</span>
+            <span class="rf-val">DeepSeek-R1-Distill-Qwen-1.5B-Hybrid</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Recipe</span>
+            <span class="rf-val">ryzenai-llm</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Size</span>
+            <span class="rf-val">~3 GB</span>
+          </div>
+          <div class="response-field">
+            <span class="rf-key">Hardware</span>
+            <span class="rf-val">XDNA 2 NPU + iGPU</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="takeaway">
+      <p>For the GPU-only scenario, the default model is <strong>Qwen3-4B-GGUF</strong> (configurable via <code>--gpu-model</code>).</p>
+    </div>
+  </section>
+
+  <!-- ── 3. Requirements ── -->
+  <section id="sec-req">
+    <h2>Requirements</h2>
+    <p>Two prerequisites before running the benchmark: Python packages and a running Lemonade server.</p>
+
+    <div class="stage-tabs">
+      <div class="req-tab stage-tab active" onclick="reqGoTo(0)">1 · Python Packages</div>
+      <div class="req-tab stage-tab" onclick="reqGoTo(1)">2 · Lemonade Server</div>
+    </div>
+
+    <div class="req-panel demo-panel visible" id="req-p0">
+      <p>Install the required Python packages:</p>
+      <pre class="code-block"><span class="fn">pip</span> <span class="kw">install</span> <span class="str">openai</span> <span class="str">requests</span></pre>
+    </div>
+    <div class="req-panel demo-panel" id="req-p1">
+      <p>Start a local Lemonade server. The benchmark connects to <code>http://localhost:13305</code> by default.</p>
+      <pre class="code-block"><span class="fn">lemonade</span> <span class="kw">launch</span></pre>
+    </div>
+
+    <div class="demo-controls">
+      <button class="btn btn-ghost" id="reqPrev" disabled onclick="reqGoTo(reqStep-1)">← Back</button>
+      <button class="btn btn-primary" id="reqNext" onclick="reqGoTo(reqStep+1)">Next →</button>
+      <span class="step-indicator" id="reqIndicator">Step 1 of 2</span>
+    </div>
+  </section>
+
+  <!-- ── 4. Usage ── -->
+  <section id="sec-usage">
+    <h2>Usage</h2>
+    <p>Run with auto-detected hardware or override any setting via command-line arguments.</p>
+
+    <pre class="code-block"><span class="cmt"># Auto-detect hardware and run the appropriate benchmark</span>
+<span class="fn">python</span> <span class="str">demo/computex_benchmark.py</span>
+
+<span class="cmt"># Override the GPU-only model</span>
+<span class="fn">python</span> <span class="str">demo/computex_benchmark.py</span> <span class="key">--gpu-model</span> <span class="str">Qwen3-1.7B-GGUF</span>
+
+<span class="cmt"># Skip model downloads (models already pulled)</span>
+<span class="fn">python</span> <span class="str">demo/computex_benchmark.py</span> <span class="key">--skip-pull</span>
+
+<span class="cmt"># Skip backend installation</span>
+<span class="fn">python</span> <span class="str">demo/computex_benchmark.py</span> <span class="key">--skip-install</span>
+
+<span class="cmt"># Connect to a non-default server</span>
+<span class="fn">python</span> <span class="str">demo/computex_benchmark.py</span> <span class="key">--host</span> <span class="str">localhost</span> <span class="key">--port</span> <span class="str">13305</span></pre>
+
+    <h3>Command-line Arguments</h3>
+    <div class="api-fields">
+      <div class="field">
+        <div class="name">--host</div>
+        <div class="desc">Lemonade server hostname. Default: <code>localhost</code></div>
+      </div>
+      <div class="field">
+        <div class="name">--port</div>
+        <div class="desc">Lemonade server port. Default: <code>13305</code></div>
+      </div>
+      <div class="field">
+        <div class="name">--gpu-model</div>
+        <div class="desc">GGUF model for GPU-only scenario. Default: <code>Qwen3-4B-GGUF</code></div>
+      </div>
+      <div class="field">
+        <div class="name">--skip-pull</div>
+        <div class="desc">Skip model download step — use when models are already pulled</div>
+      </div>
+      <div class="field">
+        <div class="name">--skip-install</div>
+        <div class="desc">Skip backend installation step</div>
+      </div>
+      <div class="field">
+        <div class="name">--prompt</div>
+        <div class="desc">Override the inference prompt (built-in prompt used by default)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. Sample Output ── -->
+  <section id="sec-output">
+    <h2>Sample Output</h2>
+    <p>When an XDNA 2 NPU is detected the script runs both passes and prints a side-by-side comparison.</p>
+
+    <div class="response-box">
+      <div class="response-field">
+        <span class="rf-key">Server</span>
+        <span class="rf-val">http://localhost:13305 — ✔ Running</span>
+      </div>
+      <div class="response-field">
+        <span class="rf-key">Hardware</span>
+        <span class="rf-val">AMD XDNA 2 NPU detected → NPU model + GPU+NPU Hybrid</span>
+      </div>
+      <div class="response-field">
+        <span class="rf-key">NPU model</span>
+        <span class="rf-val">DeepSeek-R1-Distill-Qwen-1.5B-NPU ✔ ready</span>
+      </div>
+      <div class="response-field">
+        <span class="rf-key">Hybrid model</span>
+        <span class="rf-val">DeepSeek-R1-Distill-Qwen-1.5B-Hybrid ✔ ready</span>
+      </div>
+      <div class="response-field">
+        <span class="rf-key">NPU result</span>
+        <span class="rf-val">Wall: 13.2 s · TPS: 27.7 · TTFT: 349 ms · Tokens: 256</span>
+      </div>
+      <div class="response-field">
+        <span class="rf-key">Hybrid result</span>
+        <span class="rf-val">Wall: 10.6 s · TPS: 33.4 · TTFT: 216 ms · Tokens: 256</span>
+      </div>
+    </div>
+
+    <h3>Throughput Comparison (illustrative numbers)</h3>
+    <div class="tps-row">
+      <span class="tps-label">⚡ NPU</span>
+      <div class="tps-track"><div class="tps-fill npu">27.7 TPS</div></div>
+      <span class="tps-value">27.7 TPS · TTFT 349 ms</span>
+    </div>
+    <div class="tps-row">
+      <span class="tps-label">🚀 Hybrid</span>
+      <div class="tps-track"><div class="tps-fill hybrid">33.4 TPS</div></div>
+      <span class="tps-value">33.4 TPS · TTFT 216 ms</span>
+    </div>
+
+    <div class="winner-box">
+      <span class="winner-star">★</span>
+      <div>
+        <div class="winner-text">Winner: Hybrid — 33.4 tokens/sec</div>
+        <div class="winner-sub">38% lower TTFT (216 ms vs 349 ms)</div>
+      </div>
+      <span class="speedup-badge">×1.2 faster</span>
+    </div>
+
+    <div class="info-box">
+      <div class="tag">NOTE</div>
+      <p>Numbers above are illustrative. Actual results depend on installed GPU and system memory configuration.</p>
+    </div>
+  </section>
+
+  <!-- ── 6. Setup Instructions ── -->
+  <section id="sec-setup">
+    <h2>Setup Instructions</h2>
+    <p>Follow these five steps to prepare the full COMPUTEX 2026 demo environment.</p>
+
+    <div class="stage-tabs">
+      <div class="su-tab stage-tab active" onclick="suGoTo(0)">1 · Install Lemonade</div>
+      <div class="su-tab stage-tab" onclick="suGoTo(1)">2 · Configure Server</div>
+      <div class="su-tab stage-tab" onclick="suGoTo(2)">3 · Pull Models</div>
+      <div class="su-tab stage-tab" onclick="suGoTo(3)">4 · Python Deps</div>
+      <div class="su-tab stage-tab" onclick="suGoTo(4)">5 · Validate &amp; Run</div>
+    </div>
+
+    <div class="su-panel demo-panel visible" id="su-p0">
+      <p>Download and install Lemonade Server for Windows from the official install page.</p>
+      <div class="info-box">
+        <div class="tag">INSTALL PAGE</div>
+        <p>lemonade.ai → Install Options → Windows</p>
+      </div>
+    </div>
+
+    <div class="su-panel demo-panel" id="su-p1">
+      <p>Allow Lemonade to load up to 9 models simultaneously — required for the full multi-model demo:</p>
+      <pre class="code-block"><span class="fn">lemonade</span> <span class="fn">config</span> <span class="kw">set</span> <span class="key">max-loaded-models</span>=<span class="str">9</span></pre>
+    </div>
+
+    <div class="su-panel demo-panel" id="su-p2">
+      <p>Run the batch script to download all 9 demo models. First run may take several minutes.</p>
+      <pre class="code-block"><span class="cmt"># From the repo root</span>
+<span class="str">demo/pullmodels.bat</span></pre>
+    </div>
+
+    <div class="su-panel demo-panel" id="su-p3">
+      <p>Install all Python dependencies needed by the demo scripts:</p>
+      <pre class="code-block"><span class="fn">python</span> -m <span class="fn">pip</span> <span class="kw">install</span> <span class="str">pyaudio</span>
+<span class="fn">python</span> -m <span class="fn">pip</span> <span class="kw">install</span> <span class="str">websockets</span>
+<span class="fn">python</span> -m <span class="fn">pip</span> <span class="kw">install</span> <span class="str">numpy</span>
+<span class="fn">python</span> -m <span class="fn">pip</span> <span class="kw">install</span> <span class="str">"openai[voice_helpers]"</span>
+<span class="fn">python</span> -m <span class="fn">pip</span> <span class="kw">install</span> <span class="str">sounddevice</span></pre>
+    </div>
+
+    <div class="su-panel demo-panel" id="su-p4">
+      <p>Run the environment validator. It checks server connectivity, verifies all 9 models are ready (grouped by stage), and reports NPU / Vulkan / ROCm backend status with automatic fallback hints.</p>
+      <pre class="code-block"><span class="fn">python</span> <span class="str">demo/setup.py</span></pre>
+      <p style="margin-top:14px;">Then launch the five-act host script:</p>
+      <pre class="code-block"><span class="fn">python</span> <span class="str">demo/orchestrator.py</span>                  <span class="cmt"># start from act 1</span>
+<span class="fn">python</span> <span class="str">demo/orchestrator.py</span> <span class="key">--start-at</span> <span class="str">3</span>      <span class="cmt"># resume from act 3</span></pre>
+    </div>
+
+    <div class="demo-controls">
+      <button class="btn btn-ghost" id="suPrev" disabled onclick="suGoTo(suStep-1)">← Back</button>
+      <button class="btn btn-primary" id="suNext" onclick="suGoTo(suStep+1)">Next →</button>
+      <span class="step-indicator" id="suIndicator">Step 1 of 5</span>
+    </div>
+  </section>
+
+  <!-- ── 7. Learning ── -->
+  <section id="sec-learning">
+    <h2>Learning</h2>
+    <p>Deep dives into the three inference modes and AMD's AI software strategy.</p>
+
+    <div class="chip-row">
+      <span class="chip-label">Topic:</span>
+      <span class="chip lrn-chip active" onclick="lrnSelect(0)">⚡ NPU Only</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(1)">🎮 GPU Only</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(2)">🚀 Hybrid</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(3)">❓ Why No ROCm?</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(4)">📊 AMD Stack</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(5)">🔗 Integration</span>
+      <span class="chip lrn-chip" onclick="lrnSelect(6)">🏢 Vendors</span>
+    </div>
+
+    <!-- 0: NPU Only -->
+    <div class="lrn-panel demo-panel visible" id="lrn-p0">
+      <h3>NPU Only — Dedicated NPU Path</h3>
+      <p><strong>Example:</strong> Phi-4-mini-instruct-NPU</p>
+      <div class="api-fields">
+        <div class="field">
+          <div class="name">Runtime</div>
+          <div class="desc">AMD ryzenai-llm — runs entirely on Ryzen AI XDNA NPU. No GPU or CPU compute involved.</div>
+        </div>
+        <div class="field">
+          <div class="name">Power profile</div>
+          <div class="desc">Lowest power consumption — critical for laptops. Silent, low temperature, stable latency.</div>
+        </div>
+        <div class="field">
+          <div class="name">Throughput</div>
+          <div class="desc">Generally lower than Hybrid, but highly predictable latency characteristics.</div>
+        </div>
+        <div class="field">
+          <div class="name">Limitations</div>
+          <div class="desc">Model must be compiled to NPU format (INT8 / special compilation). Does not support large models due to NPU memory constraints.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1: GPU Only -->
+    <div class="lrn-panel demo-panel" id="lrn-p1">
+      <h3>GPU Only — GPU Inference Path</h3>
+      <p><strong>Example:</strong> Phi-4-mini-instruct-GGUF</p>
+      <div class="api-fields">
+        <div class="field">
+          <div class="name">Runtime</div>
+          <div class="desc">llama.cpp with Vulkan backend — cross-platform GPU inference, not AMD-specific.</div>
+        </div>
+        <div class="field">
+          <div class="name">Performance</div>
+          <div class="desc">Much faster than CPU. Highest model compatibility, most mature ecosystem with the largest community.</div>
+        </div>
+        <div class="field">
+          <div class="name">Portability</div>
+          <div class="desc">Vulkan backend works on AMD / NVIDIA / Intel GPUs across Windows and Linux.</div>
+        </div>
+        <div class="field">
+          <div class="name">Model format</div>
+          <div class="desc">GGUF — industry-standard quantized format. No compilation step required.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2: Hybrid -->
+    <div class="lrn-panel demo-panel" id="lrn-p2">
+      <h3>GPU + NPU — Hybrid Inference</h3>
+      <p><strong>Example:</strong> Phi-4-mini-instruct-Hybrid</p>
+      <div class="api-fields">
+        <div class="field">
+          <div class="name">Architecture</div>
+          <div class="desc">Some layers run on NPU, some on GPU (or CPU). The runtime automatically splits the workload.</div>
+        </div>
+        <div class="field">
+          <div class="name">Trade-off</div>
+          <div class="desc">Faster than NPU-only, more power-efficient than GPU-only. Best-of-both-worlds for AI PCs.</div>
+        </div>
+        <div class="field">
+          <div class="name">Runtime</div>
+          <div class="desc">ryzenai-llm — same recipe as NPU-only, enabling direct apples-to-apples TPS comparison.</div>
+        </div>
+        <div class="field">
+          <div class="name">GPU used</div>
+          <div class="desc">Integrated GPU (iGPU), not a discrete Radeon. Comparing against a dGPU would mix inference stacks and give a misleading result.</div>
+        </div>
+      </div>
+      <div class="takeaway">
+        <p>Hybrid inference is AMD's "best experience" answer for AI PCs: the NPU handles power-sensitive layers while the iGPU boosts throughput on compute-heavy layers — within the same ryzenai-llm stack.</p>
+      </div>
+    </div>
+
+    <!-- 3: Why No ROCm? -->
+    <div class="lrn-panel demo-panel" id="lrn-p3">
+      <h3>Why "No ROCm"? — Key Insight</h3>
+      <div class="two-col">
+        <div class="col-card">
+          <div class="col-card-title">1 — ROCm ≠ Consumer Windows</div>
+          <p>ROCm is AMD's CUDA equivalent — primarily Linux-based, targeting datacenter (MI300) and AI training / HPC. Windows support is limited and unstable.</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">2 — llama.cpp chose Vulkan</div>
+          <p>Vulkan backend supports AMD / NVIDIA / Intel, runs on Windows and Linux, and requires no ROCm or CUDA. This portability path intentionally avoids ROCm.</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">3 — Ryzen AI stack ≠ ROCm</div>
+          <p>AMD's AI PC stack: NPU → ryzenai-llm, GPU → Vulkan / DirectML. ROCm is not part of this client stack. AMD does not push ROCm here.</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">4 — ROCm ≠ Edge / Client AI</div>
+          <p>Heavy installation, GPU compatibility constraints, driver–kernel coupling, and not suited for OEM or end-user distribution.</p>
+        </div>
+      </div>
+      <div class="takeaway" style="margin-top:14px;">
+        <p>These three modes represent three product strategies: NPU → power efficiency &amp; AI PC differentiation; GPU Vulkan → maximum compatibility; Hybrid → best experience. ROCm is intentionally excluded — it is not the optimal path for consumer AI PCs. This reveals AMD's strategic split: ROCm → datacenter (vs CUDA), Ryzen AI → client AI (a completely separate stack).</p>
+      </div>
+    </div>
+
+    <!-- 4: AMD Stack -->
+    <div class="lrn-panel demo-panel" id="lrn-p4">
+      <h3>AMD AI Software Stack</h3>
+      <div class="stack-app-row">Application Layer — Chatbot / Copilot / RAG</div>
+      <div class="stack-diagram">
+        <div class="stack-col stack-col-npu">
+          <div class="stack-col-title">Ryzen AI / NPU</div>
+          <div class="stack-box">Ryzen AI SDK<small>(NPU Runtime)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">ryzenai-llm<small>(NPU Driver)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box hw">XDNA NPU<small>(Ryzen AI 300+)</small></div>
+        </div>
+        <div class="stack-col stack-col-vulkan">
+          <div class="stack-col-title">llama.cpp / Vulkan</div>
+          <div class="stack-box">llama.cpp<small>(GGUF Runtime)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">Vulkan Backend<small>(Cross-GPU)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box hw">RDNA GPU<small>(Consumer GPU)</small></div>
+        </div>
+        <div class="stack-col stack-col-rocm">
+          <div class="stack-col-title">PyTorch / ROCm</div>
+          <div class="stack-box">PyTorch / ONNX<small>(Training / Inference)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box">ROCm<small>(HIP / OpenCL)</small></div>
+          <div class="stack-arrow">↓</div>
+          <div class="stack-box hw">CDNA / RDNA<small>(MI300 / HPC)</small></div>
+        </div>
+      </div>
+      <div class="info-box" style="margin-top:14px;">
+        <div class="tag">STRATEGIC SPLIT</div>
+        <p>ROCm → datacenter, competing against NVIDIA CUDA. Ryzen AI → client AI, a completely separate stack with no shared runtime.</p>
+      </div>
+    </div>
+
+    <!-- 5: Integration Challenge -->
+    <div class="lrn-panel demo-panel" id="lrn-p5">
+      <h3>Why Are They Not Integrated? — AMD's Biggest Structural Challenge</h3>
+      <p>Three completely incompatible execution models:</p>
+      <table class="int-table">
+        <thead>
+          <tr><th>Dimension</th><th>Ryzen AI</th><th>Vulkan</th><th>ROCm</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="row-label">API</td><td>Proprietary</td><td>Universal</td><td>HIP</td></tr>
+          <tr><td class="row-label">OS</td><td>Windows-first</td><td>Cross-platform</td><td>Linux</td></tr>
+          <tr><td class="row-label">Hardware</td><td>NPU</td><td>GPU</td><td>Datacenter GPU</td></tr>
+          <tr><td class="row-label">Model Format</td><td>Compiled (NPU)</td><td>GGUF</td><td>PyTorch</td></tr>
+        </tbody>
+      </table>
+      <div class="info-box" style="margin-top:14px;">
+        <div class="tag">RESULT</div>
+        <p>Models must be converted 3 times, runtimes are not shared, and the developer experience is fragmented. AMD is deliberately segmenting its stack — ROCm in the datacenter, Ryzen AI in the client.</p>
+      </div>
+      <div class="two-col" style="margin-top:14px;">
+        <div class="col-card">
+          <div class="col-card-title">Datacenter (vs NVIDIA CUDA)</div>
+          <p>ROCm + MI300</p>
+          <p>Target: OpenAI / hyperscalers</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">AI PC (vs Intel / Apple)</div>
+          <p>Ryzen AI + NPU</p>
+          <p>Target: Copilot+ PC / OEM</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">Developer / Open-source</div>
+          <p>Vulkan / llama.cpp</p>
+          <p>Target: local AI / hobby / prototyping</p>
+        </div>
+        <div class="col-card">
+          <div class="col-card-title">Structural Cost</div>
+          <p>3× model conversion, 3× SDK maintenance, 3× developer onboarding</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6: Vendor Landscape -->
+    <div class="lrn-panel demo-panel" id="lrn-p6">
+      <h3>Vendor AI Stack Comparison</h3>
+      <div class="api-fields">
+        <div class="field">
+          <div class="name">NVIDIA</div>
+          <div class="desc">CUDA — unified stack across consumer and datacenter. Single ecosystem, massive developer adoption and toolchain maturity.</div>
+        </div>
+        <div class="field">
+          <div class="name">AMD</div>
+          <div class="desc">Fragmented — ROCm (datacenter) + Ryzen AI (NPU) + Vulkan (consumer GPU). Three separate, incompatible stacks.</div>
+        </div>
+        <div class="field">
+          <div class="name">Intel</div>
+          <div class="desc">oneAPI — unified vision, but weak execution. NPU (AI Boost) + Arc GPU stack still maturing.</div>
+        </div>
+        <div class="field">
+          <div class="name">Apple</div>
+          <div class="desc">CoreML — closed but tightly integrated. Unified memory removes the NPU/GPU split entirely.</div>
+        </div>
+      </div>
+      <div class="takeaway" style="margin-top:14px;">
+        <p>AMD's fragmentation is partly a consequence of its chip product line history (ATI GPU acquisition + independent XDNA NPU development). Whether this remains a structural constraint or becomes an opportunity for a unified client AI stack is AMD's defining challenge for the AI PC era.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 8. Model Registry ── -->
+  <section id="sec-registry">
+    <h2>Model Registry — server_models.json</h2>
+    <p>The file <code>src/cpp/resources/server_models.json</code> defines every model available in Lemonade. Each entry has two key fields that control download source and runtime.</p>
+
+    <h3>checkpoint — download source</h3>
+    <p>Points to <code>HuggingFace repo/model-name[:filename]</code>. Used by <code>lemonade pull &lt;model-name&gt;</code> to fetch weights.</p>
+    <div class="api-fields">
+      <div class="field">
+        <div class="name">amd/…</div>
+        <div class="desc">81 models — Official AMD quantized versions, optimized for Ryzen AI hardware</div>
+      </div>
+      <div class="field">
+        <div class="name">unsloth/…</div>
+        <div class="desc">36 models — Third-party GGUF quantizations</div>
+      </div>
+      <div class="field">
+        <div class="name">stabilityai/…</div>
+        <div class="desc">3 models — Stability AI official releases</div>
+      </div>
+      <div class="field">
+        <div class="name">mikkoph/…</div>
+        <div class="desc">1 model — kokoro TTS</div>
+      </div>
+      <div class="field">
+        <div class="name">(none)</div>
+        <div class="desc">12 models — Whisper series; download is handled by the recipe itself</div>
+      </div>
+    </div>
+
+    <h3>recipe — inference engine</h3>
+    <p>Specifies which backend processes this model at runtime.</p>
+    <div class="event-list">
+      <div class="event-item">
+        <span class="event-name">ryzenai-llm</span>
+        <span class="event-desc">AMD RyzenAI ONNX runtime — for NPU and Hybrid LLM models</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">llamacpp</span>
+        <span class="event-desc">llama.cpp with Vulkan or CPU backend — for GGUF models</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">whispercpp</span>
+        <span class="event-desc">whisper.cpp — speech-to-text recognition</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">sd-cpp</span>
+        <span class="event-desc">stable-diffusion.cpp — image generation</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">kokoro</span>
+        <span class="event-desc">kokoro ONNX — text-to-speech synthesis</span>
+      </div>
+      <div class="event-item">
+        <span class="event-name">experience</span>
+        <span class="event-desc">Bundled composite — multi-component demo experiences</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark');
+    document.getElementById('themeToggle').textContent = isDark ? '☀ 亮色模式' : '🌙 暗色模式';
+  }
+
+  function bdSelect(n) {
+    document.querySelectorAll('.bd-chip').forEach((c, i) => c.classList.toggle('active', i === n));
+    document.querySelectorAll('.bd-panel').forEach((p, i) => p.classList.toggle('visible', i === n));
+  }
+  bdSelect(0);
+
+  var reqStep = 0;
+  const REQ_MAX = 1;
+  function reqGoTo(n) {
+    reqStep = Math.max(0, Math.min(REQ_MAX, n));
+    document.querySelectorAll('.req-panel').forEach((el, i) =>
+      el.classList.toggle('visible', i === reqStep));
+    document.querySelectorAll('.req-tab').forEach((t, i) => {
+      t.classList.remove('active', 'done');
+      if (i === reqStep)    t.classList.add('active');
+      else if (i < reqStep) t.classList.add('done');
+    });
+    document.getElementById('reqPrev').disabled = reqStep === 0;
+    const rNext = document.getElementById('reqNext');
+    rNext.disabled    = reqStep === REQ_MAX;
+    rNext.textContent = reqStep === REQ_MAX ? 'Done ✓' : 'Next →';
+    document.getElementById('reqIndicator').textContent = `Step ${reqStep + 1} of ${REQ_MAX + 1}`;
+  }
+  reqGoTo(0);
+
+  var suStep = 0;
+  const SU_MAX = 4;
+  function suGoTo(n) {
+    suStep = Math.max(0, Math.min(SU_MAX, n));
+    document.querySelectorAll('.su-panel').forEach((el, i) =>
+      el.classList.toggle('visible', i === suStep));
+    document.querySelectorAll('.su-tab').forEach((t, i) => {
+      t.classList.remove('active', 'done');
+      if (i === suStep)    t.classList.add('active');
+      else if (i < suStep) t.classList.add('done');
+    });
+    document.getElementById('suPrev').disabled = suStep === 0;
+    const sNext = document.getElementById('suNext');
+    sNext.disabled    = suStep === SU_MAX;
+    sNext.textContent = suStep === SU_MAX ? 'Done ✓' : 'Next →';
+    document.getElementById('suIndicator').textContent = `Step ${suStep + 1} of ${SU_MAX + 1}`;
+  }
+  suGoTo(0);
+
+  function lrnSelect(n) {
+    document.querySelectorAll('.lrn-chip').forEach((c, i) => c.classList.toggle('active', i === n));
+    document.querySelectorAll('.lrn-panel').forEach((p, i) => p.classList.toggle('visible', i === n));
+  }
+  lrnSelect(0);
+</script>
+</body>
+</html>
