@@ -570,12 +570,12 @@ const I18N = {
     // Welcome screen
     welcomeHw: {
         zh: [
-            { role: 'NPU 聽', desc: 'XDNA2 55 TOPS' },
+            { role: 'NPU 聽', desc: 'XDNA2 50 TOPS' },
             { role: 'CPU 說', desc: 'Ryzen AI CPU' },
             { role: 'iGPU 畫', desc: 'Radeon GPU RDNA 3.5' },
         ],
         en: [
-            { role: 'NPU Listens', desc: 'XDNA2 55 TOPS' },
+            { role: 'NPU Listens', desc: 'XDNA2 50 TOPS' },
             { role: 'CPU Speaks', desc: 'Ryzen AI CPU' },
             { role: 'iGPU Draws', desc: 'Radeon GPU RDNA 3.5' },
         ],
@@ -595,24 +595,10 @@ const I18N = {
                 en: '"NPU, iGPU, and CPU each play a role —\nbut ROCm is not part of this.\nThis machine runs AI on a different path:\nXDNA2 NPU · Radeon GPU · Vulkan"\n\n"No discrete GPU. No cloud.\nThat\'s the point of Ryzen AI."',
             },
             hint: {
-                zh: '點擊「下一步」開始第一幕。',
-                en: 'Click Next to begin Act 1.',
+                zh: '點擊「下一步」開始第二幕。',
+                en: 'Click Next to begin Act 2.',
             },
             btnStart: { zh: '📊 顯示架構圖', en: '📊 Show Stack' },
-        },
-        { // Act 1
-            title:    { zh: '語音進來', en: 'Speech In' },
-            subtitle: { zh: 'Speech In', en: 'Realtime Transcription' },
-            cue: {
-                zh: '「55 TOPS 的 NPU 在跑 Whisper，\nCPU 和 GPU 完全沒動，留給後面用。」',
-                en: '"The 55 TOPS NPU is running Whisper —\nCPU and GPU stay idle, reserved for later."',
-            },
-            hint: {
-                zh: '對麥克風說話，大螢幕即時顯示逐字稿。',
-                en: 'Speak into the microphone. Live transcription appears on screen.',
-            },
-            btnStart: { zh: '🎤 開始錄音', en: '🎤 Start Recording' },
-            btnStop:  { zh: '⏹ 停止錄音', en: '⏹ Stop Recording' },
         },
         { // Act 2
             title:    { zh: '大腦思考', en: 'Brain Thinks' },
@@ -661,8 +647,8 @@ const I18N = {
             title:    { zh: '5 個 AI 同時辯論', en: '5 AIs Debate Live' },
             subtitle: { zh: 'Multi-Model Debate', en: 'Multi-Model Debate' },
             cue: {
-                zh: '「五個模型同時串流辯論，\n890M 一張 iGPU 全部扛起來。」\n「三個矽晶片各司其職——\nNPU 聽、CPU 說、iGPU 辯論。」\n「這套系統，就是一座完整的 AI 工廠。」',
-                en: '"Five models streaming debate simultaneously,\nall powered by a single 890M iGPU."\n"Three silicon units, each with a role —\nNPU listens, CPU speaks, iGPU debates."\n"This system is a complete AI factory."',
+                zh: '「五個模型同時串流辯論，\n840M 一張 iGPU 全部扛起來。」\n「三個矽晶片各司其職——\nNPU 聽、CPU 說、iGPU 辯論。」\n「這套系統，就是一座完整的 AI 工廠。」',
+                en: '"Five models streaming debate simultaneously,\nall powered by a single 840M iGPU."\n"Three silicon units, each with a role —\nNPU listens, CPU speaks, iGPU debates."\n"This system is a complete AI factory."',
             },
             hint: {
                 zh: '瀏覽器開啟 llm-debate.html 後，在 UI 裡選 5 個模型並啟動辯論。',
@@ -674,8 +660,8 @@ const I18N = {
 
     // Footer labels
     footerNames: {
-        zh: ['架構', '語音', '思考', '說話', '畫', '辯論'],
-        en: ['Stack', 'Speech', 'Think', 'TTS', 'Image', 'Debate'],
+        zh: ['架構', '思考', '說話', '畫', '辯論'],
+        en: ['Stack', 'Think', 'TTS', 'Image', 'Debate'],
     },
 
     // Act badge prefix
@@ -697,24 +683,24 @@ const I18N = {
     },
     demoComplete: { zh: 'Demo 完成', en: 'Demo Complete' },
 
-    // Act 1 status
-    loadingModel:    { zh: '正在載入模型…', en: 'Loading model...' },
-    modelLoadedMic:  { zh: '模型已載入，正在啟動麥克風…', en: 'Model loaded. Starting microphone...' },
-    recording:       { zh: '🔴 正在錄音… 按「停止」或 Enter/Space 結束', en: '🔴 Recording... Press Stop or Enter/Space to end' },
-    speechDetected:  { zh: '🔴 偵測到語音…', en: '🔴 Speech detected...' },
-    recordingDone:   { zh: '✔ 錄音結束', en: '✔ Recording ended' },
-
     // Act 2 status
     waiting:         { zh: '等待中…', en: 'Waiting...' },
 
     // Act 3 status
+    ttsLabel:        { zh: '說話文字（可於當場修改）', en: 'Speech text (editable)' },
+    replay:          { zh: '🔄 重新播放', en: '🔄 Replay' },
     synthesizing:    { zh: '正在合成語音…', en: 'Synthesizing speech...' },
     playing:         { zh: '🔊 播放中…', en: '🔊 Playing...' },
     playDone:        { zh: '✔ 播放完成', en: '✔ Playback complete' },
     playFail:        { zh: '⚠ 播放失敗', en: '⚠ Playback failed' },
     clickToPlay:     { zh: '▶ 點擊播放', en: '▶ Click to Play' },
 
+    // Act 2 status
+    benchmarkPromptLabel: { zh: 'Benchmark Prompt（可於當場修改）', en: 'Benchmark Prompt (editable)' },
+
     // Act 4 status
+    promptLabel:     { zh: 'Prompt（可於當場修改）', en: 'Prompt (editable)' },
+    regenerate:      { zh: '🔄 重新生成', en: '🔄 Regenerate' },
     generating:      { zh: '正在生成圖片… (SD-Turbo)', en: 'Generating image... (SD-Turbo)' },
     genDone:         { zh: s => `✔ 生成完成 (${s}s)`, en: s => `✔ Generation complete (${s}s)` },
 
@@ -725,12 +711,11 @@ const I18N = {
     restartServer:   { zh: '請重啟 server：', en: 'Please restart the server:' },
     slotsUnknown:    { zh: '⚠ 無法讀取 server slots', en: '⚠ Cannot read server slots' },
     debateTotal:     { zh: '總計：', en: 'Total: ' },
-    debate890m:      { zh: '（890M 可承受）', en: '(within 890M capacity)' },
+    debate840M:      { zh: '（840M 可承受）', en: '(within 840M capacity)' },
     debateOpened:    { zh: '✔ 已在新分頁開啟 llm-debate.html', en: '✔ Opened llm-debate.html in a new tab' },
 
     // Errors
     actError:        { zh: n => `第 ${n} 幕錯誤`, en: n => `Act ${n} Error` },
-    wsError:         { zh: (h,p) => `無法連線到 ws://${h}:${p}/realtime`, en: (h,p) => `Cannot connect to ws://${h}:${p}/realtime` },
 };
 
 /* ==================================================================
@@ -795,8 +780,7 @@ const STATE = {
    Act Definitions (structural — text comes from I18N)
    ================================================================== */
 const ACTS_META = [
-    { num: 0, hw: 'Ryzen AI CPU · XDNA2 + Radeon GPU', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
-    { num: 1, hw: 'XDNA2 NPU · Whisper-Large-v3-Turbo', color: 'var(--act1)', colorHex: '#38bdf8', icon: '🎤' },
+    { num: 1, hw: 'Ryzen AI CPU · XDNA2 + Radeon GPU', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
     { num: 2, hw: 'XDNA2 NPU + CPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
     { num: 3, hw: 'CPU · kokoro-v1', color: 'var(--act3)', colorHex: '#facc15', icon: '🔊' },
     { num: 4, hw: 'Radeon GPU · SD-Turbo', color: 'var(--act4)', colorHex: '#22c55e', icon: '🎨' },
@@ -807,12 +791,11 @@ function getAct(idx) {
     const m = ACTS_META[idx];
     const i = I18N.acts[idx];
     let hw = m.hw;
-    // Act 4 hw varies by backend (Act 4 is now at idx 4 since Act 0 was prepended)
-    if (idx === 4) {
+    if (idx === 3) {
         hw = STATE.imageBackend === 'rocm' ? 'Radeon GPU (ROCm) · SD-Turbo' : 'CPU · SD-Turbo';
     }
     let cue;
-    if (idx === 4) {
+    if (idx === 3) {
         cue = STATE.imageBackend === 'rocm' ? i.cueRocm[LANG] : i.cueCpu[LANG];
     } else {
         cue = i.cue[LANG];
@@ -844,10 +827,7 @@ const BENCHMARK_PROMPT =
 const TTS_TEXT = `AI PCs are starting to deliver real value across a wide range of everyday tasks, from content creation and productivity to intelligent personal assistants. \
 Starting with content creation, videos can be generated from simple text prompts on a Ryzen AI PC — not in the cloud, but in a local environment. \
 Anyone can generate professional quality photos and videos in minutes with no design expertise. \
-You just describe what you need, and the PC takes it from there. \
-Ryzen AI combines high-performance Zen 5 CPU cores, RDNA 3.5 GPU cores, and our latest XDNA 2 NPU delivering up to 60 TOPS of AI compute. \
-Now, powering the next generation of AI PC experiences takes more than just hardware. \
-It takes smarter software with models that are lighter, faster, and can run directly on device.`;
+You just describe what you need, and the PC takes it from there.`;
 const IMAGE_PROMPT = 'two cute and energetic shiba inu dogs playing with each other in a sunny park, fluffy fur, happy expression, tongue out, dynamic motion, bright sunlight, green grass, flowers, outdoor scenery, vibrant colors, soft lighting, depth of field, high detail, ultra realistic, 4k, cinematic composition';
 
 /* ==================================================================
@@ -1023,10 +1003,10 @@ function renderWelcome() {
 }
 
 function buildFooter() {
-    const icons = ['📊', '🎤', '🧠', '🔊', '🎨', '⚔️'];
+    const icons = ['📊', '🧠', '🔊', '🎨', '⚔️'];
     const names = I18N.footerNames[LANG];
     let html = '';
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 4; i++) {
         if (i > 0) html += '<div class="footer-sep"></div>';
         html += `<div class="footer-act" id="footer-act-${i}" onclick="goToAct(${i})">${icons[i]} ${names[i]}</div>`;
     }
@@ -1034,7 +1014,7 @@ function buildFooter() {
 }
 
 function updateFooter() {
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i <= 4; i++) {
         const f = document.getElementById(`footer-act-${i}`);
         if (!f) continue;
         f.classList.remove('done', 'current');
@@ -1045,7 +1025,7 @@ function updateFooter() {
 
 function showAct(actIdx) {
     const act = getAct(actIdx);
-    STATE.currentAct = act.num;
+    STATE.currentAct = actIdx;
     STATE.phase = 'intro';
 
     el.cueBadge.textContent = I18N.actBadge[LANG](act.num);
@@ -1066,6 +1046,24 @@ function showAct(actIdx) {
 
     el.outputTitle.textContent = `${act.subtitle} — ${t('output')}`;
     el.outputContent.innerHTML = '';
+    if (actIdx === 1) {
+        el.outputContent.innerHTML =
+            `<div style="margin-bottom:0.6rem;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">${t('benchmarkPromptLabel')}</div>` +
+            `<textarea id="benchmark-prompt-input" spellcheck="false" rows="4" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-color);border-radius:10px;padding:1rem 1.2rem;color:var(--text-primary);font-size:1rem;line-height:1.65;resize:vertical;font-family:var(--font-ui);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#06b6d4'" onblur="this.style.borderColor='var(--border-color)'">${BENCHMARK_PROMPT}</textarea>` +
+            `<div id="act2-result" style="margin-top:1.2rem"></div>`;
+    }
+    if (actIdx === 2) {
+        el.outputContent.innerHTML =
+            `<div style="margin-bottom:0.6rem;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">${t('ttsLabel')}</div>` +
+            `<textarea id="tts-text-input" spellcheck="false" rows="7" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-color);border-radius:10px;padding:1rem 1.2rem;color:var(--text-primary);font-size:1rem;line-height:1.65;resize:vertical;font-family:var(--font-ui);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#facc15'" onblur="this.style.borderColor='var(--border-color)'">${TTS_TEXT}</textarea>` +
+            `<div id="act3-result" style="margin-top:1.2rem"></div>`;
+    }
+    if (actIdx === 3) {
+        el.outputContent.innerHTML =
+            `<div style="margin-bottom:0.6rem;font-size:0.85rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em">${t('promptLabel')}</div>` +
+            `<textarea id="image-prompt-input" spellcheck="false" rows="5" style="width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border-color);border-radius:10px;padding:1rem 1.2rem;color:var(--text-primary);font-size:1.05rem;line-height:1.65;resize:vertical;font-family:var(--font-ui);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='#22c55e'" onblur="this.style.borderColor='var(--border-color)'">${IMAGE_PROMPT}</textarea>` +
+            `<div id="act4-result" style="margin-top:1.2rem"></div>`;
+    }
     el.outputContent.className = 'output-content fade-in';
 
     updateFooter();
@@ -1120,7 +1118,7 @@ function advance() {
 
 function nextAct() {
     const nextIdx = STATE.currentAct + 1;
-    if (nextIdx > 5) showFinale();
+    if (nextIdx > 4) showFinale();
     else showAct(nextIdx);
 }
 
@@ -1133,7 +1131,7 @@ function goToAct(num) {
 function actDone() {
     STATE.phase = 'done';
     const act = getAct(STATE.currentAct);
-    el.actionBtn.textContent = STATE.currentAct < 5 ? t('nextAct') : t('finish');
+    el.actionBtn.textContent = STATE.currentAct < 4 ? t('nextAct') : t('finish');
     el.actionBtn.style.background = act.colorHex;
     el.actionBtn.disabled = false;
 }
@@ -1146,15 +1144,13 @@ document.addEventListener('keydown', (e) => {
     const advanceKeys = ['Enter', ' ', 'PageDown', 'ArrowRight', 'ArrowDown'];
     if (advanceKeys.includes(e.key)) {
         e.preventDefault();
-        if (STATE.phase === 'running' && STATE.currentAct === 1) stopAct1();
-        else advance();
+        advance();
     }
     if (e.key === 'Escape') { e.preventDefault(); emergencyStop(); }
 });
 
 el.actionBtn.addEventListener('click', () => {
-    if (STATE.phase === 'running' && STATE.currentAct === 1) stopAct1();
-    else advance();
+    advance();
 });
 
 function emergencyStop() {
@@ -1179,7 +1175,7 @@ function cleanupCurrentAct() {
 function runCurrentAct() {
     STATE.phase = 'running';
     el.actionBtn.disabled = true;
-    [runAct0, runAct1, runAct2, runAct3, runAct4, runAct5][STATE.currentAct]();
+    [runAct0, runAct2, runAct3, runAct4, runAct5][STATE.currentAct]();
 }
 
 /* ==================================================================
@@ -1234,8 +1230,8 @@ function runAct0() {
         <div class="stack-row">
             <div class="stack-col npu-col">
                 <div class="stack-col-title">XDNA2 NPU</div>
-                <div class="stack-col-sub">55 TOPS</div>
-                <div class="demo-badge">✦ Acts 1 &amp; 2</div>
+                <div class="stack-col-sub">50 TOPS</div>
+                <div class="demo-badge">✦ Act 2</div>
             </div>
             <div class="stack-col gpu-col">
                 <div class="stack-col-title">Radeon GPU</div>
@@ -1264,137 +1260,14 @@ function runAct0() {
 }
 
 /* ==================================================================
-   Act 1: Whisper Realtime Transcription
-   ================================================================== */
-async function runAct1() {
-    const act = getAct(1);
-    el.actionBtn.textContent = act.btnStop;
-    el.actionBtn.disabled = false;
-
-    el.outputContent.innerHTML =
-        '<div class="transcript-area" id="transcript"></div>' +
-        '<div class="mic-level"><div class="mic-level-bar" id="mic-level"></div></div>' +
-        `<div style="margin-top:0.8rem;color:var(--text-muted);font-size:0.9rem" id="act1-status">${t('loadingModel')}</div>`;
-
-    const statusEl = $('act1-status');
-    const transcriptEl = $('transcript');
-    let finalText = '';
-    let interimText = '';
-
-    try {
-        await postJSON('/v1/load', { model_name: 'Whisper-Large-v3-Turbo' });
-        statusEl.textContent = t('modelLoadedMic');
-
-        if (!STATE.wsPort) {
-            const health = await fetchJSON('/v1/health');
-            STATE.wsPort = health.websocket_port;
-        }
-
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true },
-        });
-        STATE.micStream = stream;
-
-        const audioCtx = new AudioContext();
-        STATE.audioCtx = audioCtx;
-        const nativeRate = audioCtx.sampleRate;
-        const source = audioCtx.createMediaStreamSource(stream);
-        const processor = audioCtx.createScriptProcessor(4096, 1, 1);
-        STATE.processor = processor;
-
-        const wsUrl = `ws://${CONFIG.host}:${STATE.wsPort}/realtime?model=Whisper-Large-v3-Turbo`;
-        const ws = new WebSocket(wsUrl);
-        STATE.ws = ws;
-
-        ws.addEventListener('open', () => {
-            ws.send(JSON.stringify({ type: 'session.update', session: { model: 'Whisper-Large-v3-Turbo' } }));
-            statusEl.textContent = t('recording');
-        });
-
-        ws.addEventListener('message', (event) => {
-            try {
-                const msg = JSON.parse(event.data);
-                if (msg.type === 'conversation.item.input_audio_transcription.delta') {
-                    interimText = msg.delta || '';
-                    render();
-                } else if (msg.type === 'conversation.item.input_audio_transcription.completed') {
-                    if (msg.transcript) { finalText += msg.transcript + ' '; interimText = ''; render(); }
-                } else if (msg.type === 'input_audio_buffer.speech_started') {
-                    statusEl.textContent = t('speechDetected');
-                } else if (msg.type === 'input_audio_buffer.speech_stopped') {
-                    statusEl.textContent = t('recording');
-                }
-            } catch (_) {}
-        });
-
-        ws.addEventListener('error', () => {
-            showError(I18N.actError[LANG](1), I18N.wsError[LANG](CONFIG.host, STATE.wsPort), true);
-        });
-
-        processor.onaudioprocess = (e) => {
-            if (!STATE.ws || STATE.ws.readyState !== WebSocket.OPEN) return;
-            const input = e.inputBuffer.getChannelData(0);
-            const ratio = nativeRate / 16000;
-            const outLen = Math.floor(input.length / ratio);
-            const int16 = new Int16Array(outLen);
-            let sumSq = 0;
-            for (let i = 0; i < outLen; i++) {
-                const srcIdx = i * ratio;
-                const floor = Math.floor(srcIdx);
-                const ceil = Math.min(floor + 1, input.length - 1);
-                const frac = srcIdx - floor;
-                const sample = input[floor] * (1 - frac) + input[ceil] * frac;
-                sumSq += sample * sample;
-                const s = Math.max(-1, Math.min(1, sample));
-                int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-            }
-            const bytes = new Uint8Array(int16.buffer);
-            let binary = '';
-            for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
-            STATE.ws.send(JSON.stringify({ type: 'input_audio_buffer.append', audio: btoa(binary) }));
-
-            const rms = Math.sqrt(sumSq / outLen);
-            const db = rms > 0 ? 20 * Math.log10(rms) : -60;
-            const norm = Math.max(0, Math.min(1, (Math.max(-60, Math.min(-6, db)) + 60) / 54));
-            $('mic-level').style.width = (norm * 100) + '%';
-        };
-
-        source.connect(processor);
-        const mute = audioCtx.createGain();
-        mute.gain.value = 0;
-        processor.connect(mute);
-        mute.connect(audioCtx.destination);
-
-    } catch (err) {
-        showError(I18N.actError[LANG](1), err.message, true);
-        actDone();
-    }
-
-    function render() {
-        transcriptEl.innerHTML =
-            `<span class="transcript-final">${escHtml(finalText)}</span>` +
-            `<span class="transcript-interim">${escHtml(interimText)}</span>`;
-        transcriptEl.scrollTop = transcriptEl.scrollHeight;
-    }
-}
-
-function stopAct1() {
-    cleanupCurrentAct();
-    const s = $('act1-status');
-    if (s) s.textContent = t('recordingDone');
-    postJSON('/v1/unload', { model: 'Whisper-Large-v3-Turbo' }).catch(() => {});
-    actDone();
-}
-
-/* ==================================================================
    Act 2: Hybrid Benchmark
    ================================================================== */
 async function runAct2() {
+    const prompt = ($('benchmark-prompt-input')?.value.trim()) || BENCHMARK_PROMPT;
     const NPU_MODEL    = 'DeepSeek-R1-Distill-Qwen-1.5B-NPU';
     const HYBRID_MODEL = 'DeepSeek-R1-Distill-Qwen-1.5B-Hybrid';
 
-    el.outputContent.innerHTML =
-        '<div class="benchmark-prompt"><strong>Prompt:</strong> ' + escHtml(BENCHMARK_PROMPT) + '</div>' +
+    $('act2-result').innerHTML =
         '<div class="benchmark-run" id="run-npu">' +
             '<div class="benchmark-run-label" style="color:var(--act1)">⚡ NPU <span class="spinner" id="spin-npu"></span></div>' +
             '<div class="benchmark-response" id="resp-npu"></div>' +
@@ -1410,13 +1283,13 @@ async function runAct2() {
 
     const results = [];
     try {
-        const npuR = await runBenchmarkPass(NPU_MODEL, 'NPU', 'resp-npu', 'stats-npu', 'spin-npu');
+        const npuR = await runBenchmarkPass(prompt, NPU_MODEL, 'NPU', 'resp-npu', 'stats-npu', 'spin-npu');
         if (npuR) results.push(npuR);
 
         $('resp-hybrid').textContent = '';
         $('resp-hybrid').style.color = '';
         $('spin-hybrid').classList.remove('hidden');
-        const hybR = await runBenchmarkPass(HYBRID_MODEL, 'Hybrid', 'resp-hybrid', 'stats-hybrid', 'spin-hybrid');
+        const hybR = await runBenchmarkPass(prompt, HYBRID_MODEL, 'Hybrid', 'resp-hybrid', 'stats-hybrid', 'spin-hybrid');
         if (hybR) results.push(hybR);
 
         if (results.length === 2) showBenchmarkChart(results);
@@ -1426,11 +1299,11 @@ async function runAct2() {
     actDone();
 }
 
-async function runBenchmarkPass(modelId, label, respId, statsId, spinId) {
+async function runBenchmarkPass(prompt, modelId, label, respId, statsId, spinId) {
     const wallStart = performance.now();
     await streamSSE('/v1/chat/completions', {
         model: modelId,
-        messages: [{ role: 'user', content: BENCHMARK_PROMPT }],
+        messages: [{ role: 'user', content: prompt }],
         stream: true, max_tokens: 512,
     }, (full) => {
         // DEBUG: log raw content to browser console (open DevTools → Console)
@@ -1495,8 +1368,9 @@ function showBenchmarkChart(results) {
    Act 3: Text-to-Speech
    ================================================================== */
 async function runAct3() {
-    el.outputContent.innerHTML =
-        '<div class="tts-text">' + escHtml(TTS_TEXT) + '</div>' +
+    const text = ($('tts-text-input')?.value.trim()) || TTS_TEXT;
+    const resultEl = $('act3-result');
+    resultEl.innerHTML =
         `<div style="color:var(--text-muted);font-size:0.95rem" id="tts-status"><span class="spinner"></span> ${t('synthesizing')}</div>` +
         '<div class="audio-progress hidden" id="audio-prog"><div class="audio-progress-bar" id="audio-bar"></div></div>';
 
@@ -1507,7 +1381,7 @@ async function runAct3() {
         const r = await fetch(`${CONFIG.serverUrl}/v1/audio/speech`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ model: 'kokoro-v1', voice: 'af_sarah', input: TTS_TEXT, response_format: 'mp3' }),
+            body: JSON.stringify({ model: 'kokoro-v1', voice: 'af_sarah', input: text, response_format: 'mp3' }),
             signal: ctrl.signal,
         });
 
@@ -1525,6 +1399,9 @@ async function runAct3() {
         audio.addEventListener('ended', () => {
             $('tts-status').textContent = t('playDone');
             $('audio-bar').style.width = '100%';
+            $('tts-status').insertAdjacentHTML('afterend',
+                `<button onclick="replayAct3()" style="margin-top:0.8rem;padding:0.45rem 1.2rem;border:1px solid var(--act3);background:transparent;color:var(--act3);border-radius:8px;cursor:pointer;font-size:0.95rem;font-weight:600;display:inline-block;transition:background 0.2s" onmouseover="this.style.background='rgba(250,204,21,0.12)'" onmouseout="this.style.background='transparent'">${t('replay')}</button>`
+            );
             postJSON('/v1/unload', { model: 'kokoro-v1' }).catch(() => {});
             actDone();
         });
@@ -1542,12 +1419,21 @@ async function runAct3() {
     }
 }
 
+async function replayAct3() {
+    if (STATE.phase === 'running') return;
+    STATE.phase = 'running';
+    el.actionBtn.disabled = true;
+    await runAct3();
+}
+
 /* ==================================================================
    Act 4: Image Generation
    ================================================================== */
 async function runAct4() {
-    el.outputContent.innerHTML =
-        '<div class="image-prompt">"' + escHtml(IMAGE_PROMPT) + '"</div>' +
+    const prompt = ($('image-prompt-input')?.value.trim()) || IMAGE_PROMPT;
+    const resultEl = $('act4-result');
+    resultEl.innerHTML =
+        '<div class="image-prompt">"' + escHtml(prompt) + '"</div>' +
         '<div class="image-container" id="img-container"><div class="shimmer" id="img-shimmer"></div><img id="gen-image" alt="Generated"></div>' +
         '<div class="image-backend-badge" id="img-backend">Backend: ' + STATE.imageBackend.toUpperCase() + '</div>' +
         `<div style="color:var(--text-muted);font-size:0.95rem;margin-top:0.5rem" id="img-status"><span class="spinner"></span> ${t('generating')}</div>`;
@@ -1555,7 +1441,7 @@ async function runAct4() {
     const startTime = performance.now();
     try {
         const r = await postJSON('/v1/images/generations', {
-            model: 'SD-Turbo', prompt: IMAGE_PROMPT, size: '512x512',
+            model: 'SD-Turbo', prompt, size: '512x512',
             n: 1, response_format: 'b64_json', steps: 4, cfg_scale: 1.0,
         });
         const data = await r.json();
@@ -1567,6 +1453,9 @@ async function runAct4() {
         img.src = `data:image/png;base64,${b64}`;
         img.onload = () => { img.classList.add('loaded'); $('img-shimmer').style.display = 'none'; };
         $('img-status').textContent = I18N.genDone[LANG](elapsed);
+        $('img-status').insertAdjacentHTML('afterend',
+            `<button onclick="regenAct4()" style="margin-top:0.8rem;padding:0.45rem 1.2rem;border:1px solid var(--act4);background:transparent;color:var(--act4);border-radius:8px;cursor:pointer;font-size:0.95rem;font-weight:600;display:inline-block;transition:background 0.2s" onmouseover="this.style.background='rgba(34,197,94,0.12)'" onmouseout="this.style.background='transparent'">${t('regenerate')}</button>`
+        );
         postJSON('/v1/unload', { model: 'SD-Turbo' }).catch(() => {});
     } catch (err) {
         if (err.name !== 'AbortError') {
@@ -1576,6 +1465,13 @@ async function runAct4() {
         }
     }
     actDone();
+}
+
+async function regenAct4() {
+    if (STATE.phase === 'running') return;
+    STATE.phase = 'running';
+    el.actionBtn.disabled = true;
+    await runAct4();
 }
 
 /* ==================================================================
@@ -1663,7 +1559,7 @@ async function init() {
 
     el.btnStart.addEventListener('click', () => {
         el.welcome.classList.add('hidden');
-        const startIdx = Math.max(0, Math.min(5, CONFIG.startAt));
+        const startIdx = Math.max(0, Math.min(4, CONFIG.startAt));
         showAct(startIdx);
     });
 
