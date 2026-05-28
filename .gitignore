@@ -169,6 +169,7 @@ cython_debug/
 # Claude files
 CLAUDE.md
 CLAUDE.local.md
+!demo/CLAUDE.md
 .settings.local.json
 
 # Bruno/GitHub files
