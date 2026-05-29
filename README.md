@@ -1,8 +1,14 @@
 ## 🍋 Lemonade: Refreshingly fast local LLMs, Image and Speech Generation
 
-> **Fork Notice**
-> This repository is forked from [lemonade-sdk/lemonade](https://github.com/lemonade-sdk/lemonade) (AMD) for personal research and learning purposes.
+> **Clone Notice**
+> This repository is cloned from [lemonade-sdk/lemonade](https://github.com/lemonade-sdk/lemonade) (AMD) and extended for personal research and a Computex 2026 live demo.
 > All original copyrights belong to the respective authors. See [LICENSE](./LICENSE) and [NOTICE.md](./NOTICE.md).
+>
+> **What's added in this repo (`demo/` folder):**
+> - [`orchestrator.html`](demo/orchestrator.html) — Five-act live demo UI for Computex 2026, showcasing NPU / CPU / iGPU roles on AMD Ryzen AI hardware (bilingual EN/ZH, no build step)
+> - [`computex-debate.html`](demo/computex-debate.html) — Act 5 multi-model debate page: five GGUF models streaming simultaneously on a single Radeon iGPU
+> - [`README.html`](demo/README.html) — Interactive HTML course generated from the README, explaining the Lemonade stack to non-technical audiences
+> - [`setup.py`](demo/setup.py) / [`pullmodels.bat`](demo/pullmodels.bat) — Pre-show verification (server health, model availability, backend states) and batch model download
 
 <p align="center">
   <a href="https://discord.gg/5xXzkMu8Zk">

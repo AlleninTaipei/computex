@@ -604,8 +604,8 @@ const I18N = {
             title:    { zh: '大腦思考', en: 'Brain Thinks' },
             subtitle: { zh: 'Hybrid LLM Benchmark', en: 'Hybrid LLM Benchmark' },
             cue: {
-                zh: '「模型的權重切割——部分層在 NPU 跑，\n剩餘層在 CPU 跑，同時進行，\n這是 Ryzen AI 的 Hybrid 推論架構。」',
-                en: '"Model weights are split — \nsome layers run on NPU,\nthe rest on CPU, simultaneously.\nThis is Ryzen AI\'s Hybrid inference architecture."',
+                zh: '「模型的權重切割——部分層在 NPU 跑，\n剩餘層在 iGPU 跑，同時進行，\n這是 Ryzen AI 的 Hybrid 推論架構。」',
+                en: '"Model weights are split — \nsome layers run on NPU,\nthe rest on iGPU, simultaneously.\nThis is Ryzen AI\'s Hybrid inference architecture."',
             },
             hint: {
                 zh: 'Benchmark 自動執行，完成後顯示 NPU vs Hybrid 速度比較。',
@@ -781,7 +781,7 @@ const STATE = {
    ================================================================== */
 const ACTS_META = [
     { num: 1, hw: 'Ryzen AI CPU · XDNA2 + Radeon GPU', color: '#ff8c00', colorHex: '#ff8c00', icon: '📊' },
-    { num: 2, hw: 'XDNA2 NPU + CPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
+    { num: 2, hw: 'XDNA2 NPU + iGPU · DeepSeek-R1-Distill-Qwen-1.5B', color: 'var(--act2)', colorHex: '#06b6d4', icon: '🧠' },
     { num: 3, hw: 'CPU · kokoro-v1', color: 'var(--act3)', colorHex: '#facc15', icon: '🔊' },
     { num: 4, hw: 'Radeon GPU · SD-Turbo', color: 'var(--act4)', colorHex: '#22c55e', icon: '🎨' },
     { num: 5, hw: 'Radeon GPU Vulkan · 5× GGUF', color: 'var(--act5)', colorHex: '#a855f7', icon: '⚔️' },
